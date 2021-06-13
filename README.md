@@ -2,7 +2,7 @@
 
 Autori:
 
-Dragan Jović
-Miroslav Tomić
-Nikola Arsenijević
-Balša Šarenac
+- Dragan Jović
+- Miroslav Tomić
+- Nikola Arsenijević
+- Balša Šarenac
