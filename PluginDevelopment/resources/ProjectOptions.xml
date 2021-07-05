@@ -72,5 +72,40 @@
 		</entry>
 	</generatorOptions>
 	<staticResources>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend</sourceFolder>
+			<sourceFilename>package.json</sourceFilename>
+			<destinationFolder>{path}/frontend</destinationFolder>
+			<destinationFilename>package.json</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend</sourceFolder>
+			<sourceFilename>package-lock.json</sourceFilename>
+			<destinationFolder>{path}/frontend</destinationFolder>
+			<destinationFilename>package-lock.json</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend</sourceFolder>
+			<sourceFilename>README.md</sourceFilename>
+			<destinationFolder>{path}/frontend</destinationFolder>
+			<destinationFilename>README.md</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend/public</sourceFolder>
+			<sourceFilename>index.html</sourceFilename>
+			<destinationFolder>{path}/frontend/public</destinationFolder>
+			<destinationFilename>index.html</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend</sourceFolder>
+			<sourceFilename>frontend.gitignore</sourceFilename>
+			<destinationFolder>{path}/frontend</destinationFolder>
+			<destinationFilename>.gitignore</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
 	</staticResources>
 </myplugin.generator.options.SerializableProjectOptions>
