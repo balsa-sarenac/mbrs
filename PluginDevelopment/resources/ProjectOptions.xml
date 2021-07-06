@@ -70,6 +70,17 @@
 				<filePackage>generated</filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
+		<entry>
+			<string>IndexJSGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/frontend/src</outputPath>
+				<templateName>indexjs</templateName>
+				<templateDir>templates/frontend/src</templateDir>
+				<outputFileName>index.js</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
 	</generatorOptions>
 	<staticResources>
 		<myplugin.generator.options.StaticResource>

@@ -8,6 +8,7 @@ import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMMethod;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMStandardForm;
 
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -75,6 +76,19 @@ public class ModelAnalyzer {
 					Class cl = (Class) ownedElement;
 					FMClass fmClass = getClassData(cl, packageName);
 					FMModel.getInstance().getClasses().add(fmClass);
+					Stereotype s = StereotypesHelper.getAppliedStereotypeByString(cl, "StandardForm");
+					if (s != null) {
+						// preuzimanje podataka o standardnoj formi
+						// prolazak kroz tagove
+						List<Property> attributes = s.getOwnedAttribute();
+						String name = (String) getTagValue(cl, s, "name");
+						Boolean create = (Boolean) getTagValue(cl, s, "create");
+						Boolean update = (Boolean) getTagValue(cl, s, "update");
+						Boolean delete = (Boolean) getTagValue(cl, s, "delete");
+						FMStandardForm fmStandardForm = new FMStandardForm(name, create, update, delete);
+						FMModel.getInstance().getForms().add(fmStandardForm);
+					}
+
 				}
 
 				if (ownedElement instanceof Enumeration) {
@@ -101,8 +115,8 @@ public class ModelAnalyzer {
 		}
 	}
 
-	private String getTagValue(Element el, Stereotype s, String tagName) {
-		List<String> value = StereotypesHelper.getStereotypePropertyValueAsString(el, s, tagName);
+	private Object getTagValue(Element el, Stereotype s, String tagName) {
+		List<?> value = StereotypesHelper.getStereotypePropertyValue(el, s, tagName);
 		if (value == null)
 			return null;
 		if (value.size() == 0)
@@ -121,12 +135,12 @@ public class ModelAnalyzer {
 			FMProperty prop = getPropertyData(p, cl);
 			fmClass.addProperty(prop);
 		}
-		
+
 		Stereotype entityStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
 		if (entityStereotype != null) {
-			fmClass.setTbName(getTagValue(cl, entityStereotype, "tableName"));
+			fmClass.setTbName((String) getTagValue(cl, entityStereotype, "tableName"));
 		}
-		
+
 		Iterator<Operation> it_op = ModelHelper.operations(cl);
 		while (it_op.hasNext()) {
 			Operation op = it_op.next();
