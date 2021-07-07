@@ -103,6 +103,17 @@
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
+		<entry>
+			<string>TableViewGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/frontend/src/components/views</outputPath>
+				<templateName>tableview</templateName>
+				<templateDir>templates/frontend/src/components/views</templateDir>
+				<outputFileName>{0}TableView.js</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
 	</generatorOptions>
 	<staticResources>
 		<myplugin.generator.options.StaticResource>

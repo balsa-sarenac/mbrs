@@ -3,6 +3,7 @@ package myplugin.generator;
 import myplugin.generator.frontend.ContainerGenerator;
 import myplugin.generator.frontend.IndexHTMLGenerator;
 import myplugin.generator.frontend.IndexJSGenerator;
+import myplugin.generator.frontend.TableViewGenerator;
 import myplugin.generator.options.GeneratorOptions;
 
 public class GeneratorFactory {
@@ -20,6 +21,8 @@ public class GeneratorFactory {
 			return new IndexHTMLGenerator(options);
 		} else if (name.equals(ContainerGenerator.class.getSimpleName())) {
 			return new ContainerGenerator(options);
+		} else if (name.equals(TableViewGenerator.class.getSimpleName())) {
+			return new TableViewGenerator(options);
 		} else {
 			return null;
 		}

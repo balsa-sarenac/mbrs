@@ -37,7 +37,7 @@ public class ContainerGenerator extends BasicGenerator {
 				formImport = component.getForm().getName();
 			}
 			String tableImport = null;
-			if (component.getForm() != null) {
+			if (component.getTableView() != null) {
 				tableImport = component.getName() + "TableView";
 			}
 			Writer out;

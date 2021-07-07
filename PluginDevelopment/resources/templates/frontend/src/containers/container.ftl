@@ -1,14 +1,14 @@
 import React from 'react';
 import { Row, Col, Typography } from 'antd';
-const { Title } = Typography;
-
 <#if formImport??>
-import { ${formImport} } from './components/forms/${formImport}';
+import { ${formImport} } from '../components/forms/${formImport}';
 </#if>
 
-<#if tableView??>
-import { ${tableView} } from './components/views/${tableView}';
+<#if tableImport??>
+import { ${tableImport} } from '../components/views/${tableImport}';
 </#if>
+
+const { Title } = Typography;
 
 export const ${name}Container = () => {
 	
@@ -19,6 +19,13 @@ export const ${name}Container = () => {
 					<Title>${name}</Title>
 				</Col>
 			</Row>
+			<#if tableImport??>
+			<Row>
+				<Col xs={{ span: 22, offset: 1 }} sm={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }}>
+					<${tableImport} />
+				</Col>
+			</Row>
+			</#if>
 		</>
 	)
 };

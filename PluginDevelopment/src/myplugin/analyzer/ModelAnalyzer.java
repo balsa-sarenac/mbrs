@@ -13,6 +13,7 @@ import myplugin.generator.fmmodel.FMMethod;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.fmmodel.FMStandardForm;
+import myplugin.generator.fmmodel.FMTableView;
 
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -75,6 +76,7 @@ public class ModelAnalyzer {
 
 		if (pack.hasOwnedElement()) {
 
+			// application description from data (root) package
 			FMApplication application = getAppDescription(pack);
 			FMModel.getInstance().setApplication(application);
 
@@ -86,23 +88,13 @@ public class ModelAnalyzer {
 					FMClass fmClass = getClassData(cl, packageName);
 					FMModel.getInstance().getClasses().add(fmClass);
 
+					// extraction of frontend components
 					Stereotype tableS = StereotypesHelper.getAppliedStereotypeByString(cl, "TableView");
 					Stereotype formS = StereotypesHelper.getAppliedStereotypeByString(cl, "StandardForm");
 
 					if (tableS != null || formS != null) {
 						FMComponent fmComponent = getComponentData(cl, packageName, tableS, formS);
 						FMModel.getInstance().getComponents().add(fmComponent);
-					}
-
-					Stereotype s = StereotypesHelper.getAppliedStereotypeByString(cl, "StandardForm");
-					if (s != null) {
-						// preuzimanje podataka o standardnoj formi
-						// prolazak kroz tagove
-						String name = (String) getTagValue(cl, s, "name");
-						Boolean create = (Boolean) getTagValue(cl, s, "create");
-						Boolean update = (Boolean) getTagValue(cl, s, "update");
-						Boolean delete = (Boolean) getTagValue(cl, s, "delete");
-						FMStandardForm fmStandardForm = new FMStandardForm(name, null, create, update, delete);
 					}
 
 				}
@@ -123,6 +115,30 @@ public class ModelAnalyzer {
 	private FMComponent getComponentData(Class cl, String packageName, Stereotype tableS, Stereotype formS) {
 		FMComponent component = new FMComponent();
 		component.setName(cl.getName());
+		if (tableS != null) {
+			FMTableView tableView = new FMTableView();
+			Iterator<Property> it = ModelHelper.attributes(cl);
+			while (it.hasNext()) {
+				Property p = it.next();
+				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "ColumnComponent");
+				if (propS != null) {
+					String columnName = (String) getTagValue(p, propS, "columnName");
+					tableView.getColumnNames().put(p.getName(), columnName);
+				}
+
+			}
+			component.setTableView(tableView);
+		}
+		if (formS != null) {
+			String name = (String) getTagValue(cl, formS, "name");
+			Boolean create = (Boolean) getTagValue(cl, formS, "create");
+			Boolean update = (Boolean) getTagValue(cl, formS, "update");
+			Boolean delete = (Boolean) getTagValue(cl, formS, "delete");
+			FMStandardForm fmStandardForm = new FMStandardForm(name, null, create, update, delete);
+			// svaki property od forme treba setovati
+
+			//component.setForm(fmStandardForm);
+		}
 		return component;
 	}
 
