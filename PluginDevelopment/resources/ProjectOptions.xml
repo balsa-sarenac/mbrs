@@ -81,6 +81,17 @@
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
+		<entry>
+			<string>IndexHTMLGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/frontend/public</outputPath>
+				<templateName>indexhtml</templateName>
+				<templateDir>templates/frontend/public</templateDir>
+				<outputFileName>index.html</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
 	</generatorOptions>
 	<staticResources>
 		<myplugin.generator.options.StaticResource>
@@ -102,13 +113,6 @@
 			<sourceFilename>README.md</sourceFilename>
 			<destinationFolder>{path}/frontend</destinationFolder>
 			<destinationFilename>README.md</destinationFilename>
-			<overwrite>true</overwrite>
-		</myplugin.generator.options.StaticResource>
-		<myplugin.generator.options.StaticResource>
-			<sourceFolder>static/frontend/public</sourceFolder>
-			<sourceFilename>index.html</sourceFilename>
-			<destinationFolder>{path}/frontend/public</destinationFolder>
-			<destinationFilename>index.html</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>

@@ -27,7 +27,7 @@ const Root = () => {
       activeKey={tab || "/"}
     >
       <Tabs.TabPane tab="Home" key={"/"}>
-        <div>MBRS</div>
+        <center><h1>${appDescription}</h1></center>
       </Tabs.TabPane>
       <#list imports as import>
 	      <Tabs.TabPane tab="${import}" key="${import?lower_case}">

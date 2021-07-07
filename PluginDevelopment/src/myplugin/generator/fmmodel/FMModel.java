@@ -14,6 +14,7 @@ public class FMModel {
 	private List<FMClass> classes = new ArrayList<FMClass>();
 	private List<FMEnumeration> enumerations = new ArrayList<FMEnumeration>();
 	private List<FMForm> forms = new ArrayList<FMForm>();
+	private FMApplication application = new FMApplication();
 
 	// ....
 	/** @ToDo: Add lists of other elements, if needed */
@@ -52,6 +53,14 @@ public class FMModel {
 
 	public void setForms(List<FMForm> forms) {
 		this.forms = forms;
+	}
+
+	public FMApplication getApplication() {
+		return application;
+	}
+
+	public void setApplication(FMApplication application) {
+		this.application = application;
 	}
 
 }

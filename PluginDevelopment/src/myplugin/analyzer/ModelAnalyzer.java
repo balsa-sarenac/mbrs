@@ -3,6 +3,9 @@ package myplugin.analyzer;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMMethod;
@@ -52,6 +55,7 @@ public class ModelAnalyzer {
 	public void prepareModel() throws AnalyzeException {
 		FMModel.getInstance().getClasses().clear();
 		FMModel.getInstance().getEnumerations().clear();
+		FMModel.getInstance().getForms().clear();
 		processPackage(root, filePackage);
 	}
 
@@ -70,8 +74,12 @@ public class ModelAnalyzer {
 
 		if (pack.hasOwnedElement()) {
 
+			FMApplication application = getAppDescription(pack);
+			FMModel.getInstance().setApplication(application);
+
 			for (Iterator<Element> it = pack.getOwnedElement().iterator(); it.hasNext();) {
 				Element ownedElement = it.next();
+
 				if (ownedElement instanceof Class) {
 					Class cl = (Class) ownedElement;
 					FMClass fmClass = getClassData(cl, packageName);
@@ -80,7 +88,6 @@ public class ModelAnalyzer {
 					if (s != null) {
 						// preuzimanje podataka o standardnoj formi
 						// prolazak kroz tagove
-						List<Property> attributes = s.getOwnedAttribute();
 						String name = (String) getTagValue(cl, s, "name");
 						Boolean create = (Boolean) getTagValue(cl, s, "create");
 						Boolean update = (Boolean) getTagValue(cl, s, "update");
@@ -98,20 +105,37 @@ public class ModelAnalyzer {
 				}
 			}
 
-			for (Iterator<Element> it = pack.getOwnedElement().iterator(); it.hasNext();) {
-				Element ownedElement = it.next();
-				if (ownedElement instanceof Package) {
-					Package ownedPackage = (Package) ownedElement;
-					if (StereotypesHelper.getAppliedStereotypeByString(ownedPackage, "BusinessApp") != null)
-						// only packages with stereotype BusinessApp are candidates for metadata
-						// extraction and code generation:
-						processPackage(ownedPackage, packageName);
-				}
-			}
-
 			/**
 			 * @ToDo: Process other package elements, as needed
 			 */
+		}
+	}
+
+	private FMApplication getAppDescription(Package pack) throws AnalyzeException {
+
+		Stereotype packs = StereotypesHelper.getAppliedStereotypeByString(pack, "PackageConfiguration");
+		if (packs != null) {
+			List<Property> attributes = packs.getOwnedAttribute();
+			String dbUrl = (String) getTagValue(pack, packs, "dbUrl");
+			String dbUsername = (String) getTagValue(pack, packs, "dbUsername");
+			String dbPassword = (String) getTagValue(pack, packs, "dbPassword");
+			String dbType = (String) getTagValue(pack, packs, "dbType");
+			String appHost = (String) getTagValue(pack, packs, "appHost");
+			String appPort = (String) getTagValue(pack, packs, "appPort");
+			String appName = (String) getTagValue(pack, packs, "appName");
+			String appDescription = (String) getTagValue(pack, packs, "appDescription");
+			FMApplication application = new FMApplication();
+			application.setDbUrl(dbUrl);
+			application.setDbPassword(dbPassword);
+			application.setDbType(dbType);
+			application.setDbUsername(dbUsername);
+			application.setAppHost(appHost);
+			application.setAppPort(appPort);
+			application.setAppName(appName);
+			application.setAppDescription(appDescription);
+			return application;
+		} else {
+			throw new AnalyzeException("Package must have applied PackageConfiguration stereotype!");
 		}
 	}
 

@@ -2,27 +2,19 @@ package myplugin.generator.frontend;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
-
 import freemarker.template.TemplateException;
 import myplugin.generator.BasicGenerator;
-import myplugin.generator.fmmodel.FMClass;
-import myplugin.generator.fmmodel.FMForm;
 import myplugin.generator.fmmodel.FMModel;
-import myplugin.generator.fmmodel.FMStandardForm;
 import myplugin.generator.options.GeneratorOptions;
 
-public class IndexJSGenerator extends BasicGenerator {
+public class IndexHTMLGenerator extends BasicGenerator {
 
-	public IndexJSGenerator(GeneratorOptions generatorOptions) {
+	public IndexHTMLGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -34,17 +26,7 @@ public class IndexJSGenerator extends BasicGenerator {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 
-		List<String> imports = new ArrayList<String>();
-
-		List<FMForm> forms = FMModel.getInstance().getForms();
-		for (int i = 0; i < forms.size(); i++) {
-			FMForm form = forms.get(i);
-			if (form instanceof FMStandardForm) {
-				imports.add(form.getName());
-			}
-		}
-
-		String appDescription = FMModel.getInstance().getApplication().getAppDescription();
+		String appName = FMModel.getInstance().getApplication().getAppName();
 
 		Writer out;
 		Map<String, Object> context = new HashMap<String, Object>();
@@ -52,8 +34,7 @@ public class IndexJSGenerator extends BasicGenerator {
 			out = getWriter(this.getOutputFileName(), "");
 			if (out != null) {
 				context.clear();
-				context.put("imports", imports);
-				context.put("appDescription", appDescription);
+				context.put("appName", appName);
 				getTemplate().process(context, out);
 				out.flush();
 			}
