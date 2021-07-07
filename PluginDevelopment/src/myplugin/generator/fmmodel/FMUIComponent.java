@@ -5,11 +5,11 @@ public class FMUIComponent {
 	private String label;
 	private Boolean visible;
 	private ComponentTypeEnum componentTypeEnum;
-	private Boolean editable;
-	private Boolean calculated;
-	private Boolean next;
-	private Boolean zoom;
-	private Boolean hierarchy;
+	private Boolean editable = false;
+	private Boolean calculated = false;
+	private Boolean next = false ;
+	private Boolean zoom = false;
+	private Boolean hierarchy = false;
 	private String formula;
 	private String level;
 

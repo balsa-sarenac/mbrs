@@ -1,32 +1,28 @@
 package myplugin.generator.fmmodel;
 
-
 import java.util.ArrayList;
-import java.util.Iterator;
-
-
 
 public class FMEnumeration extends FMType {
-	private ArrayList <String> Values = new ArrayList<String>();
-	
+	private ArrayList<String> values = new ArrayList<String>();
+
 	public FMEnumeration(String name, String typePackage) {
 		super(name, typePackage);
 	}
-	
-	public Iterator<String> getValueIterator(){
-		return Values.iterator();
-	}
-	
-	public void addValue(String value){
-		Values.add(value);		
-	}
-	
-	public int getValuesCount(){
-		return Values.size();
+
+	public ArrayList<String> getValues() {
+		return values;
 	}
 
-	public String getValueAt(int i){
-		return Values.get(i);
+	public void setValues(ArrayList<String> values) {
+		this.values = values;
 	}
-	
+
+	public int getValuesCount() {
+		return values.size();
+	}
+
+	public String getValueAt(int i) {
+		return values.get(i);
+	}
+
 }
