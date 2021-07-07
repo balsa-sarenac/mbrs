@@ -92,6 +92,17 @@
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
+		<entry>
+			<string>ContainerGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/frontend/src/containers</outputPath>
+				<templateName>container</templateName>
+				<templateDir>templates/frontend/src/containers</templateDir>
+				<outputFileName>{0}Container.js</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
 	</generatorOptions>
 	<staticResources>
 		<myplugin.generator.options.StaticResource>

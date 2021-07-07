@@ -1,5 +1,6 @@
 package myplugin.generator;
 
+import myplugin.generator.frontend.ContainerGenerator;
 import myplugin.generator.frontend.IndexHTMLGenerator;
 import myplugin.generator.frontend.IndexJSGenerator;
 import myplugin.generator.options.GeneratorOptions;
@@ -17,6 +18,8 @@ public class GeneratorFactory {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {
 			return new IndexHTMLGenerator(options);
+		} else if (name.equals(ContainerGenerator.class.getSimpleName())) {
+			return new ContainerGenerator(options);
 		} else {
 			return null;
 		}

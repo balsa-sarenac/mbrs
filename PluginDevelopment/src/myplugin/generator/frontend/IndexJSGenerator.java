@@ -15,6 +15,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import freemarker.template.TemplateException;
 import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMComponent;
 import myplugin.generator.fmmodel.FMForm;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMStandardForm;
@@ -36,12 +37,10 @@ public class IndexJSGenerator extends BasicGenerator {
 
 		List<String> imports = new ArrayList<String>();
 
-		List<FMForm> forms = FMModel.getInstance().getForms();
-		for (int i = 0; i < forms.size(); i++) {
-			FMForm form = forms.get(i);
-			if (form instanceof FMStandardForm) {
-				imports.add(form.getName());
-			}
+		List<FMComponent> components = FMModel.getInstance().getComponents();
+		for (int i = 0; i < components.size(); i++) {
+			FMComponent component = components.get(i);
+			imports.add(component.getName());
 		}
 
 		String appDescription = FMModel.getInstance().getApplication().getAppDescription();

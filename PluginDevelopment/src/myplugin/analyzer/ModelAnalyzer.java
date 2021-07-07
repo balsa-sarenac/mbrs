@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMComponent;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMMethod;
 import myplugin.generator.fmmodel.FMModel;
@@ -55,7 +56,7 @@ public class ModelAnalyzer {
 	public void prepareModel() throws AnalyzeException {
 		FMModel.getInstance().getClasses().clear();
 		FMModel.getInstance().getEnumerations().clear();
-		FMModel.getInstance().getForms().clear();
+		FMModel.getInstance().getComponents().clear();
 		processPackage(root, filePackage);
 	}
 
@@ -84,6 +85,15 @@ public class ModelAnalyzer {
 					Class cl = (Class) ownedElement;
 					FMClass fmClass = getClassData(cl, packageName);
 					FMModel.getInstance().getClasses().add(fmClass);
+
+					Stereotype tableS = StereotypesHelper.getAppliedStereotypeByString(cl, "TableView");
+					Stereotype formS = StereotypesHelper.getAppliedStereotypeByString(cl, "StandardForm");
+
+					if (tableS != null || formS != null) {
+						FMComponent fmComponent = getComponentData(cl, packageName, tableS, formS);
+						FMModel.getInstance().getComponents().add(fmComponent);
+					}
+
 					Stereotype s = StereotypesHelper.getAppliedStereotypeByString(cl, "StandardForm");
 					if (s != null) {
 						// preuzimanje podataka o standardnoj formi
@@ -92,8 +102,7 @@ public class ModelAnalyzer {
 						Boolean create = (Boolean) getTagValue(cl, s, "create");
 						Boolean update = (Boolean) getTagValue(cl, s, "update");
 						Boolean delete = (Boolean) getTagValue(cl, s, "delete");
-						FMStandardForm fmStandardForm = new FMStandardForm(name, create, update, delete);
-						FMModel.getInstance().getForms().add(fmStandardForm);
+						FMStandardForm fmStandardForm = new FMStandardForm(name, null, create, update, delete);
 					}
 
 				}
@@ -111,11 +120,16 @@ public class ModelAnalyzer {
 		}
 	}
 
+	private FMComponent getComponentData(Class cl, String packageName, Stereotype tableS, Stereotype formS) {
+		FMComponent component = new FMComponent();
+		component.setName(cl.getName());
+		return component;
+	}
+
 	private FMApplication getAppDescription(Package pack) throws AnalyzeException {
 
 		Stereotype packs = StereotypesHelper.getAppliedStereotypeByString(pack, "PackageConfiguration");
 		if (packs != null) {
-			List<Property> attributes = packs.getOwnedAttribute();
 			String dbUrl = (String) getTagValue(pack, packs, "dbUrl");
 			String dbUsername = (String) getTagValue(pack, packs, "dbUsername");
 			String dbPassword = (String) getTagValue(pack, packs, "dbPassword");

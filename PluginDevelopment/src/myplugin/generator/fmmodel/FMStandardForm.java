@@ -1,5 +1,7 @@
 package myplugin.generator.fmmodel;
 
+import java.util.List;
+
 public class FMStandardForm extends FMForm {
 
 	private Boolean create;
@@ -10,8 +12,8 @@ public class FMStandardForm extends FMForm {
 		super();
 	}
 
-	public FMStandardForm(String name, Boolean create, Boolean update, Boolean delete) {
-		super(name);
+	public FMStandardForm(String name, List<FMUIComponent> components, Boolean create, Boolean update, Boolean delete) {
+		super(name, components);
 		this.create = create;
 		this.update = update;
 		this.delete = delete;

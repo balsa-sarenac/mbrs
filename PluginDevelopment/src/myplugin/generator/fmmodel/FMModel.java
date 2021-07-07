@@ -13,7 +13,7 @@ public class FMModel {
 
 	private List<FMClass> classes = new ArrayList<FMClass>();
 	private List<FMEnumeration> enumerations = new ArrayList<FMEnumeration>();
-	private List<FMForm> forms = new ArrayList<FMForm>();
+	private List<FMComponent> components = new ArrayList<FMComponent>();
 	private FMApplication application = new FMApplication();
 
 	// ....
@@ -47,12 +47,12 @@ public class FMModel {
 		this.enumerations = enumerations;
 	}
 
-	public List<FMForm> getForms() {
-		return forms;
+	public List<FMComponent> getComponents() {
+		return components;
 	}
 
-	public void setForms(List<FMForm> forms) {
-		this.forms = forms;
+	public void setComponents(List<FMComponent> components) {
+		this.components = components;
 	}
 
 	public FMApplication getApplication() {
