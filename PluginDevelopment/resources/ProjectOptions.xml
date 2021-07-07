@@ -114,6 +114,17 @@
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
+		<entry>
+			<string>FormGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/frontend/src/components/forms</outputPath>
+				<templateName>form</templateName>
+				<templateDir>templates/frontend/src/components/forms</templateDir>
+				<outputFileName>{0}Form.js</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
 	</generatorOptions>
 	<staticResources>
 		<myplugin.generator.options.StaticResource>
@@ -121,13 +132,6 @@
 			<sourceFilename>package.json</sourceFilename>
 			<destinationFolder>{path}/frontend</destinationFolder>
 			<destinationFilename>package.json</destinationFilename>
-			<overwrite>true</overwrite>
-		</myplugin.generator.options.StaticResource>
-		<myplugin.generator.options.StaticResource>
-			<sourceFolder>static/frontend</sourceFolder>
-			<sourceFilename>package-lock.json</sourceFilename>
-			<destinationFolder>{path}/frontend</destinationFolder>
-			<destinationFilename>package-lock.json</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>

@@ -10,9 +10,11 @@ import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
 import myplugin.generator.BasicGenerator;
+import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMComponent;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMStandardForm;
 import myplugin.generator.options.GeneratorOptions;
 
 public class ContainerGenerator extends BasicGenerator {
@@ -30,11 +32,21 @@ public class ContainerGenerator extends BasicGenerator {
 		}
 
 		List<FMComponent> components = FMModel.getInstance().getComponents();
+		FMApplication application = FMModel.getInstance().getApplication();
 		for (int i = 0; i < components.size(); i++) {
 			FMComponent component = components.get(i);
 			String formImport = null;
+			Boolean isCreate = false;
+			Boolean isEdit = false;
+			Boolean isDelete = false;
 			if (component.getForm() != null) {
 				formImport = component.getForm().getName();
+				if (component.getForm() instanceof FMStandardForm) {
+					FMStandardForm sf = (FMStandardForm) component.getForm();
+					isCreate = sf.isCreate();
+					isEdit = sf.isUpdate();
+					isDelete = sf.isDelete();
+				}
 			}
 			String tableImport = null;
 			if (component.getTableView() != null) {
@@ -49,6 +61,12 @@ public class ContainerGenerator extends BasicGenerator {
 					context.put("name", component.getName());
 					context.put("formImport", formImport);
 					context.put("tableImport", tableImport);
+					context.put("appHost", application.getAppHost());
+					context.put("appPort", application.getAppPort());
+					context.put("appContextPath", application.getAppContextPath());
+					context.put("isCreate", isCreate);
+					context.put("isEdit", isEdit);
+					context.put("isDelete", isDelete);
 					getTemplate().process(context, out);
 					out.flush();
 				}

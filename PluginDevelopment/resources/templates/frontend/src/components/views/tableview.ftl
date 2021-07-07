@@ -11,29 +11,16 @@ const columns = [
 </#list>  
 ];
 
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(
-      selectedRows
-    );
-  },
-  getCheckboxProps: record => ({
-    disabled: record.name === 'Disabled User',
-    // Column configuration not to be checked
-    name: record.name
-  })
-};
-
-export const ${name} = () => {
+export const ${name} = (props) => {
   return (
     <div>
       <Table
         rowSelection={{
           type: 'radio',
-          ...rowSelection
+          ...props.rowSelection
         }}
         columns={columns}
-        data={[]}
+        dataSource={props.data}
       />
     </div>
   );

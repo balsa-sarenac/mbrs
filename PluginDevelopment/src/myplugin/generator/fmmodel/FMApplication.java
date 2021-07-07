@@ -10,13 +10,14 @@ public class FMApplication {
 	private String appPort;
 	private String appName;
 	private String appDescription;
-	
+	private String appContextPath;
+
 	public FMApplication() {
-		
+
 	}
 
 	public FMApplication(String dbUrl, String dbUsername, String dbPassword, String dbType, String appHost,
-			String appPort, String appName, String appDescription) {
+			String appPort, String appName, String appDescription, String appContextPath) {
 		super();
 		this.dbUrl = dbUrl;
 		this.dbUsername = dbUsername;
@@ -26,6 +27,7 @@ public class FMApplication {
 		this.appPort = appPort;
 		this.appName = appName;
 		this.appDescription = appDescription;
+		this.appContextPath = appContextPath;
 	}
 
 	public String getDbUrl() {
@@ -91,6 +93,13 @@ public class FMApplication {
 	public void setAppDescription(String appDescription) {
 		this.appDescription = appDescription;
 	}
-	
-	
+
+	public String getAppContextPath() {
+		return appContextPath;
+	}
+
+	public void setAppContextPath(String appContextPath) {
+		this.appContextPath = appContextPath;
+	}
+
 }

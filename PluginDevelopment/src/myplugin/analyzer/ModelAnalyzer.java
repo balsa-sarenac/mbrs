@@ -137,7 +137,7 @@ public class ModelAnalyzer {
 			FMStandardForm fmStandardForm = new FMStandardForm(name, null, create, update, delete);
 			// svaki property od forme treba setovati
 
-			//component.setForm(fmStandardForm);
+			 component.setForm(fmStandardForm);
 		}
 		return component;
 	}
@@ -154,6 +154,7 @@ public class ModelAnalyzer {
 			String appPort = (String) getTagValue(pack, packs, "appPort");
 			String appName = (String) getTagValue(pack, packs, "appName");
 			String appDescription = (String) getTagValue(pack, packs, "appDescription");
+			String appContextPath = (String) getTagValue(pack, packs, "appContextPath");
 			FMApplication application = new FMApplication();
 			application.setDbUrl(dbUrl);
 			application.setDbPassword(dbPassword);
@@ -163,6 +164,7 @@ public class ModelAnalyzer {
 			application.setAppPort(appPort);
 			application.setAppName(appName);
 			application.setAppDescription(appDescription);
+			application.setAppContextPath(appContextPath);
 			return application;
 		} else {
 			throw new AnalyzeException("Package must have applied PackageConfiguration stereotype!");

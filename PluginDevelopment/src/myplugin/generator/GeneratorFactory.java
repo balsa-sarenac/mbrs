@@ -1,6 +1,7 @@
 package myplugin.generator;
 
 import myplugin.generator.frontend.ContainerGenerator;
+import myplugin.generator.frontend.FormGenerator;
 import myplugin.generator.frontend.IndexHTMLGenerator;
 import myplugin.generator.frontend.IndexJSGenerator;
 import myplugin.generator.frontend.TableViewGenerator;
@@ -23,6 +24,8 @@ public class GeneratorFactory {
 			return new ContainerGenerator(options);
 		} else if (name.equals(TableViewGenerator.class.getSimpleName())) {
 			return new TableViewGenerator(options);
+		} else if (name.equals(FormGenerator.class.getSimpleName())) {
+			return new FormGenerator(options);
 		} else {
 			return null;
 		}
