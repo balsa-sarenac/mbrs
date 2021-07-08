@@ -14,6 +14,10 @@ const { Title } = Typography;
 export const ${name}Container = () => {
 	<#if isCreate || isEdit>
   	const [isModalVisible, setIsModalVisible] = useState(false);
+  	const [isCreate, setIsCreate] = useState(true);
+	</#if>
+	<#if formImport??>
+	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
 	</#if>
 	<#if tableImport??>
 	const [data, setData] = useState([]);
@@ -45,13 +49,14 @@ export const ${name}Container = () => {
 	const rowSelection = {
 		onChange: (selectedRowKeys, selectedRows) => {
 			setId(selectedRows[0].id);
+			setInitialValues(selectedRows[0]);
 		}
 	};
 	</#if>
 	
 	<#if isDelete>
 	const handleDelete = () => {
-		axios.delete('http://localhost:8080/api/'+id)
+		axios.delete('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}/'+id)
 		  .then(function (response) {
 			handleGetData();
 		  })
@@ -62,19 +67,63 @@ export const ${name}Container = () => {
 	</#if>
 	
 	<#if isCreate || isEdit>
-	const showModal = () => {
+	const showModal = (type) => {
+		if(type==='new'){
+			setInitialValues(undefined);
+			setIsCreate(true);
+		}else{
+			setIsCreate(false);
+		}
 		setIsModalVisible(true);
-	};
-	
-	const handleOk = () => {
-		setIsModalVisible(false);
 	};
 	
 	const handleCancel = () => {
 		setIsModalVisible(false);
 	};
 	</#if>
+	
+	<#if isCreate>
+	const handleOk = (values, { setSubmitting }) => {
+		axios.post('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', JSON.stringify(values, null, 2))
+		  .then(function (response) {
+			setTimeout(() => {
+				alert(JSON.stringify(values, null, 2));
+					  setSubmitting(false);
+			}, 400);
+			setIsModalVisible(false);
+		  })
+		  .catch(function (error) {
+			setTimeout(() => {
+				alert(JSON.stringify(values, null, 2));
+					  setSubmitting(false);
+			}, 400);
+			setIsModalVisible(false);
+		  });
+			
+	};
+	</#if>
 
+	<#if isCreate>
+	const handleUpdate = (values, { setSubmitting }) => {
+		axios.put('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}/'+id, JSON.stringify(values, null, 2))
+		  .then(function (response) {
+			setTimeout(() => {
+				alert(JSON.stringify(values, null, 2));
+					  setSubmitting(false);
+			}, 400);
+			setIsModalVisible(false);
+		  })
+		  .catch(function (error) {
+			setTimeout(() => {
+				alert(JSON.stringify(values, null, 2));
+					  setSubmitting(false);
+			}, 400);
+			setIsModalVisible(false);
+		  });
+			
+	};
+	</#if>
+	
 	return (
 		<>
 			<Row gutter={[16, 16]}>
@@ -86,8 +135,8 @@ export const ${name}Container = () => {
 			<Row gutter={[16, 16]}>
 				<Col xs={{ span: 1, offset: 1 }} sm={{ span: 1, offset: 1 }} md={{ span: 1, offset: 1 }} >
 					<Space direction="horizontal">
-						<#if isCreate><Button type="primary" icon={<PlusOutlined />} onClick={showModal}>New</Button></#if>
-						<#if isEdit><Button type="default" icon={<EditOutlined />} onClick={showModal} disabled={id==null}>Edit</Button></#if>
+						<#if isCreate><Button type="primary" icon={<PlusOutlined />} onClick={()=>{showModal('new');}}>New</Button></#if>
+						<#if isEdit><Button type="default" icon={<EditOutlined />} onClick={()=>{showModal('edit');}} disabled={id==null}>Edit</Button></#if>
 						<#if isDelete><Button type="primary" icon={<DeleteOutlined />} onClick={handleDelete} disabled={id==null} danger>Delete</Button></#if>
 					</Space>
 				</Col>
@@ -95,19 +144,12 @@ export const ${name}Container = () => {
 			<#if isCreate || isEdit>
 			<Modal
 	          visible={isModalVisible}
+	          destroyOnClose={true}
 	          title="${formImport}"
-	          onOk={handleOk}
+	          footer={null}
 	          onCancel={handleCancel}
-	          footer={[
-	            <Button key="cancel" onClick={handleCancel}>
-	              Cancel
-	            </Button>,
-	            <Button key="submit" type="primary" onClick={handleOk}>
-	              Submit
-	            </Button>
-	          ]}
 	         >
-	          <${formImport} />
+	          <${formImport} <#if formImport??>initialValues={initialValues}</#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
 	        </Modal>
 			</#if>
 			</#if>

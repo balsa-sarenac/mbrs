@@ -2,6 +2,7 @@ package myplugin.generator.frontend;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMComponent;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMStandardForm;
+import myplugin.generator.fmmodel.FMUIComponent;
 import myplugin.generator.options.GeneratorOptions;
 
 public class ContainerGenerator extends BasicGenerator {
@@ -39,6 +41,7 @@ public class ContainerGenerator extends BasicGenerator {
 			Boolean isCreate = false;
 			Boolean isEdit = false;
 			Boolean isDelete = false;
+			List<String> elements = null;
 			if (component.getForm() != null) {
 				formImport = component.getForm().getName();
 				if (component.getForm() instanceof FMStandardForm) {
@@ -46,6 +49,10 @@ public class ContainerGenerator extends BasicGenerator {
 					isCreate = sf.isCreate();
 					isEdit = sf.isUpdate();
 					isDelete = sf.isDelete();
+					elements = new ArrayList<String>();
+					for (FMUIComponent comp : sf.getComponents()) {
+						elements.add(comp.getIdName());
+					}
 				}
 			}
 			String tableImport = null;
@@ -67,6 +74,7 @@ public class ContainerGenerator extends BasicGenerator {
 					context.put("isCreate", isCreate);
 					context.put("isEdit", isEdit);
 					context.put("isDelete", isDelete);
+					context.put("elements", elements);
 					getTemplate().process(context, out);
 					out.flush();
 				}

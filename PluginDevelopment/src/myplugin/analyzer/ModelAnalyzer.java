@@ -152,6 +152,7 @@ public class ModelAnalyzer {
 					EnumerationLiteralImpl enumtemp = (EnumerationLiteralImpl) getTagValue(p, propS, "componentType");
 					ComponentTypeEnum cte = ComponentTypeEnum.valueOf(enumtemp.getName());
 					FMUIComponent com = new FMUIComponent();
+					com.setIdName(p.getName());
 					com.setLabel(label);
 					com.setEditable(true);
 					com.setVisible(visible);

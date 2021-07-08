@@ -2,6 +2,7 @@ package myplugin.generator.fmmodel;
 
 public class FMUIComponent {
 
+	private String idName;
 	private String label;
 	private Boolean visible;
 	private ComponentTypeEnum componentTypeEnum;
@@ -17,9 +18,10 @@ public class FMUIComponent {
 
 	}
 
-	public FMUIComponent(String label, Boolean visible, ComponentTypeEnum componentTypeEnum, Boolean editable,
+	public FMUIComponent(String idName, String label, Boolean visible, ComponentTypeEnum componentTypeEnum, Boolean editable,
 			Boolean calculated, Boolean next, Boolean zoom, Boolean hierarchy, String formula, String level) {
 		super();
+		this.idName = idName;
 		this.label = label;
 		this.visible = visible;
 		this.componentTypeEnum = componentTypeEnum;
@@ -32,6 +34,14 @@ public class FMUIComponent {
 		this.level = level;
 	}
 
+	public String getIdName() {
+		return idName;
+	}
+
+	public void setIdName(String idName) {
+		this.idName = idName;
+	}
+	
 	public String getLabel() {
 		return label;
 	}
