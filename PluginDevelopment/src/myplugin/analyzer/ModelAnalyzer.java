@@ -24,6 +24,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Operation;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
@@ -123,9 +124,8 @@ public class ModelAnalyzer {
 		component.setName(cl.getName());
 		if (tableS != null) {
 			FMTableView tableView = new FMTableView();
-			Iterator<Property> it = ModelHelper.attributes(cl);
-			while (it.hasNext()) {
-				Property p = it.next();
+			List<Property> props = (List<Property>) cl.getAttribute();
+			for (Property p : props) {
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "ColumnComponent");
 				if (propS != null) {
 					String columnName = (String) getTagValue(p, propS, "columnName");

@@ -69,7 +69,7 @@ export const ${name}Container = () => {
 	<#if isCreate || isEdit>
 	const showModal = (type) => {
 		if(type==='new'){
-			setInitialValues(undefined);
+			setInitialValues({<#list elements as el>${el} : "",</#list>});
 			setIsCreate(true);
 		}else{
 			setIsCreate(false);
