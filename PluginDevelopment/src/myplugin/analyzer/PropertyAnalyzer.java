@@ -8,7 +8,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
 import myplugin.generator.fmmodel.CascadeType;
-import myplugin.generator.fmmodel.FMLinkedProperty;
+import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.fmmodel.FMPeristentProperty;
 import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.fmmodel.FMType;
@@ -40,18 +40,37 @@ public class PropertyAnalyzer {
 		String visibility = property.getVisibility().toString();
 		FMProperty fmProperty = new FMProperty(propertyName, type, visibility, lower, upper);
 
-		// ucitati tagove za perzistente atribute
 		Stereotype persistentPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
 				"PersistentProperty");
 		if (persistentPropertyStereotype != null) {	
 			fmProperty = setPersistentPropertyData(property, fmProperty, persistentPropertyStereotype);
 		}
 
-		// ucitati tagove za linked atribute
-		Stereotype linkedPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
-				"LinkedProperty");
-		if (linkedPropertyStereotype != null) {
-			fmProperty = setLinkedPropertyData(property, fmProperty, linkedPropertyStereotype);
+		Stereotype referencedPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
+				"ReferencedProperty");
+		if (referencedPropertyStereotype != null) {
+			fmProperty = setReferencedPropertyData(property, fmProperty, referencedPropertyStereotype);
+		}
+		
+		Stereotype manyToOnePropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
+				"ManyToOne");
+		if (manyToOnePropertyStereotype != null) {
+			fmProperty = setReferencedPropertyData(property, fmProperty, manyToOnePropertyStereotype);
+		}
+		Stereotype manyToManyPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
+				"ManyToMany");
+		if (manyToManyPropertyStereotype != null) {
+			fmProperty = setReferencedPropertyData(property, fmProperty, manyToManyPropertyStereotype);
+		}
+		Stereotype oneToOnePropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
+				"OneToOne");
+		if (oneToOnePropertyStereotype != null) {
+			fmProperty = setReferencedPropertyData(property, fmProperty, oneToOnePropertyStereotype);
+		}
+		Stereotype oneToManyPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
+				"OneToMany");
+		if (oneToManyPropertyStereotype != null) {
+			fmProperty = setReferencedPropertyData(property, fmProperty, oneToManyPropertyStereotype);
 		}
 		return fmProperty;
 	}
@@ -116,17 +135,17 @@ public class PropertyAnalyzer {
 		}
 	}
 	
-	private static FMProperty setLinkedPropertyData(Property property, FMProperty fmProperty, Stereotype stereotype) {
-		FMLinkedProperty linkedProperty = new FMLinkedProperty(fmProperty);
+	private static FMProperty setReferencedPropertyData(Property property, FMProperty fmProperty, Stereotype stereotype) {
+		FMReferencedProperty referencedProperty = new FMReferencedProperty(fmProperty);
 		List<Property> tags = stereotype.getOwnedAttribute();
 		for (Property tag : tags) {
-			createLinkedProperty(tag, property, fmProperty, stereotype, linkedProperty);
+			createReferencedProperty(tag, property, fmProperty, stereotype, referencedProperty);
 		}
-		return linkedProperty;
+		return referencedProperty;
 	}
 	
-	private static void createLinkedProperty(Property tag, Property property, FMProperty fmProperty,
-			Stereotype stereotype, FMLinkedProperty linkedProperty) {
+	private static void createReferencedProperty(Property tag, Property property, FMProperty fmProperty,
+			Stereotype stereotype, FMReferencedProperty linkedProperty) {
 
 		Property referencingProperty = property.getOpposite();
 		int upper = referencingProperty.getUpper();
@@ -145,7 +164,7 @@ public class PropertyAnalyzer {
 		FMType type = new FMType(typeName, typePackage);
 
 		FMProperty p = new FMProperty(name, type, referencingProperty.getVisibility().toString(), lower, upper);
-		linkedProperty.setOppositeEnd(new FMLinkedProperty(p));
+		linkedProperty.setOppositeEnd(new FMReferencedProperty(p));
 		String tagName = tag.getName();
 
 		// preuzimanje vrednosti taga

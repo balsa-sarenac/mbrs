@@ -2,6 +2,7 @@ package myplugin.generator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
 import myplugin.generator.fmmodel.FMClass;
-import myplugin.generator.fmmodel.FMLinkedProperty;
+import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMPeristentProperty;
 import myplugin.generator.fmmodel.FMProperty;
@@ -53,12 +54,20 @@ public class ModelGenerator extends BasicGenerator {
 					context.put("importedPackages", cl.getImportedPackages());
 					context.put("properties", cl.getProperties());
 					context.put("methods", cl.getMethods());
-					List<FMProperty> peristantProperties = cl.getProperties().stream()
-							.filter(p -> p instanceof FMPeristentProperty).collect(Collectors.toList());
-					context.put("peristentProperties", peristantProperties);
-					List<FMProperty> linked = cl.getProperties().stream().filter(p -> p instanceof FMLinkedProperty)
-							.collect(Collectors.toList());
-					context.put("linkedProperties", linked);
+					List<FMProperty> props = new ArrayList<FMProperty>();
+					List<FMProperty> peristantProps = new ArrayList<FMProperty>();
+					List<FMProperty> referencedProps = new ArrayList<FMProperty>();
+					for (FMProperty p : cl.getProperties()) {
+						if (p instanceof FMPeristentProperty)
+							peristantProps.add(p);
+						else if (p instanceof FMReferencedProperty)
+							referencedProps.add(p);
+						else
+							props.add(p);
+					}
+					context.put("properties", props);
+					context.put("persistentProps", peristantProps);
+					context.put("referencedProps", referencedProps);
 					getTemplate().process(context, out);
 					out.flush();
 				}

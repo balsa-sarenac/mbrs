@@ -1,13 +1,13 @@
 package myplugin.generator.fmmodel;
 
-public class FMLinkedProperty extends FMProperty {
+public class FMReferencedProperty extends FMProperty {
 	private FetchType fetchType;
 	private CascadeType cascadeType;
 	private String columnName;
 	private String joinTable;
-	private FMLinkedProperty oppositeEnd;
+	private FMReferencedProperty oppositeEnd;
 
-	public FMLinkedProperty(FMProperty fmProperty) {
+	public FMReferencedProperty(FMProperty fmProperty) {
 		super(fmProperty.getName(), fmProperty.getType(), fmProperty.getVisibility(),
 				fmProperty.getLower(), fmProperty.getUpper());
 	}
@@ -44,11 +44,11 @@ public class FMLinkedProperty extends FMProperty {
 		this.joinTable = joinTable;
 	}
 
-	public FMLinkedProperty getOppositeEnd() {
+	public FMReferencedProperty getOppositeEnd() {
 		return oppositeEnd;
 	}
 
-	public void setOppositeEnd(FMLinkedProperty oppositeEnd) {
+	public void setOppositeEnd(FMReferencedProperty oppositeEnd) {
 		this.oppositeEnd = oppositeEnd;
 	}
 }
