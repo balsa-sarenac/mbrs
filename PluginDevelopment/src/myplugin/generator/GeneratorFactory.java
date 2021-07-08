@@ -9,8 +9,8 @@ public class GeneratorFactory {
 	}
 
 	public static BasicGenerator getGenerator(String name, GeneratorOptions options) {
-		if (name.equals(EJBGenerator.class.getSimpleName())) {
-			return new EJBGenerator(options);
+		if (name.equals(ModelGenerator.class.getSimpleName())) {
+			return new ModelGenerator(options);
 		} else {
 			return null;
 		}

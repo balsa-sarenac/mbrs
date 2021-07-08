@@ -14,17 +14,17 @@ import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 
 /**
- * EJB generator that now generates incomplete ejb classes based on MagicDraw
+ * Model generator that now generates incomplete model classes based on MagicDraw
  * class model
  * 
  * @ToDo: enhance resources/templates/ejbclass.ftl template and intermediate
  *        data structure (@see myplugin.generator.fmmodel) in order to generate
- *        complete ejb classes
+ *        complete model classes
  */
 
-public class EJBGenerator extends BasicGenerator {
+public class ModelGenerator extends BasicGenerator {
 
-	public EJBGenerator(GeneratorOptions generatorOptions) {
+	public ModelGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -47,6 +47,7 @@ public class EJBGenerator extends BasicGenerator {
 					context.clear();
 					context.put("class", cl);
 					context.put("properties", cl.getProperties());
+					context.put("methods", cl.getMethods());
 					context.put("importedPackages", cl.getImportedPackages());
 					getTemplate().process(context, out);
 					out.flush();
