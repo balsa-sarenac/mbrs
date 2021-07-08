@@ -22,7 +22,6 @@ import myplugin.generator.options.GeneratorOptions;
 
 public abstract class BasicGenerator {
 
-	private GeneratorOptions generatorOptions;
 	private String outputPath;
 	private String templateName;
 	private String templateDir;
@@ -33,7 +32,6 @@ public abstract class BasicGenerator {
 	private Template template;
 
 	public BasicGenerator(GeneratorOptions generatorOptions) {
-		this.generatorOptions = generatorOptions;
 		this.outputPath = generatorOptions.getOutputPath();
 		this.templateName = generatorOptions.getTemplateName();
 		this.templateDir = generatorOptions.getTemplateDir();

@@ -118,7 +118,7 @@ public class ModelAnalyzer {
 		Iterator<Property> it = ModelHelper.attributes(cl);
 		while (it.hasNext()) {
 			Property p = it.next();
-			FMProperty prop = getPropertyData(p, cl);
+			FMProperty prop = PropertyAnalyzer.createProperty(p);
 			fmClass.addProperty(prop);
 		}
 		
@@ -138,43 +138,6 @@ public class ModelAnalyzer {
 		 * @ToDo: Add import declarations etc.
 		 */
 		return fmClass;
-	}
-
-	/*
-	 * private FMProperty getMethodData(Operation op, Class cl) throws
-	 * AnalyzeException { String methodName = op.getName(); if (methodName == null)
-	 * throw new AnalyzeException("Properties of the class: " + cl.getName() +
-	 * " must have names!"); Type attType = op.getType(); if (attType == null) throw
-	 * new AnalyzeException("Property " + cl.getName() + "." + p.getName() +
-	 * " must have type!");
-	 * 
-	 * String typeName = attType.getName(); if (typeName == null) throw new
-	 * AnalyzeException("Type ot the property " + cl.getName() + "." + p.getName() +
-	 * " must have name!");
-	 * 
-	 * int lower = p.getLower(); int upper = p.getUpper();
-	 * 
-	 * FMProperty prop = new FMProperty(attName, typeName,
-	 * p.getVisibility().toString(), lower, upper); return prop; }
-	 * 
-	 */
-	private FMProperty getPropertyData(Property p, Class cl) throws AnalyzeException {
-		String attName = p.getName();
-		if (attName == null)
-			throw new AnalyzeException("Properties of the class: " + cl.getName() + " must have names!");
-		Type attType = p.getType();
-		if (attType == null)
-			throw new AnalyzeException("Property " + cl.getName() + "." + p.getName() + " must have type!");
-
-		String typeName = attType.getName();
-		if (typeName == null)
-			throw new AnalyzeException("Type ot the property " + cl.getName() + "." + p.getName() + " must have name!");
-
-		int lower = p.getLower();
-		int upper = p.getUpper();
-
-		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), lower, upper);
-		return prop;
 	}
 
 	private FMEnumeration getEnumerationData(Enumeration enumeration, String packageName) throws AnalyzeException {
