@@ -1,5 +1,7 @@
 package myplugin.analyzer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -29,13 +31,14 @@ public class PropertyAnalyzer {
 
 		String typeName = property.getType().getName();
 		String typePackage = "";
-
+		Boolean baseType = false;
 		TypeMapping typeMapping = getDataType(typeName);
 		if (typeMapping != null) {
 			typeName = typeMapping.getDestType();
 			typePackage = typeMapping.getLibraryName();
+			baseType = true;
 		}
-		FMType type = new FMType(typeName, typePackage);
+		FMType type = new FMType(typeName, typePackage, baseType);
 
 		String visibility = property.getVisibility().toString();
 		FMProperty fmProperty = new FMProperty(propertyName, type, visibility, lower, upper);
@@ -46,32 +49,15 @@ public class PropertyAnalyzer {
 			fmProperty = setPersistentPropertyData(property, fmProperty, persistentPropertyStereotype);
 		}
 
-		Stereotype referencedPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
-				"ReferencedProperty");
-		if (referencedPropertyStereotype != null) {
-			fmProperty = setReferencedPropertyData(property, fmProperty, referencedPropertyStereotype);
+		List<String> stereotypes = Arrays.asList("ReferencedProperty", "OneToMany", "OneToOne", "ManyToMany", "ManyToOne");
+		for (String st : stereotypes) {
+			Stereotype referencedPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
+					st);
+			if (referencedPropertyStereotype != null) {
+				fmProperty = setReferencedPropertyData(property, fmProperty, referencedPropertyStereotype);
+			}
 		}
-		
-		Stereotype manyToOnePropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
-				"ManyToOne");
-		if (manyToOnePropertyStereotype != null) {
-			fmProperty = setReferencedPropertyData(property, fmProperty, manyToOnePropertyStereotype);
-		}
-		Stereotype manyToManyPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
-				"ManyToMany");
-		if (manyToManyPropertyStereotype != null) {
-			fmProperty = setReferencedPropertyData(property, fmProperty, manyToManyPropertyStereotype);
-		}
-		Stereotype oneToOnePropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
-				"OneToOne");
-		if (oneToOnePropertyStereotype != null) {
-			fmProperty = setReferencedPropertyData(property, fmProperty, oneToOnePropertyStereotype);
-		}
-		Stereotype oneToManyPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
-				"OneToMany");
-		if (oneToManyPropertyStereotype != null) {
-			fmProperty = setReferencedPropertyData(property, fmProperty, oneToManyPropertyStereotype);
-		}
+
 		return fmProperty;
 	}
 
@@ -90,10 +76,8 @@ public class PropertyAnalyzer {
 			Stereotype stereotype, FMPeristentProperty persistantProperty) {
 		String tagName = tag.getName();
 
-		// preuzimanje vrednosti tagova
 		List<?> values = StereotypesHelper.getStereotypePropertyValue(property, stereotype, tagName);
 
-		// ako tag ima vrednosti
 		if (values.size() > 0) {
 			switch (tagName) {
 			case "columnName":
@@ -154,23 +138,22 @@ public class PropertyAnalyzer {
 
 		String typeName = referencingProperty.getType().getName();
 		String typePackage = "";
-
+		Boolean baseType = false;
 		TypeMapping typeMapping = getDataType(typeName);
 
 		if (typeMapping != null) {
 			typeName = typeMapping.getDestType();
 			typePackage = typeMapping.getLibraryName();
+			baseType = true;
 		}
-		FMType type = new FMType(typeName, typePackage);
+		FMType type = new FMType(typeName, typePackage, baseType);
 
 		FMProperty p = new FMProperty(name, type, referencingProperty.getVisibility().toString(), lower, upper);
 		linkedProperty.setOppositeEnd(new FMReferencedProperty(p));
 		String tagName = tag.getName();
 
-		// preuzimanje vrednosti taga
 		List<?> values = StereotypesHelper.getStereotypePropertyValue(property, stereotype, tagName);
 
-		// ako tag ima vrednosti
 		if (values.size() > 0) {
 			switch (tagName) {			
 			case "columnName":
@@ -178,6 +161,9 @@ public class PropertyAnalyzer {
 				break;
 			case "joinTable":
 				linkedProperty.setJoinTable((String) values.get(0));
+				break;
+			case "mappedBy":
+				linkedProperty.setMappedBy((String) values.get(0));
 				break;
 			case "fetchType":
 				if (values.get(0) instanceof EnumerationLiteral) {

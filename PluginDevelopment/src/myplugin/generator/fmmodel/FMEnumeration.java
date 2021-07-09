@@ -10,7 +10,7 @@ public class FMEnumeration extends FMType {
 	private ArrayList <String> Values = new ArrayList<String>();
 	
 	public FMEnumeration(String name, String typePackage) {
-		super(name, typePackage);
+		super(name, typePackage, false);
 	}
 	
 	public Iterator<String> getValueIterator(){

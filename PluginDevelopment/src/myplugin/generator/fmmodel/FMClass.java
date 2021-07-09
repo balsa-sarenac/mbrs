@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public class FMClass extends FMType {	
-	
+
 	private String visibility;
 	private String tbName;
 	
@@ -24,7 +24,7 @@ public class FMClass extends FMType {
 	
 	
 	public FMClass(String name, String classPackage, String visibility) {
-		super(name, classPackage);		
+		super(name, classPackage, false);
 		this.visibility = visibility;
 	}	
 	

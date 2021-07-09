@@ -5,6 +5,7 @@ public class FMReferencedProperty extends FMProperty {
 	private CascadeType cascadeType;
 	private String columnName;
 	private String joinTable;
+	private String mappedBy;
 	private FMReferencedProperty oppositeEnd;
 
 	public FMReferencedProperty(FMProperty fmProperty) {
@@ -42,6 +43,14 @@ public class FMReferencedProperty extends FMProperty {
 
 	public void setJoinTable(String joinTable) {
 		this.joinTable = joinTable;
+	}
+
+	public String getMappedBy() {
+		return mappedBy;
+	}
+
+	public void setMappedBy(String mappedBy) {
+		this.mappedBy = mappedBy;
 	}
 
 	public FMReferencedProperty getOppositeEnd() {

@@ -3,6 +3,7 @@ package myplugin.generator;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 import freemarker.template.TemplateException;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMReferencedProperty;
+import myplugin.generator.fmmodel.FMType;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMPeristentProperty;
 import myplugin.generator.fmmodel.FMProperty;
@@ -51,6 +53,7 @@ public class ModelGenerator extends BasicGenerator {
 				if (out != null) {
 					context.clear();
 					context.put("class", cl);
+					context.put("package", cl.getTypePackage());
 					context.put("importedPackages", cl.getImportedPackages());
 					context.put("properties", cl.getProperties());
 					context.put("methods", cl.getMethods());
@@ -68,6 +71,7 @@ public class ModelGenerator extends BasicGenerator {
 					context.put("properties", props);
 					context.put("persistentProps", peristantProps);
 					context.put("referencedProps", referencedProps);
+					context.put("imports", uniqueTypesUsed(cl.getProperties()));
 					getTemplate().process(context, out);
 					out.flush();
 				}
@@ -77,5 +81,14 @@ public class ModelGenerator extends BasicGenerator {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
+	}
+
+	public Collection<FMType> uniqueTypesUsed(List<FMProperty> properties){
+		Map<String, FMType> uniqueTypes = new HashMap<String, FMType>();
+		for(FMProperty property: properties) {
+			FMType type = property.getType();
+			uniqueTypes.put(type.getName(), type);
+		}
+		return uniqueTypes.values();
 	}
 }
