@@ -17,7 +17,7 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 	String pluginDir = null;
 
 	public void init() {
-		JOptionPane.showMessageDialog(null, "Spring+React plugin init");
+		//JOptionPane.showMessageDialog(null, "Spring+React plugin init");
 
 		pluginDir = getDescriptor().getPluginDirectory().getPath();
 

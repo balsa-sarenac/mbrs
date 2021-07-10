@@ -8,8 +8,7 @@ import java.util.List;
 public class FMClass extends FMType {	
 	
 	private String visibility;
-	private String tbName;
-	
+	private String tbName;	
 
 	//Class properties
 	private List<FMProperty> FMProperties = new ArrayList<FMProperty>();
