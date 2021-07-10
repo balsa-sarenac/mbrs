@@ -53,6 +53,7 @@ public class ModelGenerator extends BasicGenerator {
 				if (out != null) {
 					context.clear();
 					context.put("class", cl);
+					context.put("name", cl.getName());
 					context.put("package", cl.getTypePackage());
 					context.put("importedPackages", cl.getImportedPackages());
 					context.put("properties", cl.getProperties());

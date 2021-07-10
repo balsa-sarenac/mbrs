@@ -6,24 +6,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import myplugin.generator.fmmodel.FMClass;
-import myplugin.generator.fmmodel.FMEnumeration;
-import myplugin.generator.fmmodel.FMMethod;
-import myplugin.generator.fmmodel.FMModel;
-import myplugin.generator.fmmodel.FMProperty;
-import myplugin.generator.fmmodel.FMType;
-
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Operation;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Type;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
+
+import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMEnumeration;
+import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMType;
 
 /**
  * Model Analyzer takes necessary metadata from the MagicDraw model and puts it

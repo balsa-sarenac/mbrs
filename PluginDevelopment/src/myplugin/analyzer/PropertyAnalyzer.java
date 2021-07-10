@@ -1,6 +1,5 @@
 package myplugin.analyzer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,9 +9,9 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
 import myplugin.generator.fmmodel.CascadeType;
-import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.fmmodel.FMPeristentProperty;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.fmmodel.FMType;
 import myplugin.generator.fmmodel.FetchType;
 import myplugin.generator.fmmodel.StrategyType;
@@ -81,7 +80,10 @@ public class PropertyAnalyzer {
 		if (values.size() > 0) {
 			switch (tagName) {
 			case "columnName":
-				persistantProperty.setColumnName((String) values.get(0));
+				if (values.get(0) instanceof String) {
+					String columnName = (String) values.get(0);
+					persistantProperty.setColumnName(columnName);
+				}
 				break;
 			case "isKey":
 				if (values.get(0) instanceof Boolean) {
@@ -157,15 +159,24 @@ public class PropertyAnalyzer {
 		if (values.size() > 0) {
 			switch (tagName) {			
 			case "columnName":
-				linkedProperty.setColumnName((String) values.get(0));
+				if (values.get(0) instanceof String) {
+					String columnName= (String) values.get(0);
+					linkedProperty.setColumnName(columnName);
+				}
 				break;
 			case "joinTable":
-				linkedProperty.setJoinTable((String) values.get(0));
+				if (values.get(0) instanceof String) {
+					String joinTable= (String) values.get(0);
+					linkedProperty.setJoinTable(joinTable);
+				}
 				break;
 			case "mappedBy":
-				linkedProperty.setMappedBy((String) values.get(0));
+				if (values.get(0) instanceof String) {
+					String mappedBy= (String) values.get(0);
+					linkedProperty.setMappedBy(mappedBy);
+				}
 				break;
-			case "fetchType":
+			case "fetch":
 				if (values.get(0) instanceof EnumerationLiteral) {
 					EnumerationLiteral enumLiteral = (EnumerationLiteral) values.get(0);
 					String enumString = enumLiteral.getName();
@@ -173,7 +184,7 @@ public class PropertyAnalyzer {
 					linkedProperty.setFetchType(fetchType);
 				}
 				break;
-			case "cascadeType":
+			case "cascade":
 				if (values.get(0) instanceof EnumerationLiteral) {
 					EnumerationLiteral enumLiteral = (EnumerationLiteral) values.get(0);
 					String enumString = enumLiteral.getName();
