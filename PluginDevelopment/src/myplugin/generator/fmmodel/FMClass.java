@@ -15,7 +15,7 @@ public class FMClass extends FMType {
 	private List<FMProperty> FMProperties = new ArrayList<FMProperty>();
 	
 	//list of packages (for import declarations) 
-	private List<String> importedPackages = new ArrayList<String>();
+	private List<FMType> importedPackages = new ArrayList<FMType>();
 	
 	//methods
 	private List<FMMethod> FMMethods = new ArrayList<FMMethod>();
@@ -56,15 +56,15 @@ public class FMClass extends FMType {
 		return FMProperties.size();
 	}
 	
-	public List<String> getImportedPackages(){
+	public List<FMType> getImportedPackages(){
 		return importedPackages;
 	}
 
-	public Iterator<String> getImportedIterator(){
+	public Iterator<FMType> getImportedIterator(){
 		return importedPackages.iterator();
 	}
 	
-	public void addImportedPackage(String importedPackage){
+	public void addImportedPackage(FMType importedPackage){
 		importedPackages.add(importedPackage);		
 	}
 	

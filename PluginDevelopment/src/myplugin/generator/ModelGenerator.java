@@ -71,7 +71,6 @@ public class ModelGenerator extends BasicGenerator {
 					context.put("properties", props);
 					context.put("persistentProps", peristantProps);
 					context.put("referencedProps", referencedProps);
-					context.put("imports", uniqueTypesUsed(cl.getProperties()));
 					getTemplate().process(context, out);
 					out.flush();
 				}
@@ -81,14 +80,5 @@ public class ModelGenerator extends BasicGenerator {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
-	}
-
-	public Collection<FMType> uniqueTypesUsed(List<FMProperty> properties){
-		Map<String, FMType> uniqueTypes = new HashMap<String, FMType>();
-		for(FMProperty property: properties) {
-			FMType type = property.getType();
-			uniqueTypes.put(type.getName(), type);
-		}
-		return uniqueTypes.values();
 	}
 }

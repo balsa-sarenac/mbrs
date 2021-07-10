@@ -37,10 +37,10 @@ public class TestPackageGeneration {
 		
 		classes.clear();
 		
-		FMType str = new FMType("String", "");
-		FMType bool = new FMType("Boolean", "");
-		FMType dte = new FMType("Date", "");
-		FMType osb = new FMType("Osoba", "ejb");
+		FMType str = new FMType("String", "", true);
+		FMType bool = new FMType("Boolean", "", true);
+		FMType dte = new FMType("Date", "", true);
+		FMType osb = new FMType("Osoba", "ejb", true);
 		FMClass cl = new FMClass ("Preduzece", "ejb.orgsema", "public");
 		cl.addProperty(new FMProperty("sifraPreduzeca", str, "private", 1, 1));
 		cl.addProperty(new FMProperty("nazivPreduzeca", str, "private", 1, 1));

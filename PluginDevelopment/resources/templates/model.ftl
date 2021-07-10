@@ -1,4 +1,20 @@
-package ${class.typePackage};
+package demo.generated.model;
+
+import java.util.Set;
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+<#list importedPackages as import>
+<#if import.baseType && import.typePackage != "java.lang">
+import ${import.typePackage}.${import.name};
+<#elseif !import.baseType && import.typePackage != package>
+import demo.generated.model.${import.name};
+</#if>
+</#list>
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,27 +52,21 @@ ${class.visibility} class ${class.name} {
 
 <#list referencedProps as property>
 	<#if property.upper == -1 && property.oppositeEnd.upper == -1>@ManyToMany<#elseif property.upper == -1 && property.oppositeEnd.upper == 1>@OneToMany<#elseif property.upper == 1 && property.oppositeEnd.upper == -1>@ManyToOne<#else>@OneToOne</#if><#rt>
-	<#lt><#if (property.fetch)?? || (property.cascade)?? || (property.mappedBy)?? || (property.optional)?? || (property.orphanRemoval)??>(<#rt>
-		<#if (property.cascade)??>
-			<#lt>cascade = CascadeType.${property.cascade}<#rt>
+	<#lt><#if (property.fetchType)?? || (property.cascadeType)?? || (property.mappedBy)??>(<#rt>
+		<#if (property.cascadeType)??>
+			<#lt>cascade = CascadeType.${property.cascadeType}<#rt>
 		</#if>
-		<#if (property.fetch)??>
-			<#lt><#if (property.cascade)??>, </#if>fetch = FetchType.${property.fetch}<#rt>
+		<#if (property.fetchType)??>
+			<#lt><#if (property.cascadeType)??>, </#if>fetch = FetchType.${property.fetchType}<#rt>
 		</#if>
-		<#if (property.mappedBy)??>
-			<#lt><#if (property.cascade)?? || (property.fetch)??>, </#if>mappedBy = "${property.mappedBy}"<#rt>
-		</#if>
-		<#if (property.optional)??>
-			<#lt><#if (property.cascade)?? || (property.fetch)?? || (property.mappedBy)??>, </#if>optional = ${property.optional?c}<#rt>
-		</#if>
-		<#if (property.orphanRemoval)??>
-			<#lt><#if (property.cascade)?? || (property.fetch)?? || (property.mappedBy)?? || (property.optional)??>, </#if>orphanRemoval = ${property.orphanRemoval?c}<#rt>
-		</#if>
-		<#lt>)</#if>	
+		<#lt>)</#if>
+	<#if (property.joinTable)??>@JoinTable</#if>
 	<#if property.upper == 1>
+	<#if (property.columnNmae)??>@JoinColumn</#if>
 	${property.visibility} ${property.type.name} ${property.name};
 	<#else>
-	${property.visibility} Set<${property.type.name}> ${property.name} = new HashSet<${property.type.name}>();	
+	${property.visibility} Set<${property.type.name}> ${property.name};
 	</#if>${'\n'}
 	</#list>	
+
 }

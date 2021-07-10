@@ -1,13 +1,17 @@
 package myplugin.analyzer;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMMethod;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMType;
 
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -121,6 +125,9 @@ public class ModelAnalyzer {
 			FMProperty prop = PropertyAnalyzer.createProperty(p);
 			fmClass.addProperty(prop);
 		}
+		for (FMType imprt : uniqueTypesUsed(fmClass.getProperties())) {
+			fmClass.addImportedPackage(imprt);
+		}
 		
 		Stereotype entityStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
 		if (entityStereotype != null) {
@@ -138,6 +145,15 @@ public class ModelAnalyzer {
 		 * @ToDo: Add import declarations etc.
 		 */
 		return fmClass;
+	}
+	
+	public Collection<FMType> uniqueTypesUsed(List<FMProperty> properties){
+		Map<String, FMType> uniqueTypes = new HashMap<String, FMType>();
+		for(FMProperty property: properties) {
+			FMType type = property.getType();
+			uniqueTypes.put(type.getName(), type);
+		}
+		return uniqueTypes.values();
 	}
 
 	private FMEnumeration getEnumerationData(Enumeration enumeration, String packageName) throws AnalyzeException {
