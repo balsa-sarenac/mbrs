@@ -1,38 +1,35 @@
 package myplugin.analyzer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.JOptionPane;
+import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
+import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Operation;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.impl.EnumerationLiteralImpl;
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
 import myplugin.generator.fmmodel.ComponentTypeEnum;
 import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMComponent;
 import myplugin.generator.fmmodel.FMEnumeration;
-import myplugin.generator.fmmodel.FMMethod;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.fmmodel.FMStandardForm;
 import myplugin.generator.fmmodel.FMTableView;
+import myplugin.generator.fmmodel.FMType;
 import myplugin.generator.fmmodel.FMUIComponent;
-
-import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
-import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Operation;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Type;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.impl.EnumerationLiteralImpl;
-import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
-import com.nomagic.uml2.impl.magicdraw.classes.mdkernel.EnumerationClassImpl;
-import com.nomagic.uml2.impl.magicdraw.classes.mdkernel.EnumerationLiteralClassImpl;
 
 /**
  * Model Analyzer takes necessary metadata from the MagicDraw model and puts it
@@ -213,8 +210,11 @@ public class ModelAnalyzer {
 		Iterator<Property> it = ModelHelper.attributes(cl);
 		while (it.hasNext()) {
 			Property p = it.next();
-			FMProperty prop = getPropertyData(p, cl);
+			FMProperty prop = PropertyAnalyzer.createProperty(p);
 			fmClass.addProperty(prop);
+		}
+		for (FMType imprt : uniqueTypesUsed(fmClass.getProperties())) {
+			fmClass.addImportedPackage(imprt);
 		}
 
 		Stereotype entityStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
@@ -234,42 +234,14 @@ public class ModelAnalyzer {
 		 */
 		return fmClass;
 	}
-
-	/*
-	 * private FMProperty getMethodData(Operation op, Class cl) throws
-	 * AnalyzeException { String methodName = op.getName(); if (methodName == null)
-	 * throw new AnalyzeException("Properties of the class: " + cl.getName() +
-	 * " must have names!"); Type attType = op.getType(); if (attType == null) throw
-	 * new AnalyzeException("Property " + cl.getName() + "." + p.getName() +
-	 * " must have type!");
-	 * 
-	 * String typeName = attType.getName(); if (typeName == null) throw new
-	 * AnalyzeException("Type ot the property " + cl.getName() + "." + p.getName() +
-	 * " must have name!");
-	 * 
-	 * int lower = p.getLower(); int upper = p.getUpper();
-	 * 
-	 * FMProperty prop = new FMProperty(attName, typeName,
-	 * p.getVisibility().toString(), lower, upper); return prop; }
-	 * 
-	 */
-	private FMProperty getPropertyData(Property p, Class cl) throws AnalyzeException {
-		String attName = p.getName();
-		if (attName == null)
-			throw new AnalyzeException("Properties of the class: " + cl.getName() + " must have names!");
-		Type attType = p.getType();
-		if (attType == null)
-			throw new AnalyzeException("Property " + cl.getName() + "." + p.getName() + " must have type!");
-
-		String typeName = attType.getName();
-		if (typeName == null)
-			throw new AnalyzeException("Type ot the property " + cl.getName() + "." + p.getName() + " must have name!");
-
-		int lower = p.getLower();
-		int upper = p.getUpper();
-
-		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), lower, upper);
-		return prop;
+	
+	public Collection<FMType> uniqueTypesUsed(List<FMProperty> properties){
+		Map<String, FMType> uniqueTypes = new HashMap<String, FMType>();
+		for(FMProperty property: properties) {
+			FMType type = property.getType();
+			uniqueTypes.put(type.getName(), type);
+		}
+		return uniqueTypes.values();
 	}
 
 	private FMEnumeration getEnumerationData(Enumeration enumeration, String packageName) throws AnalyzeException {

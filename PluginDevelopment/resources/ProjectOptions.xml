@@ -60,10 +60,10 @@
 	</typeMappings>
 	<generatorOptions>
 		<entry>
-			<string>EJBGenerator</string>
+			<string>ModelGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
-				<outputPath>{path}/src/main/java/generated/model</outputPath>
-				<templateName>ejbclass</templateName>
+				<outputPath>{path}/demo/src/main/java/demo/generated/model</outputPath>
+				<templateName>model</templateName>
 				<templateDir>templates</templateDir>
 				<outputFileName>{0}.java</outputFileName>
 				<overwrite>true</overwrite>

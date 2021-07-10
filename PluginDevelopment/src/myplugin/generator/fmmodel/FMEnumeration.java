@@ -6,7 +6,7 @@ public class FMEnumeration extends FMType {
 	private ArrayList<String> values = new ArrayList<String>();
 
 	public FMEnumeration(String name, String typePackage) {
-		super(name, typePackage);
+		super(name, typePackage, false);
 	}
 
 	public ArrayList<String> getValues() {
