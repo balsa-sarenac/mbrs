@@ -1,5 +1,6 @@
 package myplugin.analyzer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,13 +16,20 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Operation;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.impl.EnumerationLiteralImpl;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
+import myplugin.generator.fmmodel.ComponentTypeEnum;
+import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
+import myplugin.generator.fmmodel.FMComponent;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMStandardForm;
+import myplugin.generator.fmmodel.FMTableView;
 import myplugin.generator.fmmodel.FMType;
+import myplugin.generator.fmmodel.FMUIComponent;
 
 /**
  * Model Analyzer takes necessary metadata from the MagicDraw model and puts it
@@ -53,6 +61,7 @@ public class ModelAnalyzer {
 	public void prepareModel() throws AnalyzeException {
 		FMModel.getInstance().getClasses().clear();
 		FMModel.getInstance().getEnumerations().clear();
+		FMModel.getInstance().getComponents().clear();
 		processPackage(root, filePackage);
 	}
 
@@ -71,12 +80,27 @@ public class ModelAnalyzer {
 
 		if (pack.hasOwnedElement()) {
 
+			// application description from data (root) package
+			FMApplication application = getAppDescription(pack);
+			FMModel.getInstance().setApplication(application);
+
 			for (Iterator<Element> it = pack.getOwnedElement().iterator(); it.hasNext();) {
 				Element ownedElement = it.next();
+
 				if (ownedElement instanceof Class) {
 					Class cl = (Class) ownedElement;
 					FMClass fmClass = getClassData(cl, packageName);
 					FMModel.getInstance().getClasses().add(fmClass);
+
+					// extraction of frontend components
+					Stereotype tableS = StereotypesHelper.getAppliedStereotypeByString(cl, "TableView");
+					Stereotype formS = StereotypesHelper.getAppliedStereotypeByString(cl, "StandardForm");
+
+					if (tableS != null || formS != null) {
+						FMComponent fmComponent = getComponentData(cl, packageName, tableS, formS);
+						FMModel.getInstance().getComponents().add(fmComponent);
+					}
+
 				}
 
 				if (ownedElement instanceof Enumeration) {
@@ -86,25 +110,91 @@ public class ModelAnalyzer {
 				}
 			}
 
-			for (Iterator<Element> it = pack.getOwnedElement().iterator(); it.hasNext();) {
-				Element ownedElement = it.next();
-				if (ownedElement instanceof Package) {
-					Package ownedPackage = (Package) ownedElement;
-					if (StereotypesHelper.getAppliedStereotypeByString(ownedPackage, "BusinessApp") != null)
-						// only packages with stereotype BusinessApp are candidates for metadata
-						// extraction and code generation:
-						processPackage(ownedPackage, packageName);
-				}
-			}
-
 			/**
 			 * @ToDo: Process other package elements, as needed
 			 */
 		}
 	}
 
-	private String getTagValue(Element el, Stereotype s, String tagName) {
-		List<String> value = StereotypesHelper.getStereotypePropertyValueAsString(el, s, tagName);
+	private FMComponent getComponentData(Class cl, String packageName, Stereotype tableS, Stereotype formS) {
+		FMComponent component = new FMComponent();
+		component.setName(cl.getName());
+		if (tableS != null) {
+			FMTableView tableView = new FMTableView();
+			List<Property> props = (List<Property>) cl.getAttribute();
+			for (Property p : props) {
+				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "ColumnComponent");
+				if (propS != null) {
+					String columnName = (String) getTagValue(p, propS, "columnName");
+					tableView.getColumnNames().put(p.getName(), columnName);
+				}
+
+			}
+			component.setTableView(tableView);
+		}
+		if (formS != null) {
+			String name = (String) getTagValue(cl, formS, "name");
+			Boolean create = (Boolean) getTagValue(cl, formS, "create");
+			Boolean update = (Boolean) getTagValue(cl, formS, "update");
+			Boolean delete = (Boolean) getTagValue(cl, formS, "delete");
+			// svaki property od forme treba setovati
+			List<FMUIComponent> components = new ArrayList<FMUIComponent>();
+			Iterator<Property> it = ModelHelper.attributes(cl);
+			while (it.hasNext()) {
+				Property p = it.next();
+				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "Editable");
+				if (propS != null) {
+					String label = (String) getTagValue(p, propS, "label");
+					Boolean visible = (Boolean) getTagValue(p, propS, "visible");
+					EnumerationLiteralImpl enumtemp = (EnumerationLiteralImpl) getTagValue(p, propS, "componentType");
+					ComponentTypeEnum cte = ComponentTypeEnum.valueOf(enumtemp.getName());
+					FMUIComponent com = new FMUIComponent();
+					com.setIdName(p.getName());
+					com.setLabel(label);
+					com.setEditable(true);
+					com.setVisible(visible);
+					com.setComponentTypeEnum(cte);
+					components.add(com);
+				}
+
+			}
+			FMStandardForm fmStandardForm = new FMStandardForm(name, components, create, update, delete);
+			component.setForm(fmStandardForm);
+		}
+		return component;
+	}
+
+	private FMApplication getAppDescription(Package pack) throws AnalyzeException {
+
+		Stereotype packs = StereotypesHelper.getAppliedStereotypeByString(pack, "PackageConfiguration");
+		if (packs != null) {
+			String dbUrl = (String) getTagValue(pack, packs, "dbUrl");
+			String dbUsername = (String) getTagValue(pack, packs, "dbUsername");
+			String dbPassword = (String) getTagValue(pack, packs, "dbPassword");
+			String dbType = (String) getTagValue(pack, packs, "dbType");
+			String appHost = (String) getTagValue(pack, packs, "appHost");
+			String appPort = (String) getTagValue(pack, packs, "appPort");
+			String appName = (String) getTagValue(pack, packs, "appName");
+			String appDescription = (String) getTagValue(pack, packs, "appDescription");
+			String appContextPath = (String) getTagValue(pack, packs, "appContextPath");
+			FMApplication application = new FMApplication();
+			application.setDbUrl(dbUrl);
+			application.setDbPassword(dbPassword);
+			application.setDbType(dbType);
+			application.setDbUsername(dbUsername);
+			application.setAppHost(appHost);
+			application.setAppPort(appPort);
+			application.setAppName(appName);
+			application.setAppDescription(appDescription);
+			application.setAppContextPath(appContextPath);
+			return application;
+		} else {
+			throw new AnalyzeException("Package must have applied PackageConfiguration stereotype!");
+		}
+	}
+
+	private Object getTagValue(Element el, Stereotype s, String tagName) {
+		List<?> value = StereotypesHelper.getStereotypePropertyValue(el, s, tagName);
 		if (value == null)
 			return null;
 		if (value.size() == 0)
@@ -126,12 +216,12 @@ public class ModelAnalyzer {
 		for (FMType imprt : uniqueTypesUsed(fmClass.getProperties())) {
 			fmClass.addImportedPackage(imprt);
 		}
-		
+
 		Stereotype entityStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
 		if (entityStereotype != null) {
-			fmClass.setTbName(getTagValue(cl, entityStereotype, "tableName"));
+			fmClass.setTbName((String) getTagValue(cl, entityStereotype, "tableName"));
 		}
-		
+
 		Iterator<Operation> it_op = ModelHelper.operations(cl);
 		while (it_op.hasNext()) {
 			Operation op = it_op.next();
@@ -161,7 +251,7 @@ public class ModelAnalyzer {
 			EnumerationLiteral literal = list.get(i);
 			if (literal.getName() == null)
 				throw new AnalyzeException("Items of the enumeration " + enumeration.getName() + " must have names!");
-			fmEnum.addValue(literal.getName());
+			fmEnum.getValues().add(literal.getName());
 		}
 		return fmEnum;
 	}

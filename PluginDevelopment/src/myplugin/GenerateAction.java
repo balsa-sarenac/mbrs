@@ -22,6 +22,7 @@ import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
 import myplugin.generator.BasicGenerator;
 import myplugin.generator.GeneratorFactory;
+import myplugin.generator.StaticFilesGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -58,6 +59,9 @@ class GenerateAction extends MDAction {
 				}
 			}
 
+			StaticFilesGenerator generator = GeneratorFactory.getStaticFilesGenerator();
+			generator.generate();
+			
 			/** @ToDo: Also call static generators */
 			JOptionPane.showMessageDialog(null, "Spring+React generate finished.");
 
