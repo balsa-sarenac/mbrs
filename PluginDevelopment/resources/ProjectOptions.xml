@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <myplugin.generator.options.SerializableProjectOptions>
-	<path>C:/temp</path>
+	<path>C:\temp\demo\src\main\java\demo</path>
 	<typeMappings>
 		<myplugin.generator.options.TypeMapping>
 			<uMLType>date</uMLType>
@@ -62,7 +62,7 @@
 		<entry>
 			<string>ModelGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
-				<outputPath>{path}/src/main/java/generated/model</outputPath>
+				<outputPath>{path}/generated/model</outputPath>
 				<templateName>model</templateName>
 				<templateDir>templates</templateDir>
 				<outputFileName>{0}.java</outputFileName>
