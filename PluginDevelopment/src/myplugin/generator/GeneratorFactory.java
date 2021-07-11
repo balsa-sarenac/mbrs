@@ -16,6 +16,10 @@ public class GeneratorFactory {
 	public static BasicGenerator getGenerator(String name, GeneratorOptions options) {
 		if (name.equals(ModelGenerator.class.getSimpleName())) {
 			return new ModelGenerator(options);
+		} else if (name.equals(AbstractDTOGenerator.class.getSimpleName())) {
+			return new AbstractDTOGenerator(options);
+		} else if (name.equals(ConcreteDTOGenerator.class.getSimpleName())) {
+			return new ConcreteDTOGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {
