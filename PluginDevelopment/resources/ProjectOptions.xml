@@ -134,6 +134,7 @@
 				<outputFileName>{0}Repository.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 		<entry>
 			<string>IndexJSGenerator</string>
