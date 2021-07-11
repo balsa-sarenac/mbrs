@@ -1,5 +1,13 @@
 package myplugin.generator;
 
+import myplugin.generator.backend.AbstractControllerGenerator;
+import myplugin.generator.backend.AbstractDTOGenerator;
+import myplugin.generator.backend.AbstractServiceGenerator;
+import myplugin.generator.backend.ConcreteDTOGenerator;
+import myplugin.generator.backend.ControllerGenerator;
+import myplugin.generator.backend.ModelGenerator;
+import myplugin.generator.backend.RepositoryGenerator;
+import myplugin.generator.backend.ServiceGenerator;
 import myplugin.generator.config.AppPropertiesGenerator;
 import myplugin.generator.config.PomXMLGenerator;
 import myplugin.generator.frontend.ContainerGenerator;

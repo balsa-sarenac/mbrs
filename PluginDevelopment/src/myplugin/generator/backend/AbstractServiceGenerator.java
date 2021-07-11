@@ -1,7 +1,8 @@
-package myplugin.generator;
+package myplugin.generator.backend;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +10,17 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
+import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMPeristentProperty;
+import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.options.GeneratorOptions;
 
-public class AbstractControllerGenerator extends BasicGenerator {
+public class AbstractServiceGenerator extends BasicGenerator {
 
-	public AbstractControllerGenerator(GeneratorOptions generatorOptions) {
+	public AbstractServiceGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -37,6 +42,20 @@ public class AbstractControllerGenerator extends BasicGenerator {
 				if (out != null) {
 					context.clear();
 					context.put("name", cl.getName());
+					List<FMProperty> props = new ArrayList<FMProperty>();
+					List<FMProperty> peristantProps = new ArrayList<FMProperty>();
+					List<FMProperty> referencedProps = new ArrayList<FMProperty>();
+					for (FMProperty p : cl.getProperties()) {
+						if (p instanceof FMPeristentProperty)
+							peristantProps.add(p);
+						else if (p instanceof FMReferencedProperty)
+							referencedProps.add(p);
+						else
+							props.add(p);
+					}
+					context.put("properties", props);
+					context.put("persistentProps", peristantProps);
+					context.put("referencedProps", referencedProps);
 					getTemplate().process(context, out);
 					out.flush();
 				}
