@@ -38,6 +38,8 @@ public class GeneratorFactory {
 			return new TableViewGenerator(options);
 		} else if (name.equals(FormGenerator.class.getSimpleName())) {
 			return new FormGenerator(options);
+		} else if (name.equals(FormGenerator.class.getSimpleName())) {
+			return new FormGenerator(options);
 		} else {
 			return null;
 		}
