@@ -1,5 +1,6 @@
 package myplugin.generator;
 
+import myplugin.generator.config.AppPropertiesGenerator;
 import myplugin.generator.frontend.ContainerGenerator;
 import myplugin.generator.frontend.FormGenerator;
 import myplugin.generator.frontend.IndexHTMLGenerator;
@@ -16,6 +17,8 @@ public class GeneratorFactory {
 	public static BasicGenerator getGenerator(String name, GeneratorOptions options) {
 		if (name.equals(ModelGenerator.class.getSimpleName())) {
 			return new ModelGenerator(options);
+		} else if (name.equals(AppPropertiesGenerator.class.getSimpleName())) {
+			return new AppPropertiesGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {
