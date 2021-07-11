@@ -49,4 +49,13 @@ public abstract class Abstract${name}Service {
 
         return new ResponseEntity<>(${name?uncap_first}DTO, HttpStatus.OK);
     }
+    
+    public ResponseEntity<?> delete(Long id) {
+        try {
+            repository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

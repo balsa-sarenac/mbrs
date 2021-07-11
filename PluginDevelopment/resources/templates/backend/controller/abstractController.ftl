@@ -23,4 +23,7 @@ public abstract class Abstract${name}Controller {
     public ResponseEntity<${name}DTO> getById(@PathVariable Long id) {
         return service.getById(id);
     }
+    
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) { return service.delete(id); }
 }
