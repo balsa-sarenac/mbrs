@@ -207,9 +207,7 @@ public class ModelAnalyzer {
 			throw new AnalyzeException("Classes must have names!");
 
 		FMClass fmClass = new FMClass(cl.getName(), packageName, cl.getVisibility().toString());
-		Iterator<Property> it = ModelHelper.attributes(cl);
-		while (it.hasNext()) {
-			Property p = it.next();
+		for (Property p : cl.getAttribute()){
 			FMProperty prop = PropertyAnalyzer.createProperty(p);
 			fmClass.addProperty(prop);
 		}
