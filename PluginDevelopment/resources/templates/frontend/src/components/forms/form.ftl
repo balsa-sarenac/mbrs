@@ -27,7 +27,7 @@ export const ${name}Form = (props) => {
 									<Select name="${component.idName}">
 									{props.${component.type.name?lower_case}.map((value, index) => {
 										return (
-											<Select.Option key={value} value={value}>{value}</Select.Option>
+											<Select.Option key={value.id} value={value.id}>{value.id}</Select.Option>
 										)
 									})}
 									</Select>
@@ -42,7 +42,7 @@ export const ${name}Form = (props) => {
 									<Checkbox.Group name="${component.idName}">
 									{props.${component.type.name?lower_case}.map((value, index) => {
 										return (
-											<Checkbox key={value} value={value}>{value}</Checkbox>
+											<Checkbox key={value.id} value={value.id}>{value.id}</Checkbox>
 										)
 									})}
 									</Checkbox.Group>
@@ -62,7 +62,7 @@ export const ${name}Form = (props) => {
 									<Radio.Group name="${component.idName}">
 									{props.${component.type.name?lower_case}.map((value, index) => {
 										return (
-									    	  <Radio key={value} value={value}>{value}</Radio>
+									    	  <Radio key={value.id} value={value.id}>{value.id}</Radio>
 										)
 									})}
 									</Radio.Group>
