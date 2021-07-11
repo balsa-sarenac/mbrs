@@ -60,15 +60,80 @@
 	</typeMappings>
 	<generatorOptions>
 		<entry>
+			<string>AppPropertiesGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/resources</outputPath>
+				<templateName>appProperties</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>application.properties</outputFileName>
+				<overwrite>false</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>PomXMLGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo</outputPath>
+				<templateName>pom</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>pom.xml</outputFileName>
+				<overwrite>false</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
 			<string>ModelGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/model</outputPath>
 				<templateName>model</templateName>
-				<templateDir>templates</templateDir>
+				<templateDir>templates/backend</templateDir>
 				<outputFileName>{0}.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
 			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>RepositoryGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/repository/</outputPath>
+				<templateName>repository</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>{0}Repository.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>AbstractDTOGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/dto/abs</outputPath>
+				<templateName>abstractDTO</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>Abstract{0}DTO.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ConcreteDTOGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/dto</outputPath>
+				<templateName>concreteDTO</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>{0}DTO.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+    </entry>
+    <entry>
+			<string>RepositoryGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/repository/</outputPath>
+				<templateName>repository</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>{0}Repository.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
 		</entry>
 		<entry>
 			<string>IndexJSGenerator</string>
@@ -147,6 +212,62 @@
 			<destinationFolder>{path}/frontend</destinationFolder>
 			<destinationFilename>.gitignore</destinationFilename>
 			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>README.md</sourceFilename>
+			<destinationFolder>{path}/demo</destinationFolder>
+			<destinationFilename>README.md</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>backend.gitignore</sourceFilename>
+			<destinationFolder>{path}/demo</destinationFolder>
+			<destinationFilename>.gitignore</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>mvnw</sourceFilename>
+			<destinationFolder>{path}/demo</destinationFolder>
+			<destinationFilename>mvnw</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>mvnw.cmd</sourceFilename>
+			<destinationFolder>{path}/demo</destinationFolder>
+			<destinationFilename>mvnw.cmd</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>DemoApplication.java</sourceFilename>
+			<destinationFolder>{path}/demo/src/main/java/demo</destinationFolder>
+			<destinationFilename>DemoApplication.java</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>maven-wrapper.jar</sourceFilename>
+			<destinationFolder>{path}/demo/.mvn/wrapper</destinationFolder>
+			<destinationFilename>mvn-wrapper.jar</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>maven-wrapper.properties</sourceFilename>
+			<destinationFolder>{path}/demo/.mvn/wrapper</destinationFolder>
+			<destinationFilename>mvn-wrapper.properties</destinationFilename>
+			<overwrite>false</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend</sourceFolder>
+			<sourceFilename>MavenWrapperDownloader.java</sourceFilename>
+			<destinationFolder>{path}/demo/.mvn/wrapper</destinationFolder>
+			<destinationFilename>MavenWrapperDownloader.java</destinationFilename>
+			<overwrite>false</overwrite>
 		</myplugin.generator.options.StaticResource>
 	</staticResources>
 </myplugin.generator.options.SerializableProjectOptions>

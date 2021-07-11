@@ -30,6 +30,7 @@ import myplugin.generator.fmmodel.FMStandardForm;
 import myplugin.generator.fmmodel.FMTableView;
 import myplugin.generator.fmmodel.FMType;
 import myplugin.generator.fmmodel.FMUIComponent;
+import myplugin.generator.options.TypeMapping;
 
 /**
  * Model Analyzer takes necessary metadata from the MagicDraw model and puts it
@@ -144,11 +145,19 @@ public class ModelAnalyzer {
 				Property p = it.next();
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "Editable");
 				if (propS != null) {
+					FMUIComponent com = new FMUIComponent();
+					String typeName = p.getType().getName();
+					String typePackage = "";
+					Boolean baseType = false;
+					TypeMapping typeMapping = PropertyAnalyzer.getDataType(typeName);
+					if (typeMapping == null) {
+						FMType type = new FMType(typeName, typePackage, baseType);
+						com.setType(type);
+					}
 					String label = (String) getTagValue(p, propS, "label");
 					Boolean visible = (Boolean) getTagValue(p, propS, "visible");
 					EnumerationLiteralImpl enumtemp = (EnumerationLiteralImpl) getTagValue(p, propS, "componentType");
 					ComponentTypeEnum cte = ComponentTypeEnum.valueOf(enumtemp.getName());
-					FMUIComponent com = new FMUIComponent();
 					com.setIdName(p.getName());
 					com.setLabel(label);
 					com.setEditable(true);

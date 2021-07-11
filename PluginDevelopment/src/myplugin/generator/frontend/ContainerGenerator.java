@@ -42,6 +42,7 @@ public class ContainerGenerator extends BasicGenerator {
 			Boolean isEdit = false;
 			Boolean isDelete = false;
 			List<String> elements = null;
+			List<String> referencedTypes = null;
 			if (component.getForm() != null) {
 				formImport = component.getForm().getName();
 				if (component.getForm() instanceof FMStandardForm) {
@@ -50,8 +51,12 @@ public class ContainerGenerator extends BasicGenerator {
 					isEdit = sf.isUpdate();
 					isDelete = sf.isDelete();
 					elements = new ArrayList<String>();
+					referencedTypes = new ArrayList<String>();
 					for (FMUIComponent comp : sf.getComponents()) {
 						elements.add(comp.getIdName());
+						if(comp.getType()!=null) {
+							referencedTypes.add(comp.getType().getName());
+						}
 					}
 				}
 			}
@@ -75,6 +80,7 @@ public class ContainerGenerator extends BasicGenerator {
 					context.put("isEdit", isEdit);
 					context.put("isDelete", isDelete);
 					context.put("elements", elements);
+					context.put("referencedTypes", referencedTypes);
 					getTemplate().process(context, out);
 					out.flush();
 				}

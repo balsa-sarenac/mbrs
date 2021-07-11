@@ -1,5 +1,7 @@
 package myplugin.generator;
 
+import myplugin.generator.config.AppPropertiesGenerator;
+import myplugin.generator.config.PomXMLGenerator;
 import myplugin.generator.frontend.ContainerGenerator;
 import myplugin.generator.frontend.FormGenerator;
 import myplugin.generator.frontend.IndexHTMLGenerator;
@@ -16,6 +18,16 @@ public class GeneratorFactory {
 	public static BasicGenerator getGenerator(String name, GeneratorOptions options) {
 		if (name.equals(ModelGenerator.class.getSimpleName())) {
 			return new ModelGenerator(options);
+		} else if (name.equals(AppPropertiesGenerator.class.getSimpleName())) {
+			return new AppPropertiesGenerator(options);
+		} else if (name.equals(PomXMLGenerator.class.getSimpleName())) {
+			return new PomXMLGenerator(options);
+		} else if (name.equals(AbstractDTOGenerator.class.getSimpleName())) {
+			return new AbstractDTOGenerator(options);
+		} else if (name.equals(ConcreteDTOGenerator.class.getSimpleName())) {
+			return new ConcreteDTOGenerator(options);
+		} else if (name.equals(RepositoryGenerator.class.getSimpleName())) {
+			return new RepositoryGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {
