@@ -26,6 +26,8 @@ public class GeneratorFactory {
 			return new AbstractDTOGenerator(options);
 		} else if (name.equals(ConcreteDTOGenerator.class.getSimpleName())) {
 			return new ConcreteDTOGenerator(options);
+		} else if (name.equals(RepositoryGenerator.class.getSimpleName())) {
+			return new RepositoryGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {

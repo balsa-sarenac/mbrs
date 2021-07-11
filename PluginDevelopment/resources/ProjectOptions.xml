@@ -93,6 +93,17 @@
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 		<entry>
+			<string>RepositoryGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/repository/</outputPath>
+				<templateName>repository</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>{0}Repository.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
 			<string>AbstractDTOGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/dto/abs</outputPath>
@@ -113,6 +124,16 @@
 				<overwrite>true</overwrite>
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
+    </entry>
+    <entry>
+			<string>RepositoryGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/repository/</outputPath>
+				<templateName>repository</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>{0}Repository.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
 		</entry>
 		<entry>
 			<string>IndexJSGenerator</string>
