@@ -66,7 +66,18 @@
 				<templateName>appProperties</templateName>
 				<templateDir>templates/backend</templateDir>
 				<outputFileName>application.properties</outputFileName>
-				<overwrite>true</overwrite>
+				<overwrite>false</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>PomXMLGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo</outputPath>
+				<templateName>pom</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>pom.xml</outputFileName>
+				<overwrite>false</overwrite>
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
@@ -158,13 +169,6 @@
 			<destinationFolder>{path}/frontend</destinationFolder>
 			<destinationFilename>.gitignore</destinationFilename>
 			<overwrite>true</overwrite>
-		</myplugin.generator.options.StaticResource>
-		<myplugin.generator.options.StaticResource>
-			<sourceFolder>static/backend</sourceFolder>
-			<sourceFilename>pom.xml</sourceFilename>
-			<destinationFolder>{path}/demo</destinationFolder>
-			<destinationFilename>pom.xml</destinationFilename>
-			<overwrite>false</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend</sourceFolder>
