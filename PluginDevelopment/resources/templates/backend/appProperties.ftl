@@ -8,5 +8,5 @@ spring.jpa.hibernate.ddl-auto = create-drop
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQL95Dialect
 
 server.port=${appPort}
-server.servlet.context-path=${appContextPath}
+server.servlet.context-path=/${appContextPath}
 spring.application.name=${appName}
