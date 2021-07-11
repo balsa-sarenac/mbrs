@@ -104,6 +104,28 @@
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 		<entry>
+			<string>AbstractServiceGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/service/abs/</outputPath>
+				<templateName>abstractService</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>Abstract{0}Service.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ServiceGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/service/</outputPath>
+				<templateName>service</templateName>
+				<templateDir>templates/backend</templateDir>
+				<outputFileName>{0}Service.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
 			<string>AbstractDTOGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/dto/abs</outputPath>

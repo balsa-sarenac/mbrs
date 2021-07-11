@@ -28,6 +28,10 @@ public class GeneratorFactory {
 			return new ConcreteDTOGenerator(options);
 		} else if (name.equals(RepositoryGenerator.class.getSimpleName())) {
 			return new RepositoryGenerator(options);
+		} else if (name.equals(AbstractServiceGenerator.class.getSimpleName())) {
+			return new AbstractServiceGenerator(options);
+		} else if (name.equals(ServiceGenerator.class.getSimpleName())) {
+			return new ServiceGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {
