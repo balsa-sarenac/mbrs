@@ -196,7 +196,7 @@ public class PropertyAnalyzer {
 		}
 	}
 
-	private static TypeMapping getDataType(String umlDataType) {
+	public static TypeMapping getDataType(String umlDataType) {
 		List<TypeMapping> typeMappings = ProjectOptions.getProjectOptions().getTypeMappings();
 		for (TypeMapping typeMapping : typeMappings) {
 			if (typeMapping.getuMLType().equals(umlDataType)) {
