@@ -16,6 +16,8 @@ public class GeneratorFactory {
 	public static BasicGenerator getGenerator(String name, GeneratorOptions options) {
 		if (name.equals(ModelGenerator.class.getSimpleName())) {
 			return new ModelGenerator(options);
+		} else if (name.equals(RepositoryGenerator.class.getSimpleName())) {
+			return new RepositoryGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {
