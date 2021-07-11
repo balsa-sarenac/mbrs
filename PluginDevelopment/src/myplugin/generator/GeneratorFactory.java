@@ -32,6 +32,10 @@ public class GeneratorFactory {
 			return new AbstractServiceGenerator(options);
 		} else if (name.equals(ServiceGenerator.class.getSimpleName())) {
 			return new ServiceGenerator(options);
+		} else if (name.equals(AbstractControllerGenerator.class.getSimpleName())) {
+			return new AbstractControllerGenerator(options);
+		} else if (name.equals(ControllerGenerator.class.getSimpleName())) {
+			return new ControllerGenerator(options);
 		} else if (name.equals(IndexJSGenerator.class.getSimpleName())) {
 			return new IndexJSGenerator(options);
 		} else if (name.equals(IndexHTMLGenerator.class.getSimpleName())) {

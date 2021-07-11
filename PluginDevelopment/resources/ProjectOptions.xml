@@ -97,7 +97,7 @@
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/repository/</outputPath>
 				<templateName>repository</templateName>
-				<templateDir>templates/backend</templateDir>
+				<templateDir>templates/backend/repository</templateDir>
 				<outputFileName>{0}Repository.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
@@ -108,7 +108,7 @@
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/service/abs/</outputPath>
 				<templateName>abstractService</templateName>
-				<templateDir>templates/backend</templateDir>
+				<templateDir>templates/backend/service</templateDir>
 				<outputFileName>Abstract{0}Service.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
@@ -119,8 +119,30 @@
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/service/</outputPath>
 				<templateName>service</templateName>
-				<templateDir>templates/backend</templateDir>
+				<templateDir>templates/backend/service</templateDir>
 				<outputFileName>{0}Service.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>AbstractControllerGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/controller/abs/</outputPath>
+				<templateName>abstractController</templateName>
+				<templateDir>templates/backend/controller</templateDir>
+				<outputFileName>Abstract{0}Controller.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage>generated</filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
+			<string>ControllerGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/controller/</outputPath>
+				<templateName>controller</templateName>
+				<templateDir>templates/backend/controller</templateDir>
+				<outputFileName>{0}Controller.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage>generated</filePackage>
 			</myplugin.generator.options.GeneratorOptions>
@@ -130,7 +152,7 @@
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/dto/abs</outputPath>
 				<templateName>abstractDTO</templateName>
-				<templateDir>templates/backend</templateDir>
+				<templateDir>templates/backend/dto</templateDir>
 				<outputFileName>Abstract{0}DTO.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage></filePackage>
@@ -141,7 +163,7 @@
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/dto</outputPath>
 				<templateName>concreteDTO</templateName>
-				<templateDir>templates/backend</templateDir>
+				<templateDir>templates/backend/dto</templateDir>
 				<outputFileName>{0}DTO.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage></filePackage>
