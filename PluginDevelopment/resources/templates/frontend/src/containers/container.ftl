@@ -18,6 +18,9 @@ export const ${name}Container = () => {
 	</#if>
 	<#if formImport??>
 	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
+	<#list referencedTypes as refType>
+	const [${refType?lower_case}, set${refType}] = useState([]);
+	</#list>
 	</#if>
 	<#if tableImport??>
 	const [data, setData] = useState([]);
@@ -44,6 +47,17 @@ export const ${name}Container = () => {
 		  .catch(function (error) {
 			console.log(error);
 		  });
+		  <#if formImport??>
+		  <#list referencedTypes as refType>
+		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${refType?lower_case}')
+		    .then(function (response) {
+			  set${refType}(response.data);
+		    })
+			.catch(function (error) {
+			  console.log(error);
+			});
+		  </#list>
+		  </#if>
 	  }, []);
 	  
 	const rowSelection = {
@@ -149,7 +163,7 @@ export const ${name}Container = () => {
 	          footer={null}
 	          onCancel={handleCancel}
 	         >
-	          <${formImport} <#if formImport??>initialValues={initialValues}</#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
+	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}={${refType?lower_case}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
 	        </Modal>
 			</#if>
 			</#if>
