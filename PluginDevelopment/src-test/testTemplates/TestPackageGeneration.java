@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import myplugin.generator.ModelGenerator;
+import myplugin.generator.backend.ModelGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMMethod;
 import myplugin.generator.fmmodel.FMModel;

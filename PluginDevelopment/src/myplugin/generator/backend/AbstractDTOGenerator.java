@@ -1,4 +1,4 @@
-package myplugin.generator;
+package myplugin.generator.backend;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
+import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMPeristentProperty;

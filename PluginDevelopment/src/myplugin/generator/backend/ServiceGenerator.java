@@ -1,4 +1,4 @@
-package myplugin.generator;
+package myplugin.generator.backend;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -9,13 +9,14 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
+import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 
-public class ConcreteDTOGenerator extends BasicGenerator {
+public class ServiceGenerator extends BasicGenerator {
 
-	public ConcreteDTOGenerator(GeneratorOptions generatorOptions) {
+	public ServiceGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -36,8 +37,6 @@ public class ConcreteDTOGenerator extends BasicGenerator {
 				out = getWriter(cl.getName(), cl.getTypePackage());
 				if (out != null) {
 					context.clear();
-
-					context.put("package", cl.getTypePackage());
 					context.put("name", cl.getName());
 					getTemplate().process(context, out);
 					out.flush();
