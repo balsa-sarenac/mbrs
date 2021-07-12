@@ -3,22 +3,19 @@ package myplugin.generator.backend;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
 import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMClass;
-import myplugin.generator.fmmodel.FMReferencedProperty;
-import myplugin.generator.fmmodel.FMType;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMPeristentProperty;
 import myplugin.generator.fmmodel.FMProperty;
+import myplugin.generator.fmmodel.FMReferencedProperty;
 import myplugin.generator.options.GeneratorOptions;
 
 /**
