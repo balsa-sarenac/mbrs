@@ -1,5 +1,5 @@
 spring.datasource.driverClassName=org.postgresql.Driver
-spring.datasource.url= ${dbUrl}
+spring.datasource.url=${dbUrl}
 spring.sql.init.mode=always
 spring.sql.init.platform=${dbType}
 spring.datasource.username=${dbUsername}
