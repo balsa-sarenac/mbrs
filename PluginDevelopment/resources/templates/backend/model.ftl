@@ -48,25 +48,27 @@ ${class.visibility} class ${class.name} {
 	@SequenceGenerator(name = "${name?lower_case}_generator", sequenceName = "${name?lower_case}_seq")		
 </#if>
 	${prop.visibility} ${prop.type.name} ${prop.name};
+	
 </#list>
-
 <#list referencedProps as property>
 	<#if property.upper == -1 && property.oppositeEnd.upper == -1>@ManyToMany<#elseif property.upper == -1 && property.oppositeEnd.upper == 1>@OneToMany<#elseif property.upper == 1 && property.oppositeEnd.upper == -1>@ManyToOne<#else>@OneToOne</#if><#rt>
-	<#lt><#if (property.fetchType)?? || (property.cascadeType)?? || (property.mappedBy)??>(<#rt>
+	<#if (property.fetchType)?? || (property.cascadeType)?? || (property.mappedBy)??>(<#t>
 		<#if (property.cascadeType)??>
-			<#lt>cascade = CascadeType.${property.cascadeType}<#rt>
+			cascade = CascadeType.${property.cascadeType}<#t>
 		</#if>
 		<#if (property.fetchType)??>
-			<#lt><#if (property.cascadeType)??>, </#if>fetch = FetchType.${property.fetchType}<#rt>
+			<#if (property.cascadeType)??>, </#if>fetch = FetchType.${property.fetchType}<#t>
 		</#if>
-		<#lt>)</#if>
+		)</#if><#t>
 	<#if (property.joinTable)??>@JoinTable</#if>
 	<#if property.upper == 1>
-	<#if (property.columnName)??>@JoinColumn(referencedColumnName="${property.columnName}")</#if>
+	<#if (property.columnName)??>@JoinColumn(referencedColumnName="${property.oppositeEnd.name}")</#if>
 	${property.visibility} ${property.type.name} ${property.name};
+	
 	<#else>
 	${property.visibility} Set<${property.type.name}> ${property.name};
-	</#if>${'\n'}
+	
+	</#if>
 	</#list>	
 
 }
