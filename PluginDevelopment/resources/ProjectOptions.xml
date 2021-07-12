@@ -159,12 +159,34 @@
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 		<entry>
+			<string>AbstractDTODetailsGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/dto/abs</outputPath>
+				<templateName>abstractDTODetails</templateName>
+				<templateDir>templates/backend/dto</templateDir>
+				<outputFileName>Abstract{0}DetailsDTO.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
 			<string>ConcreteDTOGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/dto</outputPath>
 				<templateName>concreteDTO</templateName>
 				<templateDir>templates/backend/dto</templateDir>
 				<outputFileName>{0}DTO.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+    	</entry>
+		<entry>
+			<string>ConcreteDTODetailsGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/dto</outputPath>
+				<templateName>concreteDTODetails</templateName>
+				<templateDir>templates/backend/dto</templateDir>
+				<outputFileName>{0}DetailsDTO.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
