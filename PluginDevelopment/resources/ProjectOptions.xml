@@ -339,5 +339,12 @@
 			<destinationFilename>ExceptionResolver.java</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend/utils</sourceFolder>
+			<sourceFilename>ModelMapperBean.java</sourceFilename>
+			<destinationFolder>{path}/demo/src/main/java/demo/utils</destinationFolder>
+			<destinationFilename>ModelMapperBean.java</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
 	</staticResources>
 </myplugin.generator.options.SerializableProjectOptions>
