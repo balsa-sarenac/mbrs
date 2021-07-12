@@ -1,4 +1,4 @@
-package myplugin.generator;
+package myplugin.generator.backend;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -9,18 +9,17 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
+import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
-import myplugin.generator.fmmodel.FMPeristentProperty;
-import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.options.GeneratorOptions;
 
-public class RepositoryGenerator extends BasicGenerator {
+public class ServiceGenerator extends BasicGenerator {
 
-	public RepositoryGenerator(GeneratorOptions generatorOptions) {
+	public ServiceGenerator(GeneratorOptions generatorOptions) {
 		super(generatorOptions);
 	}
-	
+
 	public void generate() {
 
 		try {
@@ -39,13 +38,6 @@ public class RepositoryGenerator extends BasicGenerator {
 				if (out != null) {
 					context.clear();
 					context.put("name", cl.getName());
-					for (FMProperty p : cl.getProperties()) {
-						if (p instanceof FMPeristentProperty)
-							if (((FMPeristentProperty) p).getIsKey()) {
-								context.put("keyType", p.getType().getName());
-								break;
-							}
-					}
 					getTemplate().process(context, out);
 					out.flush();
 				}
@@ -56,5 +48,4 @@ public class RepositoryGenerator extends BasicGenerator {
 			}
 		}
 	}
-
 }
