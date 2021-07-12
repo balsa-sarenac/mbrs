@@ -283,21 +283,21 @@
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
-			<sourceFolder>static/backend</sourceFolder>
+			<sourceFolder>static/backend/mvn</sourceFolder>
 			<sourceFilename>maven-wrapper.jar</sourceFilename>
 			<destinationFolder>{path}/demo/.mvn/wrapper</destinationFolder>
 			<destinationFilename>mvn-wrapper.jar</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
-			<sourceFolder>static/backend</sourceFolder>
+			<sourceFolder>static/backend/mvn</sourceFolder>
 			<sourceFilename>maven-wrapper.properties</sourceFilename>
 			<destinationFolder>{path}/demo/.mvn/wrapper</destinationFolder>
 			<destinationFilename>mvn-wrapper.properties</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
-			<sourceFolder>static/backend</sourceFolder>
+			<sourceFolder>static/backend/mvn</sourceFolder>
 			<sourceFilename>MavenWrapperDownloader.java</sourceFilename>
 			<destinationFolder>{path}/demo/.mvn/wrapper</destinationFolder>
 			<destinationFilename>MavenWrapperDownloader.java</destinationFilename>
