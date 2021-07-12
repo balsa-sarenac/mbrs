@@ -237,12 +237,13 @@ public class ModelAnalyzer {
 			fmClass.setTbName((String) getTagValue(cl, entityStereotype, "tableName"));
 		}
 
-		Iterator<Operation> it_op = ModelHelper.operations(cl);
-		while (it_op.hasNext()) {
-			Operation op = it_op.next();
-			// FMMethod method = getMethodData(op, cl);
-			// fmClass.addMethod(method);
-		}
+		// if we want to support operations
+//		Iterator<Operation> it_op = ModelHelper.operations(cl);
+//		while (it_op.hasNext()) {
+//			Operation op = it_op.next();
+//			 FMMethod method = getMethodData(op, cl);
+//			 fmClass.addMethod(method);
+//		}
 
 		/**
 		 * @ToDo: Add import declarations etc.
