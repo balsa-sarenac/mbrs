@@ -62,7 +62,7 @@ ${class.visibility} class ${class.name} {
 		<#lt>)</#if>
 	<#if (property.joinTable)??>@JoinTable</#if>
 	<#if property.upper == 1>
-	<#if (property.columnName)??>@JoinColumn(columnName="${property.columnName})</#if>
+	<#if (property.columnName)??>@JoinColumn(referencedColumnName="${property.columnName}")</#if>
 	${property.visibility} ${property.type.name} ${property.name};
 	<#else>
 	${property.visibility} Set<${property.type.name}> ${property.name};

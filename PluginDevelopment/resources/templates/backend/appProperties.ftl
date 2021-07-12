@@ -1,11 +1,11 @@
-spring.datasource.driverClassName=org.postgresql.Driver
+spring.datasource.driverClassName=${dbDriverClassName}
 spring.datasource.url=${dbUrl}
-spring.sql.init.mode=always
+spring.sql.init.mode=${dbInitMode}
 spring.sql.init.platform=${dbType}
 spring.datasource.username=${dbUsername}
 spring.datasource.password=${dbPassword}
-spring.jpa.hibernate.ddl-auto = create-drop
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQL95Dialect
+spring.jpa.hibernate.ddl-auto=${dbDDLAuto}
+spring.jpa.properties.hibernate.dialect=${dbDialect}
 
 server.port=${appPort}
 server.servlet.context-path=/${appContextPath}

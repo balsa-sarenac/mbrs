@@ -43,6 +43,10 @@ public class AppPropertiesGenerator extends BasicGenerator {
 				context.put("appPort", application.getAppPort());
 				context.put("appName", application.getAppName());
 				context.put("appContextPath", application.getAppContextPath());
+				context.put("dbDriverClassName", application.getDbDriverClassName());
+				context.put("dbInitMode", application.getDbInitMode());
+				context.put("dbDDLAuto", application.getDbDDLAuto());
+				context.put("dbDialect", application.getDbDialect());
 				getTemplate().process(context, out);
 				out.flush();
 			}

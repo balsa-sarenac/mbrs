@@ -11,13 +11,19 @@ public class FMApplication {
 	private String appName;
 	private String appDescription;
 	private String appContextPath;
+	private String dbDriverClassName;
+	private String dbInitMode;
+	private String dbDDLAuto;
+	private String dbDialect;
 
 	public FMApplication() {
 
 	}
 
+
 	public FMApplication(String dbUrl, String dbUsername, String dbPassword, String dbType, String appHost,
-			String appPort, String appName, String appDescription, String appContextPath) {
+			String appPort, String appName, String appDescription, String appContextPath, String dbDriverClassName,
+			String dbInitMode, String dbDDLAuto, String dbDialect) {
 		super();
 		this.dbUrl = dbUrl;
 		this.dbUsername = dbUsername;
@@ -28,7 +34,12 @@ public class FMApplication {
 		this.appName = appName;
 		this.appDescription = appDescription;
 		this.appContextPath = appContextPath;
+		this.dbDriverClassName = dbDriverClassName;
+		this.dbInitMode = dbInitMode;
+		this.dbDDLAuto = dbDDLAuto;
+		this.dbDialect = dbDialect;
 	}
+
 
 	public String getDbUrl() {
 		return dbUrl;
@@ -100,6 +111,38 @@ public class FMApplication {
 
 	public void setAppContextPath(String appContextPath) {
 		this.appContextPath = appContextPath;
+	}
+
+	public String getDbDriverClassName() {
+		return dbDriverClassName;
+	}
+
+	public void setDbDriverClassName(String dbDriverClassName) {
+		this.dbDriverClassName = dbDriverClassName;
+	}
+
+	public String getDbInitMode() {
+		return dbInitMode;
+	}
+
+	public void setDbInitMode(String dbInitMode) {
+		this.dbInitMode = dbInitMode;
+	}
+
+	public String getDbDDLAuto() {
+		return dbDDLAuto;
+	}
+
+	public void setDbDDLAuto(String dbDDLAuto) {
+		this.dbDDLAuto = dbDDLAuto;
+	}
+
+	public String getDbDialect() {
+		return dbDialect;
+	}
+
+	public void setDbDialect(String dbDialect) {
+		this.dbDialect = dbDialect;
 	}
 
 }
