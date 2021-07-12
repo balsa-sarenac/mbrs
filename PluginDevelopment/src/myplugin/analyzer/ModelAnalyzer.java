@@ -186,6 +186,10 @@ public class ModelAnalyzer {
 			String appName = (String) getTagValue(pack, packs, "appName");
 			String appDescription = (String) getTagValue(pack, packs, "appDescription");
 			String appContextPath = (String) getTagValue(pack, packs, "appContextPath");
+			String dbDriverClassName = (String) getTagValue(pack, packs, "dbDriverClassName");
+			String dbInitMode = (String) getTagValue(pack, packs, "dbInitMode");
+			String dbDDLAuto = (String) getTagValue(pack, packs, "dbDDLAuto");
+			String dbDialect = (String) getTagValue(pack, packs, "dbDialect");
 			FMApplication application = new FMApplication();
 			application.setDbUrl(dbUrl);
 			application.setDbPassword(dbPassword);
@@ -196,6 +200,10 @@ public class ModelAnalyzer {
 			application.setAppName(appName);
 			application.setAppDescription(appDescription);
 			application.setAppContextPath(appContextPath);
+			application.setDbDriverClassName(dbDriverClassName);
+			application.setDbInitMode(dbInitMode);
+			application.setDbDDLAuto(dbDDLAuto);
+			application.setDbDialect(dbDialect);
 			return application;
 		} else {
 			throw new AnalyzeException("Package must have applied PackageConfiguration stereotype!");
@@ -216,9 +224,7 @@ public class ModelAnalyzer {
 			throw new AnalyzeException("Classes must have names!");
 
 		FMClass fmClass = new FMClass(cl.getName(), packageName, cl.getVisibility().toString());
-		Iterator<Property> it = ModelHelper.attributes(cl);
-		while (it.hasNext()) {
-			Property p = it.next();
+		for (Property p : cl.getAttribute()) {
 			FMProperty prop = PropertyAnalyzer.createProperty(p);
 			fmClass.addProperty(prop);
 		}
@@ -243,10 +249,10 @@ public class ModelAnalyzer {
 		 */
 		return fmClass;
 	}
-	
-	public Collection<FMType> uniqueTypesUsed(List<FMProperty> properties){
+
+	public Collection<FMType> uniqueTypesUsed(List<FMProperty> properties) {
 		Map<String, FMType> uniqueTypes = new HashMap<String, FMType>();
-		for(FMProperty property: properties) {
+		for (FMProperty property : properties) {
 			FMType type = property.getType();
 			uniqueTypes.put(type.getName(), type);
 		}

@@ -159,38 +159,28 @@ public class PropertyAnalyzer {
 		if (values.size() > 0) {
 			switch (tagName) {			
 			case "columnName":
-				if (values.get(0) instanceof String) {
-					String columnName= (String) values.get(0);
-					linkedProperty.setColumnName(columnName);
-				}
+				String columnName= (String) values.get(0);
+				linkedProperty.setColumnName(columnName);
 				break;
 			case "joinTable":
-				if (values.get(0) instanceof String) {
-					String joinTable= (String) values.get(0);
-					linkedProperty.setJoinTable(joinTable);
-				}
+				String joinTable= (String) values.get(0);
+				linkedProperty.setJoinTable(joinTable);
 				break;
 			case "mappedBy":
-				if (values.get(0) instanceof String) {
-					String mappedBy= (String) values.get(0);
-					linkedProperty.setMappedBy(mappedBy);
-				}
+				String mappedBy= (String) values.get(0);
+				linkedProperty.setMappedBy(mappedBy);
 				break;
 			case "fetch":
-				if (values.get(0) instanceof EnumerationLiteral) {
-					EnumerationLiteral enumLiteral = (EnumerationLiteral) values.get(0);
-					String enumString = enumLiteral.getName();
-					FetchType fetchType = FetchType.valueOf(enumString);
-					linkedProperty.setFetchType(fetchType);
-				}
+				EnumerationLiteral enumLiteral = (EnumerationLiteral) values.get(0);
+				String enumString = enumLiteral.getName();
+				FetchType fetchType = FetchType.valueOf(enumString);
+				linkedProperty.setFetchType(fetchType);
 				break;
 			case "cascade":
-				if (values.get(0) instanceof EnumerationLiteral) {
-					EnumerationLiteral enumLiteral = (EnumerationLiteral) values.get(0);
-					String enumString = enumLiteral.getName();
-					CascadeType cascadeType = CascadeType.valueOf(enumString);
-					linkedProperty.setCascadeType(cascadeType);
-				}
+				enumLiteral = (EnumerationLiteral) values.get(0);
+				enumString = enumLiteral.getName();
+				CascadeType cascadeType = CascadeType.valueOf(enumString);
+				linkedProperty.setCascadeType(cascadeType);
 				break;
 			}
 		}
