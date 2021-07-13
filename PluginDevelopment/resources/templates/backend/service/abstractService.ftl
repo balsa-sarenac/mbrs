@@ -1,9 +1,10 @@
 package demo.generated.service.abs;
 
-import demo.generated.dto.${name}DTO;
+import demo.generated.dto.${name}DetailsDTO;
 import demo.generated.exception.NotFoundException;
 import demo.generated.model.${name};
 import demo.generated.repository.${name}Repository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,37 +18,27 @@ public abstract class Abstract${name}Service {
 
     @Autowired
     private ${name}Repository repository;
+    @Autowired
+    private ModelMapper modelMapper;
 
-    public ResponseEntity<List<${name}DTO>> getAll(int page, int size) {
+    public ResponseEntity<List<${name}DetailsDTO>> getAll(int page, int size) {
         Page<${name}> ${name?uncap_first}s = repository.findAll(PageRequest.of(page, size));
 
-        List<${name}DTO> ${name?uncap_first}DTOS = new ArrayList<>();
+        List<${name}DetailsDTO> ${name?uncap_first}DetailsDTOS = new ArrayList<>();
         for (${name} ${name?uncap_first}: ${name?uncap_first}s.getContent()) {
-            ${name}DTO ${name?uncap_first}DTO = new ${name}DTO();
-            <#list properties as prop>
-            ${name?uncap_first}DTO.set${prop.name?cap_first}(${name?uncap_first}.get${prop.name?cap_first}());
-			</#list>
-			<#list persistentProps as prop>
-            ${name?uncap_first}DTO.set${prop.name?cap_first}(${name?uncap_first}.get${prop.name?cap_first}());
-			</#list>
-            ${name?uncap_first}DTOS.add(${name?uncap_first}DTO);
+            ${name}DetailsDTO ${name?uncap_first}DetailsDTO = modelMapper.map(${name?uncap_first}, ${name}DetailsDTO.class);
+            ${name?uncap_first}DetailsDTOS.add(${name?uncap_first}DetailsDTO);
         }
 
-        return new ResponseEntity<>(${name?uncap_first}DTOS, HttpStatus.OK);
+        return new ResponseEntity<>(${name?uncap_first}DetailsDTOS, HttpStatus.OK);
     }
 
-    public ResponseEntity<${name}DTO> getById(Long id) {
+    public ResponseEntity<${name}DetailsDTO> getById(Long id) {
         ${name} ${name?uncap_first} = repository.findById(id).orElseThrow(() -> new NotFoundException("${name} with given id doesn't exist."));
 
-        ${name}DTO ${name?uncap_first}DTO = new ${name}DTO();
-        <#list properties as prop>
-        ${name?uncap_first}DTO.set${prop.name?cap_first}(${name?uncap_first}.get${prop.name?cap_first}());
-		</#list>
-		<#list persistentProps as prop>
-        ${name?uncap_first}DTO.set${prop.name?cap_first}(${name?uncap_first}.get${prop.name?cap_first}());
-		</#list>
+        ${name}DetailsDTO ${name?uncap_first}DetailsDTO = modelMapper.map(${name?uncap_first}, ${name}DetailsDTO.class);
 
-        return new ResponseEntity<>(${name?uncap_first}DTO, HttpStatus.OK);
+        return new ResponseEntity<>(${name?uncap_first}DetailsDTO, HttpStatus.OK);
     }
     
     public ResponseEntity<?> delete(Long id) {
