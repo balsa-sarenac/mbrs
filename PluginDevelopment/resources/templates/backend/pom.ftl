@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>2.3.0</version>
+			<version>2.4.4</version>
 		</dependency>
 	</dependencies>
 	<build>

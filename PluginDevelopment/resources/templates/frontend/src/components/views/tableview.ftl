@@ -20,6 +20,7 @@ export const ${name} = (props) => {
           ...props.rowSelection
         }}
         columns={columns}
+        pagination={{hideOnSinglePage:true}}
         dataSource={props.data}
       />
     </div>

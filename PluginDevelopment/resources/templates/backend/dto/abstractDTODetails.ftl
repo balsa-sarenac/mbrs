@@ -4,6 +4,8 @@ import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 <#list importedPackages as import>
 <#if import.baseType && import.typePackage != "java.lang">
@@ -15,7 +17,9 @@ import demo.generated.dto.abs.${import.name};
 
 @Getter
 @Setter
-public abstract class Abstract${name}DetailsDTO extends Abstract${name}DTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Abstract${name}DetailsDTO extends Abstract${name}DTO {
 <#list referencedProps as property> 
 	<#if property.upper == 1 >
 	protected Abstract${property.type.name}DTO ${property.name};

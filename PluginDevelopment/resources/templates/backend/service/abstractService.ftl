@@ -21,6 +21,18 @@ public abstract class Abstract${name}Service {
     @Autowired
     private ModelMapper modelMapper;
 
+	public ResponseEntity<List<${name}DetailsDTO>> getAll() {
+        List<${name}> ${name?uncap_first}s = repository.findAll();
+
+        List<${name}DetailsDTO> ${name?uncap_first}DetailsDTOS = new ArrayList<>();
+        for (${name} ${name?uncap_first}: ${name?uncap_first}s) {
+            ${name}DetailsDTO ${name?uncap_first}DetailsDTO = modelMapper.map(${name?uncap_first}, ${name}DetailsDTO.class);
+            ${name?uncap_first}DetailsDTOS.add(${name?uncap_first}DetailsDTO);
+        }
+
+        return new ResponseEntity<>(${name?uncap_first}DetailsDTOS, HttpStatus.OK);
+    }
+    
     public ResponseEntity<List<${name}DetailsDTO>> getAll(int page, int size) {
         Page<${name}> ${name?uncap_first}s = repository.findAll(PageRequest.of(page, size));
 

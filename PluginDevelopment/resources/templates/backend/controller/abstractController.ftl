@@ -16,7 +16,11 @@ public abstract class Abstract${name}Controller {
 
     @GetMapping
     public ResponseEntity<List<${name}DetailsDTO>> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return service.getAll(page, size);
+    	if(page==0 && size==0){
+    		return service.getAll();
+    	}else{
+    		return service.getAll(page, size);
+    	}
     }
 
     @GetMapping(path = "/{id}")

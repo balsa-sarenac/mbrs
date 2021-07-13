@@ -25,12 +25,13 @@ export const ${name}Container = () => {
 	<#if tableImport??>
 	const [data, setData] = useState([]);
 	const [id, setId] = useState(null);
-	
+	const [pagins, setPagins] = useState({currentPage:1, totalPages:0, totalItems:0, pageSize:0});
+
 	const handleGetData = () => {
-		axios.get('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}')
+		axios.get('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
 		  .then(function (response) {
 		  	let temp = response.data;
-		  	temp.forEach(t => t["key"] = t.id);
+		  	temp.map((t,indx) => t["key"] = indx);
 			setData(temp);
 		  })
 		  .catch(function (error) {
@@ -38,10 +39,10 @@ export const ${name}Container = () => {
 		  });
 	};
 	useEffect(() => {
-		axios.get('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}')
+		axios.get('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
 		  .then(function (response) {
 		  	let temp = response.data;
-		  	temp.forEach(t => t["key"] = t.id);
+		  	temp.map((t,indx) => t["key"] = indx);
 			setData(temp);
 		  })
 		  .catch(function (error) {
@@ -49,7 +50,7 @@ export const ${name}Container = () => {
 		  });
 		  <#if formImport??>
 		  <#list referencedTypes as refType>
-		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${refType?lower_case}')
+		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${refType?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
 		    .then(function (response) {
 			  set${refType}(response.data);
 		    })
