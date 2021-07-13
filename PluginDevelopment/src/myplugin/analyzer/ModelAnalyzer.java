@@ -27,6 +27,7 @@ import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.fmmodel.FMStandardForm;
+import myplugin.generator.fmmodel.FMTableColumn;
 import myplugin.generator.fmmodel.FMTableView;
 import myplugin.generator.fmmodel.FMType;
 import myplugin.generator.fmmodel.FMUIComponent;
@@ -127,7 +128,19 @@ public class ModelAnalyzer {
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "ColumnComponent");
 				if (propS != null) {
 					String columnName = (String) getTagValue(p, propS, "columnName");
-					tableView.getColumnNames().put(p.getName(), columnName);
+					FMTableColumn tableColumn = new FMTableColumn();
+					tableColumn.setColumnName(columnName);
+					tableColumn.setSourceName(p.getName());
+					tableColumn.setUpper(p.getUpper());
+					String typeName = p.getType().getName();
+					String typePackage = "";
+					Boolean baseType = false;
+					TypeMapping typeMapping = PropertyAnalyzer.getDataType(typeName);
+					if (typeMapping == null) {
+						FMType type = new FMType(typeName, typePackage, baseType);
+						tableColumn.setType(type);
+					}
+					tableView.getColumns().add(tableColumn);
 				}
 
 			}
