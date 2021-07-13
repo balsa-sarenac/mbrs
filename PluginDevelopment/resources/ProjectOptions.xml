@@ -328,14 +328,14 @@
 		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend/exception</sourceFolder>
 			<sourceFilename>NotFoundException.java</sourceFilename>
-			<destinationFolder>{path}/demo/src/main/java/demo/generated/exception</destinationFolder>
+			<destinationFolder>{path}/demo/src/main/java/demo/exception</destinationFolder>
 			<destinationFilename>NotFoundException.java</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend/exception</sourceFolder>
 			<sourceFilename>ExceptionResolver.java</sourceFilename>
-			<destinationFolder>{path}/demo/src/main/java/demo/generated/exception</destinationFolder>
+			<destinationFolder>{path}/demo/src/main/java/demo/exception</destinationFolder>
 			<destinationFilename>ExceptionResolver.java</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>

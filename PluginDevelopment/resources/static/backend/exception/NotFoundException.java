@@ -1,4 +1,4 @@
-package demo.generated.exception;
+package demo.exception;
 
 public class NotFoundException extends RuntimeException {
 

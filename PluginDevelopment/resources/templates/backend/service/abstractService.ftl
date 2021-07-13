@@ -1,7 +1,7 @@
 package demo.generated.service.abs;
 
 import demo.generated.dto.${name}DetailsDTO;
-import demo.generated.exception.NotFoundException;
+import demo.exception.NotFoundException;
 import demo.generated.model.${name};
 import demo.generated.repository.${name}Repository;
 import org.modelmapper.ModelMapper;
