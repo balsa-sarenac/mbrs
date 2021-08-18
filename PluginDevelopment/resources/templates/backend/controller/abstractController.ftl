@@ -1,7 +1,7 @@
 package demo.generated.controller.abs;
 
 import demo.generated.service.${name}Service;
-import demo.generated.dto.${name}DTO;
+import demo.generated.dto.${name}DetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,16 @@ public abstract class Abstract${name}Controller {
     private ${name}Service service;
 
     @GetMapping
-    public ResponseEntity<List<${name}DTO>> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return service.getAll(page, size);
+    public ResponseEntity<List<${name}DetailsDTO>> getAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+    	if(page==0 && size==0){
+    		return service.getAll();
+    	}else{
+    		return service.getAll(page, size);
+    	}
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<${name}DTO> getById(@PathVariable Long id) {
+    public ResponseEntity<${name}DetailsDTO> getById(@PathVariable Long id) {
         return service.getById(id);
     }
     

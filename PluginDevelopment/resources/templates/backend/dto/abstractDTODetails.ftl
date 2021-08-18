@@ -1,6 +1,5 @@
 package demo.generated.dto.abs;
 
-
 import java.util.Set;
 
 import lombok.Getter;
@@ -20,19 +19,12 @@ import demo.generated.dto.abs.${import.name};
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Abstract${name}DTO {
-<#list properties as property>
+public class Abstract${name}DetailsDTO extends Abstract${name}DTO {
+<#list referencedProps as property> 
 	<#if property.upper == 1 >
-	protected ${property.type.name} ${property.name};
+	protected Abstract${property.type.name}DTO ${property.name};
 	<#else>
-	protected Set<${property.type.name}> ${property.name};
-	</#if>
-</#list>
-<#list persistentProps as property>
-	<#if property.upper == 1 >
-	protected ${property.type.name} ${property.name};
-	<#else>
-	protected Set<${property.type.name}> ${property.name};	  
+	protected Set<Abstract${property.type.name}DTO> ${property.name};
 	</#if>
 </#list>
 }

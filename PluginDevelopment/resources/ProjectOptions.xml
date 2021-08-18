@@ -159,12 +159,34 @@
 			</myplugin.generator.options.GeneratorOptions>
 		</entry>
 		<entry>
+			<string>AbstractDTODetailsGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/dto/abs</outputPath>
+				<templateName>abstractDTODetails</templateName>
+				<templateDir>templates/backend/dto</templateDir>
+				<outputFileName>Abstract{0}DetailsDTO.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+		</entry>
+		<entry>
 			<string>ConcreteDTOGenerator</string>
 			<myplugin.generator.options.GeneratorOptions>
 				<outputPath>{path}/demo/src/main/java/demo/generated/dto</outputPath>
 				<templateName>concreteDTO</templateName>
 				<templateDir>templates/backend/dto</templateDir>
 				<outputFileName>{0}DTO.java</outputFileName>
+				<overwrite>true</overwrite>
+				<filePackage></filePackage>
+			</myplugin.generator.options.GeneratorOptions>
+    	</entry>
+		<entry>
+			<string>ConcreteDTODetailsGenerator</string>
+			<myplugin.generator.options.GeneratorOptions>
+				<outputPath>{path}/demo/src/main/java/demo/generated/dto</outputPath>
+				<templateName>concreteDTODetails</templateName>
+				<templateDir>templates/backend/dto</templateDir>
+				<outputFileName>{0}DetailsDTO.java</outputFileName>
 				<overwrite>true</overwrite>
 				<filePackage></filePackage>
 			</myplugin.generator.options.GeneratorOptions>
@@ -248,6 +270,13 @@
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend/src/components/common</sourceFolder>
+			<sourceFilename>Viewer.js</sourceFilename>
+			<destinationFolder>{path}/frontend/src/components/common</destinationFolder>
+			<destinationFilename>Viewer.js</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend</sourceFolder>
 			<sourceFilename>README.md</sourceFilename>
 			<destinationFolder>{path}/demo</destinationFolder>
@@ -306,15 +335,22 @@
 		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend/exception</sourceFolder>
 			<sourceFilename>NotFoundException.java</sourceFilename>
-			<destinationFolder>{path}/demo/src/main/java/demo/generated/exception</destinationFolder>
+			<destinationFolder>{path}/demo/src/main/java/demo/exception</destinationFolder>
 			<destinationFilename>NotFoundException.java</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend/exception</sourceFolder>
 			<sourceFilename>ExceptionResolver.java</sourceFilename>
-			<destinationFolder>{path}/demo/src/main/java/demo/generated/exception</destinationFolder>
+			<destinationFolder>{path}/demo/src/main/java/demo/exception</destinationFolder>
 			<destinationFilename>ExceptionResolver.java</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/backend/utils</sourceFolder>
+			<sourceFilename>ModelMapperBean.java</sourceFilename>
+			<destinationFolder>{path}/demo/src/main/java/demo/utils</destinationFolder>
+			<destinationFilename>ModelMapperBean.java</destinationFilename>
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 	</staticResources>

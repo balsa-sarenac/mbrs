@@ -1,8 +1,10 @@
 package myplugin.generator;
 
 import myplugin.generator.backend.AbstractControllerGenerator;
+import myplugin.generator.backend.AbstractDTODetailsGenerator;
 import myplugin.generator.backend.AbstractDTOGenerator;
 import myplugin.generator.backend.AbstractServiceGenerator;
+import myplugin.generator.backend.ConcreteDTODetailsGenerator;
 import myplugin.generator.backend.ConcreteDTOGenerator;
 import myplugin.generator.backend.ControllerGenerator;
 import myplugin.generator.backend.ModelGenerator;
@@ -32,8 +34,12 @@ public class GeneratorFactory {
 			return new PomXMLGenerator(options);
 		} else if (name.equals(AbstractDTOGenerator.class.getSimpleName())) {
 			return new AbstractDTOGenerator(options);
+		} else if (name.equals(AbstractDTODetailsGenerator.class.getSimpleName())) {
+			return new AbstractDTODetailsGenerator(options);
 		} else if (name.equals(ConcreteDTOGenerator.class.getSimpleName())) {
 			return new ConcreteDTOGenerator(options);
+		} else if (name.equals(ConcreteDTODetailsGenerator.class.getSimpleName())) {
+			return new ConcreteDTODetailsGenerator(options);
 		} else if (name.equals(RepositoryGenerator.class.getSimpleName())) {
 			return new RepositoryGenerator(options);
 		} else if (name.equals(AbstractServiceGenerator.class.getSimpleName())) {

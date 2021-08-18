@@ -51,8 +51,8 @@ ${class.visibility} class ${class.name} {
 	
 </#list>
 <#list referencedProps as property>
-	<#if property.upper == -1 && property.oppositeEnd.upper == -1>@ManyToMany<#elseif property.upper == -1 && property.oppositeEnd.upper == 1>@OneToMany<#elseif property.upper == 1 && property.oppositeEnd.upper == -1>@ManyToOne<#else>@OneToOne</#if><#rt>
-	<#if (property.fetchType)?? || (property.cascadeType)?? || (property.mappedBy)??>(<#t>
+	<#if property.upper == -1 && property.oppositeEnd.upper == -1>@ManyToMany<#elseif property.upper == -1 && property.oppositeEnd.upper == 1>@OneToMany(mappedBy="${property.oppositeEnd.name}"<#if (property.fetchType)?? || (property.cascadeType)??>, <#else>)</#if><#elseif property.upper == 1 && property.oppositeEnd.upper == -1>@ManyToOne<#else>@OneToOne</#if><#rt>
+	<#if (property.fetchType)?? || (property.cascadeType)??><#if property.upper != -1 && property.oppositeEnd.upper != 1>(</#if><#t>
 		<#if (property.cascadeType)??>
 			cascade = CascadeType.${property.cascadeType}<#t>
 		</#if>
@@ -61,14 +61,12 @@ ${class.visibility} class ${class.name} {
 		</#if>
 		)</#if><#t>
 	<#if (property.joinTable)??>@JoinTable</#if>
+	<#if (property.columnName)??>@JoinColumn(name="${property.columnName}")</#if>
 	<#if property.upper == 1>
-	<#if (property.columnName)??>@JoinColumn(referencedColumnName="${property.oppositeEnd.name}")</#if>
 	${property.visibility} ${property.type.name} ${property.name};
-	
 	<#else>
 	${property.visibility} Set<${property.type.name}> ${property.name};
-	
 	</#if>
-	</#list>	
+	</#list>
 
 }

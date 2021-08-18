@@ -1,27 +1,30 @@
 package myplugin.generator.fmmodel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FMTableView {
 
-	Map<String, String> columnNames = new HashMap<String, String>();
+	private List<FMTableColumn> columns = new ArrayList<FMTableColumn>();
 
 	public FMTableView() {
 
 	}
 
-	public FMTableView(Map<String, String> columnNames) {
-		this.columnNames = columnNames;
+	public FMTableView(List<FMTableColumn> columns) {
+		super();
+		this.columns = columns;
 	}
 
-	public Map<String, String> getColumnNames() {
-		return columnNames;
+	public List<FMTableColumn> getColumns() {
+		return columns;
 	}
 
-	public void setColumnNames(Map<String, String> columnNames) {
-		this.columnNames = columnNames;
+	public void setColumns(List<FMTableColumn> columns) {
+		this.columns = columns;
 	}
-	
-	
+
+
 }
