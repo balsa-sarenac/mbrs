@@ -28,6 +28,16 @@ public abstract class Abstract${name}Controller {
         return service.getById(id);
     }
     
+    @PostMapping
+    public ResponseEntity<${name}DetailsDTO> create(@RequestBody ${name}DetailsDTO ${name?uncap_first}DetailsDto) {
+        return service.create(${name?uncap_first}DetailsDto);
+    }
+    
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<${name}DetailsDTO> update(@PathVariable Long id, @RequestBody ${name}DetailsDTO ${name?uncap_first}DetailsDto) {
+        return service.update(id, ${name?uncap_first}DetailsDto);
+    }
+    
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) { return service.delete(id); }
 }
