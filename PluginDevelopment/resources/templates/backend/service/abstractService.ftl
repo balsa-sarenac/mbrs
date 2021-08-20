@@ -53,6 +53,26 @@ public abstract class Abstract${name}Service {
         return new ResponseEntity<>(${name?uncap_first}DetailsDTO, HttpStatus.OK);
     }
     
+    public ResponseEntity<${name}DetailsDTO> create(${name}DetailsDTO ${name?uncap_first}DetailsDto) {
+        ${name} ${name?uncap_first} = modelMapper.map(${name?uncap_first}DetailsDto, ${name}.class);
+        
+        ${name?uncap_first} = repository.save(${name?uncap_first});
+
+        ${name}DetailsDTO ${name?uncap_first}DetailsDTO = modelMapper.map(${name?uncap_first}, ${name}DetailsDTO.class);       
+        return new ResponseEntity<>(${name?uncap_first}DetailsDTO, HttpStatus.OK);
+    }
+    
+    public ResponseEntity<${name}DetailsDTO> update(Long id, ${name}DetailsDTO ${name?uncap_first}DetailsDto) {
+    	${name} ${name?uncap_first} = repository.findById(id).orElseThrow(() -> new NotFoundException("${name} with given id doesn't exist."));
+        ${name?uncap_first} = modelMapper.map(${name?uncap_first}DetailsDto, ${name}.class);
+        ${name?uncap_first}.setId(id);
+        
+        ${name?uncap_first} = repository.save(${name?uncap_first});
+
+        ${name}DetailsDTO ${name?uncap_first}DetailsDTO = modelMapper.map(${name?uncap_first}, ${name}DetailsDTO.class);       
+        return new ResponseEntity<>(${name?uncap_first}DetailsDTO, HttpStatus.OK);
+    }
+    
     public ResponseEntity<?> delete(Long id) {
         try {
             repository.deleteById(id);
