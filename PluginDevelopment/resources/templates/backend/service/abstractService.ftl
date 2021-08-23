@@ -1,3 +1,4 @@
+// generated on ${.now?date} at ${.now?time} based on ${.current_template_name}
 package demo.generated.service.abs;
 
 import demo.generated.dto.${name}DetailsDTO;
