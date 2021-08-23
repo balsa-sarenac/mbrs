@@ -1,3 +1,4 @@
+# generated on ${.now?date} at ${.now?time} based on ${.current_template_name}
 spring.datasource.driverClassName=${dbDriverClassName}
 spring.datasource.url=${dbUrl}
 spring.sql.init.mode=${dbInitMode}

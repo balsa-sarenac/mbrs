@@ -1,3 +1,4 @@
+// generated on ${.now?date} at ${.now?time} based on ${.current_template_name}
 package demo.generated.controller;
 
 import demo.generated.controller.abs.Abstract${name}Controller;
