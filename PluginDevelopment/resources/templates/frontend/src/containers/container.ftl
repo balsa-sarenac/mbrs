@@ -63,7 +63,7 @@ export const ${name}Container = () => {
 	  
 	const rowSelection = {
 		onChange: (selectedRowKeys, selectedRows) => {
-			setId(selectedRows[0].id);
+			setId(selectedRows[0].${keyName});
 			setInitialValues(selectedRows[0]);
 		}
 	};
@@ -99,13 +99,12 @@ export const ${name}Container = () => {
 	
 	<#if isCreate>
 	const handleOk = (values, { setSubmitting }) => {
-		axios.post('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', JSON.stringify(values, null, 2))
+		axios.post('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', 
+			JSON.stringify(values, null, 2), 
+			{ headers:{ 'Content-Type': 'application/json'}})
 		  .then(function (response) {
-			setTimeout(() => {
-				alert(JSON.stringify(values, null, 2));
-					  setSubmitting(false);
-			}, 400);
 			setIsModalVisible(false);
+			handleGetData();
 		  })
 		  .catch(function (error) {
 			setTimeout(() => {

@@ -37,6 +37,7 @@ public class AbstractServiceGenerator extends BasicGenerator {
 			FMClass cl = classes.get(i);
 			Writer out;
 			Map<String, Object> context = new HashMap<String, Object>();
+			String keyName = null;
 			try {
 				out = getWriter(cl.getName(), cl.getTypePackage());
 				if (out != null) {
@@ -46,16 +47,22 @@ public class AbstractServiceGenerator extends BasicGenerator {
 					List<FMProperty> peristantProps = new ArrayList<FMProperty>();
 					List<FMProperty> referencedProps = new ArrayList<FMProperty>();
 					for (FMProperty p : cl.getProperties()) {
-						if (p instanceof FMPeristentProperty)
+						if (p instanceof FMPeristentProperty) {
 							peristantProps.add(p);
-						else if (p instanceof FMReferencedProperty)
+							FMPeristentProperty persProp = (FMPeristentProperty) p;
+							if (keyName == null && persProp.getIsKey()) {
+								keyName = persProp.getName();
+							}
+						} else if (p instanceof FMReferencedProperty) {
 							referencedProps.add(p);
-						else
+						} else {
 							props.add(p);
+						}
 					}
 					context.put("properties", props);
 					context.put("persistentProps", peristantProps);
 					context.put("referencedProps", referencedProps);
+					context.put("keyName", keyName);
 					getTemplate().process(context, out);
 					out.flush();
 				}

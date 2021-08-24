@@ -66,7 +66,7 @@ public abstract class Abstract${name}Service {
     public ResponseEntity<${name}DetailsDTO> update(Long id, ${name}DetailsDTO ${name?uncap_first}DetailsDto) {
     	${name} ${name?uncap_first} = repository.findById(id).orElseThrow(() -> new NotFoundException("${name} with given id doesn't exist."));
         ${name?uncap_first} = modelMapper.map(${name?uncap_first}DetailsDto, ${name}.class);
-        ${name?uncap_first}.setId(id);
+        ${name?uncap_first}.set${keyName?capitalize}(id);
         
         ${name?uncap_first} = repository.save(${name?uncap_first});
 

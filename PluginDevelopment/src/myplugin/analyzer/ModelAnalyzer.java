@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
@@ -157,6 +159,7 @@ public class ModelAnalyzer {
 			while (it.hasNext()) {
 				Property p = it.next();
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "Editable");
+				Stereotype persP = StereotypesHelper.getAppliedStereotypeByString(p, "PersistentProperty");
 				if (propS != null) {
 					FMUIComponent com = new FMUIComponent();
 					String typeName = p.getType().getName();
@@ -170,12 +173,17 @@ public class ModelAnalyzer {
 					String label = (String) getTagValue(p, propS, "label");
 					Boolean visible = (Boolean) getTagValue(p, propS, "visible");
 					EnumerationLiteralImpl enumtemp = (EnumerationLiteralImpl) getTagValue(p, propS, "componentType");
+					Boolean isKey = null;
+					if (persP != null) {
+						isKey = (Boolean) getTagValue(p, persP, "isKey");
+					}
 					ComponentTypeEnum cte = ComponentTypeEnum.valueOf(enumtemp.getName());
 					com.setIdName(p.getName());
 					com.setLabel(label);
 					com.setEditable(true);
 					com.setVisible(visible);
 					com.setComponentTypeEnum(cte);
+					com.setIsKey(isKey);
 					components.add(com);
 				}
 

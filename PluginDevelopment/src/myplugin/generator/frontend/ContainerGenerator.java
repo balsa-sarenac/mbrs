@@ -41,6 +41,7 @@ public class ContainerGenerator extends BasicGenerator {
 			Boolean isCreate = false;
 			Boolean isEdit = false;
 			Boolean isDelete = false;
+			String keyName = null;
 			List<String> elements = null;
 			List<String> referencedTypes = null;
 			if (component.getForm() != null) {
@@ -53,6 +54,9 @@ public class ContainerGenerator extends BasicGenerator {
 					elements = new ArrayList<String>();
 					referencedTypes = new ArrayList<String>();
 					for (FMUIComponent comp : sf.getComponents()) {
+						if(keyName==null && comp.getIsKey()==true) {
+							keyName = comp.getIdName();
+						}
 						elements.add(comp.getIdName());
 						if(comp.getType()!=null) {
 							referencedTypes.add(comp.getType().getName());
@@ -81,6 +85,7 @@ public class ContainerGenerator extends BasicGenerator {
 					context.put("isDelete", isDelete);
 					context.put("elements", elements);
 					context.put("referencedTypes", referencedTypes);
+					context.put("keyName", keyName);
 					getTemplate().process(context, out);
 					out.flush();
 				}
