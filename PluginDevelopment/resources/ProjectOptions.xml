@@ -277,6 +277,13 @@
 			<overwrite>true</overwrite>
 		</myplugin.generator.options.StaticResource>
 		<myplugin.generator.options.StaticResource>
+			<sourceFolder>static/frontend/src/components/common</sourceFolder>
+			<sourceFilename>Chooser.js</sourceFilename>
+			<destinationFolder>{path}/frontend/src/components/common</destinationFolder>
+			<destinationFilename>Chooser.js</destinationFilename>
+			<overwrite>true</overwrite>
+		</myplugin.generator.options.StaticResource>
+		<myplugin.generator.options.StaticResource>
 			<sourceFolder>static/backend</sourceFolder>
 			<sourceFilename>README.md</sourceFilename>
 			<destinationFolder>{path}/demo</destinationFolder>

@@ -1,18 +1,53 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col<#if (formAssociationEndElements?size>0)>, Button</#if> } from 'antd';
 import { Formik } from 'formik';
 import { Form, FormItem, SubmitButton, ResetButton<#list imports as import><#if import??>, ${import}</#if></#list> } from 'formik-antd';
-
+<#if (formAssociationEndElements?size>0)>
+import { Chooser } from '../common/Chooser';
+</#if>
 export const ${name}Form = (props) => {
 	const [formLayout, setFormLayout] = useState("vertical");
-
+	<#if (formAssociationEndElements?size>0)>
+	const [chooserName, setChooserName] = useState('');
+	const [selectedRow, setSelectedRow] = useState(null);
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [record, setRecord] = useState(null);
+	<#list formAssociationEndElements as component>
+	const [is${component.idName?cap_first}ModalVisible, setIs${component.idName?cap_first}ModalVisible] = useState(false);
+	</#list>
+	const rowSelection = {
+		onChange: (selectedRowKeys, selectedRows) => {
+			setSelectedRow(selectedRows[0]);
+		}
+	};
+	const handleCancel = () => {
+		setIsModalVisible(false);
+		<#list formAssociationEndElements as component>
+		setIs${component.idName?cap_first}ModalVisible(false);		
+		</#list>
+	};
+	const handleOk = () => {
+		setIsModalVisible(false);
+		<#list formAssociationEndElements as component>
+		setIs${component.idName?cap_first}ModalVisible(false);		
+		</#list>
+		<#list formAssociationEndElements as component>
+		if(is${component.idName?cap_first}ModalVisible){
+			props.set${component.idName?cap_first}(selectedRow);
+		}
+		</#list>
+	};
+	</#if>
 	return (
 		<>
+			<#if (formAssociationEndElements?size>0)>
+			<Chooser data={record} isModalVisible={isModalVisible} rowSelection={rowSelection} name={chooserName} handleCancel={handleCancel} handleOk={handleOk}/>
+			</#if>
 			<Row>
 				<Col xs={{ span: 22, offset: 1 }} sm={{span: 22, offset: 1 }} md={{ span: 22, offset: 1 }}>
 					<Formik
 						initialValues={props.initialValues} 
-						onSubmit={(values, { setSubmitting })=>{if(props.isCreate){props.handleOk(values, { setSubmitting });}else{props.handleUpdate(values, { setSubmitting });}}}
+						onSubmit={(values, { setSubmitting })=>{<#list formAssociationEndElements as component>values['${component.idName?lower_case}']=props.${component.idName?uncap_first};</#list> if(props.isCreate){props.handleOk(values, { setSubmitting });}else{props.handleUpdate(values, { setSubmitting });}}}
 					>
 						<Form
 							layout={formLayout}
@@ -93,6 +128,11 @@ export const ${name}Form = (props) => {
 								</#if>
 							</FormItem>
 							</#if>
+							</#list>
+							<#list formAssociationEndElements as component>
+							<FormItem name="${component.idName}" label="${component.label}" >
+								<Button onClick={()=>{setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
+							</FormItem>
 							</#list>
 							<FormItem name="submit" >
 								<SubmitButton> 

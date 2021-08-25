@@ -19,8 +19,8 @@ export const ${name}Container = () => {
 	<#if formImport??>
 	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
 	<#list referencedTypes as refType>
-	const [${refType?lower_case}Data, set${refType}Data] = useState([]);
-	const [${refType?lower_case}, set${refType}] = useState([]);
+	const [${refType?lower_case}Data, set${refType?cap_first}Data] = useState([]);
+	const [${refType?lower_case}, set${refType?cap_first}] = useState({});
 	</#list>
 	</#if>
 	<#if tableImport??>
@@ -120,13 +120,12 @@ export const ${name}Container = () => {
 
 	<#if isCreate>
 	const handleUpdate = (values, { setSubmitting }) => {
-		axios.put('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}/'+id, JSON.stringify(values, null, 2))
+		axios.put('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}/'+id, 
+			JSON.stringify(values, null, 2),
+			{ headers:{ 'Content-Type': 'application/json'}})
 		  .then(function (response) {
-			setTimeout(() => {
-				alert(JSON.stringify(values, null, 2));
-					  setSubmitting(false);
-			}, 400);
 			setIsModalVisible(false);
+			handleGetData();
 		  })
 		  .catch(function (error) {
 			setTimeout(() => {
@@ -164,7 +163,7 @@ export const ${name}Container = () => {
 	          footer={null}
 	          onCancel={handleCancel}
 	         >
-	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}Data={${refType?lower_case}Data} ${refType?lower_case}={${refType?lower_case}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
+	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}Data={${refType?lower_case}Data} ${refType?lower_case}={${refType?lower_case}}  set${refType?cap_first}={set${refType?cap_first}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
 	        </Modal>
 			</#if>
 			</#if>

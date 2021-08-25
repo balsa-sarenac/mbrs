@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Modal, Table } from 'antd';
 
 
-export const Viewer = (props) => {
+export const Chooser = (props) => {
 
   	if(props.data==null){
   		return(
@@ -20,7 +20,7 @@ export const Viewer = (props) => {
         }else{
             data.push(props.data);
         }
-       let flag = false;
+        let flag = false;
         for (let d of data){
             for(let col in d){
                 if(col=='key'){
@@ -41,9 +41,13 @@ export const Viewer = (props) => {
         }
         return(
             <> 
-  			<Modal title={props.name} visible={props.isModalVisible} footer={null} onCancel={props.handleCancel}>
+  			<Modal title={props.name} visible={props.isModalVisible} onCancel={props.handleCancel} onOk={props.handleOk} okText="Save">
               <Table
 				scroll={{ x: true }}
+                rowSelection={{
+                    type: 'radio',
+                    ...props.rowSelection
+                }}
                 columns={columns}
                 pagination={{hideOnSinglePage:true}}
                 dataSource={data}

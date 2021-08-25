@@ -23,6 +23,7 @@ const Root = () => {
   return (
     <Tabs
       tabBarStyle={{ marginLeft: 40 }}
+      destroyInactiveTabPane={true}
       animated={false}
       onChange={key => {
         history.push(key)

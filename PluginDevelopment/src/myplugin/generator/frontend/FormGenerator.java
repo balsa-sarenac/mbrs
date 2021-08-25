@@ -69,7 +69,7 @@ public class FormGenerator extends BasicGenerator {
 				try {
 					out = getWriter(component.getName(), "");
 					List<FMUIComponent> formElements = new ArrayList<FMUIComponent>();
-					List<FMUIComponent> formZoomElements = new ArrayList<FMUIComponent>();
+					List<FMUIComponent> formAssociationEndElements = new ArrayList<FMUIComponent>();
 					if (out != null) {
 						context.clear();
 						context.put("name", component.getName());
@@ -82,12 +82,12 @@ public class FormGenerator extends BasicGenerator {
 										|| comp.getComponentShowTypeEnum() == ComponentShowTypeEnum.CALCULATED) {
 									formElements.add(comp);
 								} else {
-									formZoomElements.add(comp);
+									formAssociationEndElements.add(comp);
 								}
 							}
 							context.put("standardForm", (FMStandardForm) form);
 							context.put("formElements", formElements);
-							context.put("formZoomElements", formZoomElements);
+							context.put("formAssociationEndElements", formAssociationEndElements);
 							context.put("imports", imports);
 						}
 						getTemplate().process(context, out);

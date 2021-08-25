@@ -19,7 +19,9 @@ import demo.generated.dto.abs.${import.name};
 @Getter
 @Setter
 @NoArgsConstructor
+<#if (referencedProps?size>0)>
 @AllArgsConstructor
+</#if>
 public class Abstract${name}DetailsDTO extends Abstract${name}DTO {
 <#list referencedProps as property> 
 	<#if property.upper == 1 >
