@@ -21,7 +21,7 @@ export const ${name}Form = (props) => {
 							<#if component.visible == true>
 							<FormItem name="${component.idName}" label="${component.label}" >
 								<#if component.componentTypeEnum == "textBox">
-									<Input name="${component.idName}" placeholder="${component.label}" />
+									<Input name="${component.idName}" placeholder="${component.label}" <#if component.isKey??>disabled={true}</#if>/>
 								<#elseif component.componentTypeEnum == "comboBox">
 									<#if component.type??>
 									<Select name="${component.idName}">
@@ -36,7 +36,7 @@ export const ${name}Form = (props) => {
 									</Select>
 									</#if>
 								<#elseif component.componentTypeEnum == "number">
-									<InputNumber name="${component.idName}" placeholder="${component.label}"/>
+									<InputNumber name="${component.idName}" placeholder="${component.label}" <#if component.isKey??>disabled={true}</#if>/>
 								<#elseif component.componentTypeEnum == "checkBox">
 									<#if component.type??>
 									<Checkbox.Group name="${component.idName}">
