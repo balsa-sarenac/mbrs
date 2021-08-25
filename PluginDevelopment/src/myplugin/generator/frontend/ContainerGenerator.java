@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
 import myplugin.generator.BasicGenerator;
+import myplugin.generator.fmmodel.ComponentShowTypeEnum;
 import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMComponent;
@@ -54,11 +55,12 @@ public class ContainerGenerator extends BasicGenerator {
 					elements = new ArrayList<String>();
 					referencedTypes = new ArrayList<String>();
 					for (FMUIComponent comp : sf.getComponents()) {
-						if(keyName==null && comp.getIsKey()==true) {
+						if (keyName == null && comp.getIsKey() == true) {
 							keyName = comp.getIdName();
 						}
 						elements.add(comp.getIdName());
-						if(comp.getType()!=null) {
+						if (comp.getComponentShowTypeEnum() != ComponentShowTypeEnum.EDITABLE
+								&& comp.getComponentShowTypeEnum() != ComponentShowTypeEnum.CALCULATED) {
 							referencedTypes.add(comp.getType().getName());
 						}
 					}

@@ -17,8 +17,23 @@ export const ${name}Form = (props) => {
 						<Form
 							layout={formLayout}
 							scrollToFirstError>
-							<#list standardForm.components as component>
+							<#list formElements as component>
 							<#if component.visible == true>
+							<#if component.type.name=="Boolean">
+							<#if component.componentTypeEnum=="radioButton">
+							<FormItem name="${component.idName}" label="${component.label}" >
+								<Radio.Group name="${component.idName}">
+									<Radio key={1} name="${component.idName}" value={true}>Yes</Radio>
+									<Radio key={0} name="${component.idName}" value={false}>No</Radio>
+								</Radio.Group>							
+							</FormItem>
+							<#else>
+							<FormItem name="${component.idName}" label="${component.label}" >
+								<Checkbox name="${component.idName}"></Checkbox>						
+							</FormItem>	
+							</#if>
+							<#continue>
+							</#if>
 							<FormItem name="${component.idName}" label="${component.label}" >
 								<#if component.componentTypeEnum == "textBox">
 									<Input name="${component.idName}" placeholder="${component.label}" <#if component.isKey??>disabled={true}</#if>/>

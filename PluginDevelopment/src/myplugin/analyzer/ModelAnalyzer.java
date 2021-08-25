@@ -21,6 +21,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.impl.EnumerationLiteralImpl;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
+import myplugin.generator.fmmodel.ComponentShowTypeEnum;
 import myplugin.generator.fmmodel.ComponentTypeEnum;
 import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
@@ -158,7 +159,27 @@ public class ModelAnalyzer {
 			Iterator<Property> it = ModelHelper.attributes(cl);
 			while (it.hasNext()) {
 				Property p = it.next();
+				ComponentShowTypeEnum componentShowTypeEnum = null;
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "Editable");
+				if (propS != null) {
+					componentShowTypeEnum = ComponentShowTypeEnum.EDITABLE;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Calculated");
+					componentShowTypeEnum = ComponentShowTypeEnum.CALCULATED;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Zoom");
+					componentShowTypeEnum = ComponentShowTypeEnum.ZOOM;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Next");
+					componentShowTypeEnum = ComponentShowTypeEnum.NEXT;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Hierarchy");
+					componentShowTypeEnum = ComponentShowTypeEnum.HIERARCHY;
+				}
 				Stereotype persP = StereotypesHelper.getAppliedStereotypeByString(p, "PersistentProperty");
 				if (propS != null) {
 					FMUIComponent com = new FMUIComponent();
@@ -168,6 +189,9 @@ public class ModelAnalyzer {
 					TypeMapping typeMapping = PropertyAnalyzer.getDataType(typeName);
 					if (typeMapping == null) {
 						FMType type = new FMType(typeName, typePackage, baseType);
+						com.setType(type);
+					} else {
+						FMType type = new FMType(typeMapping.getDestType(), typePackage, baseType);
 						com.setType(type);
 					}
 					String label = (String) getTagValue(p, propS, "label");
@@ -183,6 +207,7 @@ public class ModelAnalyzer {
 					com.setEditable(true);
 					com.setVisible(visible);
 					com.setComponentTypeEnum(cte);
+					com.setComponentShowTypeEnum(componentShowTypeEnum);
 					com.setIsKey(isKey);
 					components.add(com);
 				}

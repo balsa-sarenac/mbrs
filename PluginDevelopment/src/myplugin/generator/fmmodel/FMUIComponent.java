@@ -7,6 +7,7 @@ public class FMUIComponent {
 	private Boolean visible;
 	private FMType type;
 	private ComponentTypeEnum componentTypeEnum;
+	private ComponentShowTypeEnum componentShowTypeEnum;
 	private Boolean editable = false;
 	private Boolean calculated = false;
 	private Boolean next = false;
@@ -21,14 +22,15 @@ public class FMUIComponent {
 	}
 
 	public FMUIComponent(String idName, String label, Boolean visible, FMType type, ComponentTypeEnum componentTypeEnum,
-			Boolean editable, Boolean calculated, Boolean next, Boolean zoom, Boolean hierarchy, String formula,
-			String level, Boolean isKey) {
+			ComponentShowTypeEnum componentShowTypeEnum, Boolean editable, Boolean calculated, Boolean next,
+			Boolean zoom, Boolean hierarchy, String formula, String level, Boolean isKey) {
 		super();
 		this.idName = idName;
 		this.label = label;
 		this.visible = visible;
 		this.type = type;
 		this.componentTypeEnum = componentTypeEnum;
+		this.componentShowTypeEnum = componentShowTypeEnum;
 		this.editable = editable;
 		this.calculated = calculated;
 		this.next = next;
@@ -77,6 +79,14 @@ public class FMUIComponent {
 
 	public void setComponentTypeEnum(ComponentTypeEnum componentTypeEnum) {
 		this.componentTypeEnum = componentTypeEnum;
+	}
+	
+	public ComponentShowTypeEnum getComponentShowTypeEnum() {
+		return componentShowTypeEnum;
+	}
+
+	public void setComponentShowTypeEnum(ComponentShowTypeEnum componentShowTypeEnum) {
+		this.componentShowTypeEnum = componentShowTypeEnum;
 	}
 
 	public Boolean getEditable() {
@@ -142,6 +152,5 @@ public class FMUIComponent {
 	public void setIsKey(Boolean isKey) {
 		this.isKey = isKey;
 	}
-	
 
 }

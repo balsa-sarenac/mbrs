@@ -19,6 +19,7 @@ export const ${name}Container = () => {
 	<#if formImport??>
 	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
 	<#list referencedTypes as refType>
+	const [${refType?lower_case}Data, set${refType}Data] = useState([]);
 	const [${refType?lower_case}, set${refType}] = useState([]);
 	</#list>
 	</#if>
@@ -52,7 +53,7 @@ export const ${name}Container = () => {
 		  <#list referencedTypes as refType>
 		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${refType?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
 		    .then(function (response) {
-			  set${refType}(response.data);
+			  set${refType}Data(response.data);
 		    })
 			.catch(function (error) {
 			  console.log(error);
@@ -163,7 +164,7 @@ export const ${name}Container = () => {
 	          footer={null}
 	          onCancel={handleCancel}
 	         >
-	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}={${refType?lower_case}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
+	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}Data={${refType?lower_case}Data} ${refType?lower_case}={${refType?lower_case}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
 	        </Modal>
 			</#if>
 			</#if>
