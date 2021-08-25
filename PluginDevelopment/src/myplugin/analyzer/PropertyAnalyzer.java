@@ -1,6 +1,7 @@
 package myplugin.analyzer;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -48,7 +49,7 @@ public class PropertyAnalyzer {
 			fmProperty = setPersistentPropertyData(property, fmProperty, persistentPropertyStereotype);
 		}
 
-		List<String> stereotypes = Arrays.asList("ReferencedProperty", "OneToMany", "OneToOne", "ManyToMany", "ManyToOne");
+		List<String> stereotypes = Arrays.asList("OneToMany", "OneToOne", "ManyToMany", "ManyToOne");
 		for (String st : stereotypes) {
 			Stereotype referencedPropertyStereotype = StereotypesHelper.getAppliedStereotypeByString(property,
 					st);
@@ -126,6 +127,12 @@ public class PropertyAnalyzer {
 		List<Property> tags = stereotype.getOwnedAttribute();
 		for (Property tag : tags) {
 			createReferencedProperty(tag, property, fmProperty, stereotype, referencedProperty);
+		}
+		
+		// get inherited attributes of stereotype
+		Collection<? extends Property> inheritedTags = (Collection<? extends Property>) stereotype.getInheritedMember();
+		for (Property inheritedTag : inheritedTags) {
+			createReferencedProperty(inheritedTag, property, fmProperty, stereotype, referencedProperty);
 		}
 		return referencedProperty;
 	}
