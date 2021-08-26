@@ -45,7 +45,7 @@ export const Chooser = (props) => {
               <Table
 				scroll={{ x: true }}
                 rowSelection={{
-                    type: 'radio',
+                    type: props.selectionType,
                     ...props.rowSelection
                 }}
                 columns={columns}

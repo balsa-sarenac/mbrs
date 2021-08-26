@@ -16,6 +16,7 @@ public class FMUIComponent {
 	private String formula;
 	private String level;
 	private Boolean isKey;
+	private Integer upper;
 
 	public FMUIComponent() {
 
@@ -23,7 +24,7 @@ public class FMUIComponent {
 
 	public FMUIComponent(String idName, String label, Boolean visible, FMType type, ComponentTypeEnum componentTypeEnum,
 			ComponentShowTypeEnum componentShowTypeEnum, Boolean editable, Boolean calculated, Boolean next,
-			Boolean zoom, Boolean hierarchy, String formula, String level, Boolean isKey) {
+			Boolean zoom, Boolean hierarchy, String formula, String level, Boolean isKey, Integer upper) {
 		super();
 		this.idName = idName;
 		this.label = label;
@@ -39,6 +40,7 @@ public class FMUIComponent {
 		this.formula = formula;
 		this.level = level;
 		this.isKey = isKey;
+		this.upper = upper;
 	}
 
 	public String getIdName() {
@@ -151,6 +153,14 @@ public class FMUIComponent {
 
 	public void setIsKey(Boolean isKey) {
 		this.isKey = isKey;
+	}
+
+	public Integer getUpper() {
+		return upper;
+	}
+
+	public void setUpper(Integer upper) {
+		this.upper = upper;
 	}
 
 }

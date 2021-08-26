@@ -159,6 +159,7 @@ public class ModelAnalyzer {
 			Iterator<Property> it = ModelHelper.attributes(cl);
 			while (it.hasNext()) {
 				Property p = it.next();
+				int upper = p.getUpper();
 				ComponentShowTypeEnum componentShowTypeEnum = null;
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "Editable");
 				if (propS != null) {
@@ -209,6 +210,7 @@ public class ModelAnalyzer {
 					com.setComponentTypeEnum(cte);
 					com.setComponentShowTypeEnum(componentShowTypeEnum);
 					com.setIsKey(isKey);
+					com.setUpper(upper);
 					components.add(com);
 				}
 

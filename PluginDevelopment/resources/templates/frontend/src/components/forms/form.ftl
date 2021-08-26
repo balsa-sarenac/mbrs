@@ -7,6 +7,7 @@ import { Chooser } from '../common/Chooser';
 </#if>
 export const ${name}Form = (props) => {
 	const [formLayout, setFormLayout] = useState("vertical");
+	const [selectionType, setSelectionType] = useState("radio");
 	<#if (formAssociationEndElements?size>0)>
 	const [chooserName, setChooserName] = useState('');
 	const [selectedRow, setSelectedRow] = useState(null);
@@ -17,7 +18,11 @@ export const ${name}Form = (props) => {
 	</#list>
 	const rowSelection = {
 		onChange: (selectedRowKeys, selectedRows) => {
-			setSelectedRow(selectedRows[0]);
+			if(selectionType=='radio'){
+				setSelectedRow(selectedRows[0]);
+			}else{
+				setSelectedRow(selectedRows);
+			}
 		}
 	};
 	const handleCancel = () => {
@@ -41,7 +46,7 @@ export const ${name}Form = (props) => {
 	return (
 		<>
 			<#if (formAssociationEndElements?size>0)>
-			<Chooser data={record} isModalVisible={isModalVisible} rowSelection={rowSelection} name={chooserName} handleCancel={handleCancel} handleOk={handleOk}/>
+			<Chooser data={record} isModalVisible={isModalVisible} selectionType={selectionType} rowSelection={rowSelection} name={chooserName} handleCancel={handleCancel} handleOk={handleOk}/>
 			</#if>
 			<Row>
 				<Col xs={{ span: 22, offset: 1 }} sm={{span: 22, offset: 1 }} md={{ span: 22, offset: 1 }}>
@@ -131,7 +136,7 @@ export const ${name}Form = (props) => {
 							</#list>
 							<#list formAssociationEndElements as component>
 							<FormItem name="${component.idName}" label="${component.label}" >
-								<Button onClick={()=>{setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName?lower_case}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
+								<Button onClick={()=>{<#if (component.upper==1)>setSelectionType('radio');<#else>setSelectionType('check');</#if> setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName?lower_case}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
 							</FormItem>
 							</#list>
 							<FormItem name="submit" >
