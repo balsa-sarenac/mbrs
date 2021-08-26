@@ -17,7 +17,7 @@ export const ${name}Container = () => {
   	const [isCreate, setIsCreate] = useState(true);
 	</#if>
 	<#if formImport??>
-	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
+	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : null,</#list>});
 	<#list referencedTypes?keys as idName>
 	const [${idName?lower_case}Data, set${idName?cap_first}Data] = useState([]);
 	const [${idName?lower_case}, set${idName?cap_first}] = useState(null);
@@ -85,7 +85,7 @@ export const ${name}Container = () => {
 	<#if isCreate || isEdit>
 	const showModal = (type) => {
 		if(type==='new'){
-			setInitialValues({<#list elements as el>${el} : "",</#list>});
+			setInitialValues({<#list elements as el>${el} : null,</#list>});
 			setIsCreate(true);
 		}else{
 			setIsCreate(false);
