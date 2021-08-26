@@ -41,7 +41,7 @@ export const Chooser = (props) => {
         }
         return(
             <> 
-  			<Modal title={props.name} visible={props.isModalVisible} onCancel={props.handleCancel} onOk={props.handleOk} okText="Save">
+  			<Modal title={props.name} visible={props.isModalVisible} onCancel={props.handleCancel} onOk={props.handleOk} okText="Save" width={1000}>
               <Table
 				scroll={{ x: true }}
                 rowSelection={{

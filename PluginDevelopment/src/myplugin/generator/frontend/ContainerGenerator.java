@@ -44,16 +44,16 @@ public class ContainerGenerator extends BasicGenerator {
 			Boolean isDelete = false;
 			String keyName = null;
 			List<String> elements = null;
-			List<String> referencedTypes = null;
+			Map<String, String> referencedTypes = null;
 			if (component.getForm() != null) {
-				formImport = component.getForm().getName();
+				formImport = component.getName();
 				if (component.getForm() instanceof FMStandardForm) {
 					FMStandardForm sf = (FMStandardForm) component.getForm();
 					isCreate = sf.isCreate();
 					isEdit = sf.isUpdate();
 					isDelete = sf.isDelete();
 					elements = new ArrayList<String>();
-					referencedTypes = new ArrayList<String>();
+					referencedTypes = new HashMap<String, String>();
 					for (FMUIComponent comp : sf.getComponents()) {
 						if (keyName == null && comp.getIsKey() == true) {
 							keyName = comp.getIdName();
@@ -61,7 +61,7 @@ public class ContainerGenerator extends BasicGenerator {
 						elements.add(comp.getIdName());
 						if (comp.getComponentShowTypeEnum() != ComponentShowTypeEnum.EDITABLE
 								&& comp.getComponentShowTypeEnum() != ComponentShowTypeEnum.CALCULATED) {
-							referencedTypes.add(comp.getType().getName());
+							referencedTypes.put(comp.getIdName(), comp.getType().getName());
 						}
 					}
 				}

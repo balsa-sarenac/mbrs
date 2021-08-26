@@ -3,7 +3,7 @@ import { Row, Col, Typography<#if formImport??>, Button, Space, Modal</#if> } fr
 import axios from 'axios';
 <#if formImport??>
 import { PlusOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
-import { ${formImport} } from '../components/forms/${formImport}';
+import { ${formImport}Form } from '../components/forms/${formImport}Form';
 </#if>
 <#if tableImport??>
 import { ${tableImport} } from '../components/views/${tableImport}';
@@ -18,9 +18,9 @@ export const ${name}Container = () => {
 	</#if>
 	<#if formImport??>
 	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
-	<#list referencedTypes as refType>
-	const [${refType?lower_case}Data, set${refType?cap_first}Data] = useState([]);
-	const [${refType?lower_case}, set${refType?cap_first}] = useState({});
+	<#list referencedTypes?keys as idName>
+	const [${idName?lower_case}Data, set${idName?cap_first}Data] = useState([]);
+	const [${idName?lower_case}, set${idName?cap_first}] = useState(null);
 	</#list>
 	</#if>
 	<#if tableImport??>
@@ -50,10 +50,10 @@ export const ${name}Container = () => {
 			console.log(error);
 		  });
 		  <#if formImport??>
-		  <#list referencedTypes as refType>
-		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${refType?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
+		  <#list referencedTypes?keys as idName>
+		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${referencedTypes[idName]?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
 		    .then(function (response) {
-			  set${refType}Data(response.data);
+			  set${idName?cap_first}Data(response.data);
 		    })
 			.catch(function (error) {
 			  console.log(error);
@@ -163,7 +163,7 @@ export const ${name}Container = () => {
 	          footer={null}
 	          onCancel={handleCancel}
 	         >
-	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}Data={${refType?lower_case}Data} ${refType?lower_case}={${refType?lower_case}}  set${refType?cap_first}={set${refType?cap_first}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
+	          <${formImport}Form <#if formImport??>initialValues={initialValues} <#list referencedTypes?keys as idName>${idName?lower_case}Data={${idName?lower_case}Data} ${idName?lower_case}={${idName?lower_case}}  set${idName?cap_first}={set${idName?cap_first}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
 	        </Modal>
 			</#if>
 			</#if>

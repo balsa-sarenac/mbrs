@@ -41,7 +41,7 @@ export const Viewer = (props) => {
         }
         return(
             <> 
-  			<Modal title={props.name} visible={props.isModalVisible} footer={null} onCancel={props.handleCancel}>
+  			<Modal title={props.name} visible={props.isModalVisible} footer={null} onCancel={props.handleCancel} width={1000}>
               <Table
 				scroll={{ x: true }}
                 columns={columns}

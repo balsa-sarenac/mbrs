@@ -47,7 +47,7 @@ export const ${name}Form = (props) => {
 				<Col xs={{ span: 22, offset: 1 }} sm={{span: 22, offset: 1 }} md={{ span: 22, offset: 1 }}>
 					<Formik
 						initialValues={props.initialValues} 
-						onSubmit={(values, { setSubmitting })=>{<#list formAssociationEndElements as component>values['${component.idName?lower_case}']=props.${component.idName?uncap_first};</#list> if(props.isCreate){props.handleOk(values, { setSubmitting });}else{props.handleUpdate(values, { setSubmitting });}}}
+						onSubmit={(values, { setSubmitting })=>{<#list formAssociationEndElements as component>values['${component.idName}']=props.${component.idName?lower_case};</#list> if(props.isCreate){props.handleOk(values, { setSubmitting });}else{props.handleUpdate(values, { setSubmitting });}}}
 					>
 						<Form
 							layout={formLayout}
@@ -131,7 +131,7 @@ export const ${name}Form = (props) => {
 							</#list>
 							<#list formAssociationEndElements as component>
 							<FormItem name="${component.idName}" label="${component.label}" >
-								<Button onClick={()=>{setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
+								<Button onClick={()=>{setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName?lower_case}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
 							</FormItem>
 							</#list>
 							<FormItem name="submit" >
