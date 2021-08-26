@@ -20,7 +20,9 @@ import demo.generated.dto.abs.${import.name};
 @Getter
 @Setter
 @NoArgsConstructor
+<#if (properties?size>0) || (persistentProps?size>0)>
 @AllArgsConstructor
+</#if>
 public class Abstract${name}DTO {
 <#list properties as property>
 	<#if property.upper == 1 >

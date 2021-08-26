@@ -1,27 +1,82 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col<#if (formAssociationEndElements?size>0)>, Button</#if> } from 'antd';
 import { Formik } from 'formik';
 import { Form, FormItem, SubmitButton, ResetButton<#list imports as import><#if import??>, ${import}</#if></#list> } from 'formik-antd';
-
+<#if (formAssociationEndElements?size>0)>
+import { Chooser } from '../common/Chooser';
+</#if>
 export const ${name}Form = (props) => {
 	const [formLayout, setFormLayout] = useState("vertical");
-
+	const [selectionType, setSelectionType] = useState("radio");
+	<#if (formAssociationEndElements?size>0)>
+	const [chooserName, setChooserName] = useState('');
+	const [selectedRow, setSelectedRow] = useState(null);
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [record, setRecord] = useState(null);
+	<#list formAssociationEndElements as component>
+	const [is${component.idName?cap_first}ModalVisible, setIs${component.idName?cap_first}ModalVisible] = useState(false);
+	</#list>
+	const rowSelection = {
+		onChange: (selectedRowKeys, selectedRows) => {
+			if(selectionType=='radio'){
+				setSelectedRow(selectedRows[0]);
+			}else{
+				setSelectedRow(selectedRows);
+			}
+		}
+	};
+	const handleCancel = () => {
+		setIsModalVisible(false);
+		<#list formAssociationEndElements as component>
+		setIs${component.idName?cap_first}ModalVisible(false);		
+		</#list>
+	};
+	const handleOk = () => {
+		setIsModalVisible(false);
+		<#list formAssociationEndElements as component>
+		setIs${component.idName?cap_first}ModalVisible(false);		
+		</#list>
+		<#list formAssociationEndElements as component>
+		if(is${component.idName?cap_first}ModalVisible){
+			props.set${component.idName?cap_first}(selectedRow);
+		}
+		</#list>
+	};
+	</#if>
 	return (
 		<>
+			<#if (formAssociationEndElements?size>0)>
+			<Chooser data={record} isModalVisible={isModalVisible} selectionType={selectionType} rowSelection={rowSelection} name={chooserName} handleCancel={handleCancel} handleOk={handleOk}/>
+			</#if>
 			<Row>
 				<Col xs={{ span: 22, offset: 1 }} sm={{span: 22, offset: 1 }} md={{ span: 22, offset: 1 }}>
 					<Formik
 						initialValues={props.initialValues} 
-						onSubmit={(values, { setSubmitting })=>{if(props.isCreate){props.handleOk(values, { setSubmitting });}else{props.handleUpdate(values, { setSubmitting });}}}
+						onSubmit={(values, { setSubmitting })=>{<#list formAssociationEndElements as component>values['${component.idName}']=props.${component.idName?lower_case};</#list> if(props.isCreate){props.handleOk(values, { setSubmitting });}else{props.handleUpdate(values, { setSubmitting });}}}
 					>
 						<Form
 							layout={formLayout}
 							scrollToFirstError>
-							<#list standardForm.components as component>
+							<#list formElements as component>
 							<#if component.visible == true>
+							<#if component.type.name=="Boolean">
+							<#if component.componentTypeEnum=="radioButton">
+							<FormItem name="${component.idName}" label="${component.label}" >
+								<Radio.Group name="${component.idName}">
+									<Radio key={1} name="${component.idName}" value={true}>Yes</Radio>
+									<Radio key={0} name="${component.idName}" value={false}>No</Radio>
+								</Radio.Group>							
+							</FormItem>
+							<#else>
+							<FormItem name="${component.idName}" label="${component.label}" >
+								<Checkbox name="${component.idName}"></Checkbox>						
+							</FormItem>	
+							</#if>
+							<#continue>
+							</#if>
 							<FormItem name="${component.idName}" label="${component.label}" >
 								<#if component.componentTypeEnum == "textBox">
-									<Input name="${component.idName}" placeholder="${component.label}" />
+									<Input name="${component.idName}" placeholder="${component.label}" <#if component.isKey??>disabled={true}</#if>/>
 								<#elseif component.componentTypeEnum == "comboBox">
 									<#if component.type??>
 									<Select name="${component.idName}">
@@ -36,7 +91,7 @@ export const ${name}Form = (props) => {
 									</Select>
 									</#if>
 								<#elseif component.componentTypeEnum == "number">
-									<InputNumber name="${component.idName}" placeholder="${component.label}"/>
+									<InputNumber name="${component.idName}" placeholder="${component.label}" <#if component.isKey??>disabled={true}</#if>/>
 								<#elseif component.componentTypeEnum == "checkBox">
 									<#if component.type??>
 									<Checkbox.Group name="${component.idName}">
@@ -78,6 +133,11 @@ export const ${name}Form = (props) => {
 								</#if>
 							</FormItem>
 							</#if>
+							</#list>
+							<#list formAssociationEndElements as component>
+							<FormItem name="${component.idName}" label="${component.label}" >
+								<Button onClick={()=>{<#if (component.upper==1)>setSelectionType('radio');<#else>setSelectionType('check');</#if> setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName?lower_case}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
+							</FormItem>
 							</#list>
 							<FormItem name="submit" >
 								<SubmitButton> 

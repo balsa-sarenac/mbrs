@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import freemarker.template.TemplateException;
 import myplugin.generator.BasicGenerator;
+import myplugin.generator.fmmodel.ComponentShowTypeEnum;
 import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMComponent;
@@ -41,21 +42,26 @@ public class ContainerGenerator extends BasicGenerator {
 			Boolean isCreate = false;
 			Boolean isEdit = false;
 			Boolean isDelete = false;
+			String keyName = null;
 			List<String> elements = null;
-			List<String> referencedTypes = null;
+			Map<String, String> referencedTypes = null;
 			if (component.getForm() != null) {
-				formImport = component.getForm().getName();
+				formImport = component.getName();
 				if (component.getForm() instanceof FMStandardForm) {
 					FMStandardForm sf = (FMStandardForm) component.getForm();
 					isCreate = sf.isCreate();
 					isEdit = sf.isUpdate();
 					isDelete = sf.isDelete();
 					elements = new ArrayList<String>();
-					referencedTypes = new ArrayList<String>();
+					referencedTypes = new HashMap<String, String>();
 					for (FMUIComponent comp : sf.getComponents()) {
+						if (keyName == null && comp.getIsKey() == true) {
+							keyName = comp.getIdName();
+						}
 						elements.add(comp.getIdName());
-						if(comp.getType()!=null) {
-							referencedTypes.add(comp.getType().getName());
+						if (comp.getComponentShowTypeEnum() != ComponentShowTypeEnum.EDITABLE
+								&& comp.getComponentShowTypeEnum() != ComponentShowTypeEnum.CALCULATED) {
+							referencedTypes.put(comp.getIdName(), comp.getType().getName());
 						}
 					}
 				}
@@ -81,6 +87,7 @@ public class ContainerGenerator extends BasicGenerator {
 					context.put("isDelete", isDelete);
 					context.put("elements", elements);
 					context.put("referencedTypes", referencedTypes);
+					context.put("keyName", keyName);
 					getTemplate().process(context, out);
 					out.flush();
 				}

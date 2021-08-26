@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
@@ -19,6 +21,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.impl.EnumerationLiteralImpl;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
+import myplugin.generator.fmmodel.ComponentShowTypeEnum;
 import myplugin.generator.fmmodel.ComponentTypeEnum;
 import myplugin.generator.fmmodel.FMApplication;
 import myplugin.generator.fmmodel.FMClass;
@@ -156,7 +159,29 @@ public class ModelAnalyzer {
 			Iterator<Property> it = ModelHelper.attributes(cl);
 			while (it.hasNext()) {
 				Property p = it.next();
+				int upper = p.getUpper();
+				ComponentShowTypeEnum componentShowTypeEnum = null;
 				Stereotype propS = StereotypesHelper.getAppliedStereotypeByString(p, "Editable");
+				if (propS != null) {
+					componentShowTypeEnum = ComponentShowTypeEnum.EDITABLE;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Calculated");
+					componentShowTypeEnum = ComponentShowTypeEnum.CALCULATED;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Zoom");
+					componentShowTypeEnum = ComponentShowTypeEnum.ZOOM;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Next");
+					componentShowTypeEnum = ComponentShowTypeEnum.NEXT;
+				}
+				if (propS == null) {
+					propS = StereotypesHelper.getAppliedStereotypeByString(p, "Hierarchy");
+					componentShowTypeEnum = ComponentShowTypeEnum.HIERARCHY;
+				}
+				Stereotype persP = StereotypesHelper.getAppliedStereotypeByString(p, "PersistentProperty");
 				if (propS != null) {
 					FMUIComponent com = new FMUIComponent();
 					String typeName = p.getType().getName();
@@ -166,16 +191,26 @@ public class ModelAnalyzer {
 					if (typeMapping == null) {
 						FMType type = new FMType(typeName, typePackage, baseType);
 						com.setType(type);
+					} else {
+						FMType type = new FMType(typeMapping.getDestType(), typePackage, baseType);
+						com.setType(type);
 					}
 					String label = (String) getTagValue(p, propS, "label");
 					Boolean visible = (Boolean) getTagValue(p, propS, "visible");
 					EnumerationLiteralImpl enumtemp = (EnumerationLiteralImpl) getTagValue(p, propS, "componentType");
+					Boolean isKey = null;
+					if (persP != null) {
+						isKey = (Boolean) getTagValue(p, persP, "isKey");
+					}
 					ComponentTypeEnum cte = ComponentTypeEnum.valueOf(enumtemp.getName());
 					com.setIdName(p.getName());
 					com.setLabel(label);
 					com.setEditable(true);
 					com.setVisible(visible);
 					com.setComponentTypeEnum(cte);
+					com.setComponentShowTypeEnum(componentShowTypeEnum);
+					com.setIsKey(isKey);
+					com.setUpper(upper);
 					components.add(com);
 				}
 

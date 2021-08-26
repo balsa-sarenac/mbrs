@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path = "${name?uncap_first}")
+@RequestMapping(path = "${name?lower_case}")
 public class ${name}Controller extends Abstract${name}Controller {
 }

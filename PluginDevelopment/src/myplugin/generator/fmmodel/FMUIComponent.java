@@ -7,6 +7,7 @@ public class FMUIComponent {
 	private Boolean visible;
 	private FMType type;
 	private ComponentTypeEnum componentTypeEnum;
+	private ComponentShowTypeEnum componentShowTypeEnum;
 	private Boolean editable = false;
 	private Boolean calculated = false;
 	private Boolean next = false;
@@ -14,20 +15,23 @@ public class FMUIComponent {
 	private Boolean hierarchy = false;
 	private String formula;
 	private String level;
+	private Boolean isKey;
+	private Integer upper;
 
 	public FMUIComponent() {
 
 	}
 
 	public FMUIComponent(String idName, String label, Boolean visible, FMType type, ComponentTypeEnum componentTypeEnum,
-			Boolean editable, Boolean calculated, Boolean next, Boolean zoom, Boolean hierarchy, String formula,
-			String level) {
+			ComponentShowTypeEnum componentShowTypeEnum, Boolean editable, Boolean calculated, Boolean next,
+			Boolean zoom, Boolean hierarchy, String formula, String level, Boolean isKey, Integer upper) {
 		super();
 		this.idName = idName;
 		this.label = label;
 		this.visible = visible;
 		this.type = type;
 		this.componentTypeEnum = componentTypeEnum;
+		this.componentShowTypeEnum = componentShowTypeEnum;
 		this.editable = editable;
 		this.calculated = calculated;
 		this.next = next;
@@ -35,6 +39,8 @@ public class FMUIComponent {
 		this.hierarchy = hierarchy;
 		this.formula = formula;
 		this.level = level;
+		this.isKey = isKey;
+		this.upper = upper;
 	}
 
 	public String getIdName() {
@@ -75,6 +81,14 @@ public class FMUIComponent {
 
 	public void setComponentTypeEnum(ComponentTypeEnum componentTypeEnum) {
 		this.componentTypeEnum = componentTypeEnum;
+	}
+	
+	public ComponentShowTypeEnum getComponentShowTypeEnum() {
+		return componentShowTypeEnum;
+	}
+
+	public void setComponentShowTypeEnum(ComponentShowTypeEnum componentShowTypeEnum) {
+		this.componentShowTypeEnum = componentShowTypeEnum;
 	}
 
 	public Boolean getEditable() {
@@ -131,6 +145,22 @@ public class FMUIComponent {
 
 	public void setLevel(String level) {
 		this.level = level;
+	}
+
+	public Boolean getIsKey() {
+		return isKey;
+	}
+
+	public void setIsKey(Boolean isKey) {
+		this.isKey = isKey;
+	}
+
+	public Integer getUpper() {
+		return upper;
+	}
+
+	public void setUpper(Integer upper) {
+		this.upper = upper;
 	}
 
 }

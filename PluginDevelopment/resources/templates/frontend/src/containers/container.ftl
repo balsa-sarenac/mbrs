@@ -3,7 +3,7 @@ import { Row, Col, Typography<#if formImport??>, Button, Space, Modal</#if> } fr
 import axios from 'axios';
 <#if formImport??>
 import { PlusOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons';
-import { ${formImport} } from '../components/forms/${formImport}';
+import { ${formImport}Form } from '../components/forms/${formImport}Form';
 </#if>
 <#if tableImport??>
 import { ${tableImport} } from '../components/views/${tableImport}';
@@ -17,9 +17,10 @@ export const ${name}Container = () => {
   	const [isCreate, setIsCreate] = useState(true);
 	</#if>
 	<#if formImport??>
-	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : "",</#list>});
-	<#list referencedTypes as refType>
-	const [${refType?lower_case}, set${refType}] = useState([]);
+	const [initialValues, setInitialValues] = useState({<#list elements as el>${el} : null,</#list>});
+	<#list referencedTypes?keys as idName>
+	const [${idName?lower_case}Data, set${idName?cap_first}Data] = useState([]);
+	const [${idName?lower_case}, set${idName?cap_first}] = useState(null);
 	</#list>
 	</#if>
 	<#if tableImport??>
@@ -49,10 +50,10 @@ export const ${name}Container = () => {
 			console.log(error);
 		  });
 		  <#if formImport??>
-		  <#list referencedTypes as refType>
-		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${refType?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
+		  <#list referencedTypes?keys as idName>
+		  axios.get('http://${appHost}:${appPort}/${appContextPath}/${referencedTypes[idName]?lower_case}', {params: {page:pagins.currentPage-1, size:pagins.pageSize}})
 		    .then(function (response) {
-			  set${refType}(response.data);
+			  set${idName?cap_first}Data(response.data);
 		    })
 			.catch(function (error) {
 			  console.log(error);
@@ -63,7 +64,7 @@ export const ${name}Container = () => {
 	  
 	const rowSelection = {
 		onChange: (selectedRowKeys, selectedRows) => {
-			setId(selectedRows[0].id);
+			setId(selectedRows[0].${keyName});
 			setInitialValues(selectedRows[0]);
 		}
 	};
@@ -84,7 +85,7 @@ export const ${name}Container = () => {
 	<#if isCreate || isEdit>
 	const showModal = (type) => {
 		if(type==='new'){
-			setInitialValues({<#list elements as el>${el} : "",</#list>});
+			setInitialValues({<#list elements as el>${el} : null,</#list>});
 			setIsCreate(true);
 		}else{
 			setIsCreate(false);
@@ -99,19 +100,16 @@ export const ${name}Container = () => {
 	
 	<#if isCreate>
 	const handleOk = (values, { setSubmitting }) => {
-		axios.post('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', JSON.stringify(values, null, 2))
+		axios.post('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}', 
+			JSON.stringify(values, null, 2), 
+			{ headers:{ 'Content-Type': 'application/json'}})
 		  .then(function (response) {
-			setTimeout(() => {
-				alert(JSON.stringify(values, null, 2));
-					  setSubmitting(false);
-			}, 400);
 			setIsModalVisible(false);
+			handleGetData();
 		  })
 		  .catch(function (error) {
-			setTimeout(() => {
-				alert(JSON.stringify(values, null, 2));
-					  setSubmitting(false);
-			}, 400);
+			console.log(JSON.stringify(values, null, 2));
+			setSubmitting(false);
 			setIsModalVisible(false);
 		  });
 			
@@ -120,19 +118,16 @@ export const ${name}Container = () => {
 
 	<#if isCreate>
 	const handleUpdate = (values, { setSubmitting }) => {
-		axios.put('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}/'+id, JSON.stringify(values, null, 2))
+		axios.put('http://${appHost}:${appPort}/${appContextPath}/${name?lower_case}/'+id, 
+			JSON.stringify(values, null, 2),
+			{ headers:{ 'Content-Type': 'application/json'}})
 		  .then(function (response) {
-			setTimeout(() => {
-				alert(JSON.stringify(values, null, 2));
-					  setSubmitting(false);
-			}, 400);
 			setIsModalVisible(false);
+			handleGetData();
 		  })
 		  .catch(function (error) {
-			setTimeout(() => {
-				alert(JSON.stringify(values, null, 2));
-					  setSubmitting(false);
-			}, 400);
+			console.log(JSON.stringify(values, null, 2));
+			setSubmitting(false);
 			setIsModalVisible(false);
 		  });
 			
@@ -164,7 +159,7 @@ export const ${name}Container = () => {
 	          footer={null}
 	          onCancel={handleCancel}
 	         >
-	          <${formImport} <#if formImport??>initialValues={initialValues} <#list referencedTypes as refType>${refType?lower_case}={${refType?lower_case}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
+	          <${formImport}Form <#if formImport??>initialValues={initialValues} <#list referencedTypes?keys as idName>${idName?lower_case}Data={${idName?lower_case}Data} ${idName?lower_case}={${idName?lower_case}}  set${idName?cap_first}={set${idName?cap_first}}</#list></#if> isCreate={isCreate} <#if isCreate>handleOk={handleOk}</#if> <#if isEdit>handleUpdate={handleUpdate}</#if>handleCancel={handleCancel}/>
 	        </Modal>
 			</#if>
 			</#if>

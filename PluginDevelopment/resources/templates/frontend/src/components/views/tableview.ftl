@@ -8,7 +8,7 @@ import { Viewer } from '../common/Viewer';
 export const ${name}TableView = (props) => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
   	const [record, setRecord] = useState(null);
-  	const name = "${name}";
+  	const [viewerName, setViewerName] = useState('');
   	
 	const columns = [
 	<#list elements as element>
@@ -22,7 +22,7 @@ export const ${name}TableView = (props) => {
 	  {
 	    title: '${element.columnName}',
 	    dataIndex: '${element.sourceName}',
-      	render: record => (<Button onClick={()=>{setRecord(record); setIsModalVisible(true);}}>Details</Button>)
+      	render: record => (<Button onClick={()=>{setViewerName('${element.columnName}'); setRecord(record); setIsModalVisible(true);}}>Details</Button>)
 	  },
 	</#list> 
 	];
@@ -32,7 +32,7 @@ export const ${name}TableView = (props) => {
 	};
   return (
     <div>
-      <Viewer data={record} isModalVisible={isModalVisible} name={name} handleCancel={handleCancel}/>
+      <Viewer data={record} isModalVisible={isModalVisible} name={viewerName} handleCancel={handleCancel}/>
       <Table
         rowSelection={{
           type: 'radio',
