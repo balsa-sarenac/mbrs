@@ -11,10 +11,12 @@ import demo.generated.repository.${name}Repository;
     	<#assign referencedTypes = referencedTypes + [prop.type.name] />
 	</#if>
 </#list>
-<#list referencedTypes as type>
-import demo.generated.repository.${type}Repository;
-import demo.generated.dto.abs.Abstract${type}DTO;
-import demo.generated.model.${type};
+<#list referencedProps as prop>
+import demo.generated.repository.${prop.type.name}Repository;
+<#if prop.upper==-1>
+import demo.generated.dto.abs.Abstract${prop.type.name}DTO;
+import demo.generated.model.${prop.type.name};
+</#if>
 </#list>
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +115,12 @@ public abstract class Abstract${name}Service {
 		}
 			<#elseif prop.upper == -1 >
 		if(${name?uncap_first}DetailsDto.get${prop.name?cap_first}()!=null){
+			${name} old${name} = repository.findById(id).orElseThrow(() -> new NotFoundException("${name} with given id doesn't exist."));
+            for(${prop.type.name?cap_first} ${prop.type.name?uncap_first} : old${name}.get${prop.name?cap_first}()){
+                if(!${name?uncap_first}DetailsDto.get${prop.name?cap_first}().stream().map(Abstract${prop.type.name?cap_first}DTO::getId).collect(Collectors.toList()).contains(${prop.type.name?uncap_first}.getId())){
+                    ${prop.type.name?uncap_first}.set${name}(null);
+                }
+            }
 			${name?uncap_first}.set${prop.name?cap_first}(${prop.type.name?lower_case}Repository.findAllById(${name?uncap_first}DetailsDto.get${prop.name?cap_first}().stream().map(Abstract${prop.type.name?cap_first}DTO::getId).collect(Collectors.toSet())).stream().collect(Collectors.toSet()));
 			for(${prop.type.name?cap_first} ${prop.type.name?uncap_first} : ${name?uncap_first}.get${prop.name?cap_first}()){
                 ${prop.type.name?uncap_first}.set${name?cap_first}(${name?uncap_first});
