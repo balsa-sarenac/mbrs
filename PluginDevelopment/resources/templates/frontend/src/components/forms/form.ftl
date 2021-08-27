@@ -141,7 +141,7 @@ export const ${name}Form = (props) => {
 							</#list>
 							<#list formAssociationEndElements as component>
 							<FormItem name="${component.idName}" label="${component.label}" >
-								<Button onClick={()=>{<#if (component.upper==1)>setSelectionType('radio');<#else>setSelectionType('check');</#if> setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName?lower_case}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
+								<Button onClick={()=>{<#if (component.upper==1)>setSelectionType('radio'); if(props.initialValues.${component.idName}!=null){setSelectedRowKeys([props.initialValues.${component.idName}.id]);}<#else>setSelectionType('check'); if(props.initialValues.${component.idName}!=null){setSelectedRowKeys(props.initialValues.${component.idName}.map(t => t.id));}</#if> setChooserName('${component.idName?cap_first}'); setRecord(props.${component.idName?lower_case}Data); setIs${component.idName?cap_first}ModalVisible(true); setIsModalVisible(true)}}>Browse...</Button>							
 							</FormItem>
 							</#list>
 							<FormItem name="submit" >

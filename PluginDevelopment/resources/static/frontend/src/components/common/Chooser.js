@@ -33,10 +33,8 @@ export const Chooser = (props) => {
             break;
         }
         if(!flag){
-            let key=0;
             for(let d of data){
-                d['key'] = key;
-                key++;
+                d['key'] = d['id'];
             }
         }
         return(
