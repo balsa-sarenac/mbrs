@@ -8,6 +8,7 @@ import { Chooser } from '../common/Chooser';
 export const ${name}Form = (props) => {
 	const [formLayout, setFormLayout] = useState("vertical");
 	const [selectionType, setSelectionType] = useState("radio");
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	<#if (formAssociationEndElements?size>0)>
 	const [chooserName, setChooserName] = useState('');
 	const [selectedRow, setSelectedRow] = useState(null);
@@ -17,7 +18,9 @@ export const ${name}Form = (props) => {
 	const [is${component.idName?cap_first}ModalVisible, setIs${component.idName?cap_first}ModalVisible] = useState(false);
 	</#list>
 	const rowSelection = {
+		selectedRowKeys,
 		onChange: (selectedRowKeys, selectedRows) => {
+			setSelectedRowKeys(selectedRowKeys);
 			if(selectionType=='radio'){
 				setSelectedRow(selectedRows[0]);
 			}else{
@@ -26,12 +29,14 @@ export const ${name}Form = (props) => {
 		}
 	};
 	const handleCancel = () => {
+		setSelectedRowKeys([]);
 		setIsModalVisible(false);
 		<#list formAssociationEndElements as component>
 		setIs${component.idName?cap_first}ModalVisible(false);		
 		</#list>
 	};
 	const handleOk = () => {
+		setSelectedRowKeys([]);
 		setIsModalVisible(false);
 		<#list formAssociationEndElements as component>
 		setIs${component.idName?cap_first}ModalVisible(false);		

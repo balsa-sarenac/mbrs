@@ -65,8 +65,10 @@ ${class.visibility} class ${class.name} {
 	<#if (property.columnName)??>@JoinColumn(name="${property.columnName}")</#if>
 	<#if property.upper == 1>
 	${property.visibility} ${property.type.name} ${property.name};
+	
 	<#else>
 	${property.visibility} Set<${property.type.name}> ${property.name};
+	
 	</#if>
 	</#list>
 
