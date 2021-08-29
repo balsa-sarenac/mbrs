@@ -68,7 +68,7 @@ ${class.visibility} class ${class.name} {
 	${property.visibility} ${property.type.name} ${property.name};
 	
 	<#else>
-	${property.visibility} Set<${property.type.name}> ${property.name} = new HashSet<${property.type.name}>();;
+	${property.visibility} Set<${property.type.name}> ${property.name} = new HashSet<${property.type.name}>();
 	
 	</#if>
 	</#list>
