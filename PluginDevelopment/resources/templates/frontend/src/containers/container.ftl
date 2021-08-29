@@ -88,6 +88,9 @@ export const ${name}Container = () => {
 			setInitialValues({<#list elements as el>${el} : null,</#list>});
 			setIsCreate(true);
 		}else{
+		<#list referencedTypes?keys as idName>
+			set${idName?cap_first}(initialValues['${idName}']);
+		</#list>
 			setIsCreate(false);
 		}
 		setIsModalVisible(true);
