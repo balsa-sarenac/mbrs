@@ -1,19 +1,20 @@
 package myplugin.generator.options;
 
-/** GeneratorOptions: options used for code generation. Every generator (ejb generator, forms generator etc) should
- * have one instance of this class */
+/**
+ * GeneratorOptions: options used for code generation. Every generator (ejb
+ * generator, forms generator etc) should have one instance of this class
+ */
 
-public class GeneratorOptions  {
-	private String outputPath; 
+public class GeneratorOptions {
+	private String outputPath;
 	private String templateName;
 	private String templateDir;
 	private String outputFileName;
 	private Boolean overwrite;
 	private String filePackage;
-	
-	public GeneratorOptions(String outputPath, String templateName,
-			String templateDir, String outputFileName, Boolean overwrite,
-			String filePackage) {
+
+	public GeneratorOptions(String outputPath, String templateName, String templateDir, String outputFileName,
+			Boolean overwrite, String filePackage) {
 		super();
 		this.outputPath = outputPath;
 		this.templateName = templateName;
@@ -23,8 +24,12 @@ public class GeneratorOptions  {
 		this.filePackage = filePackage;
 	}
 
+	public GeneratorOptions() {
+		super();
+	}
+
 	public String getOutputPath() {
-		return outputPath;
+		return outputPath.replace("{path}", ProjectOptions.getProjectOptions().getPath());
 	}
 
 	public void setOutputPath(String outputPath) {
@@ -70,6 +75,5 @@ public class GeneratorOptions  {
 	public void setFilePackage(String filePackage) {
 		this.filePackage = filePackage;
 	}
-	
-	
+
 }

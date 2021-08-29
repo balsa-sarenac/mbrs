@@ -6,16 +6,15 @@ import java.util.List;
 
 
 public class FMClass extends FMType {	
-	
+
 	private String visibility;
-	private String tbName;
-	
+	private String tbName;	
 
 	//Class properties
 	private List<FMProperty> FMProperties = new ArrayList<FMProperty>();
 	
 	//list of packages (for import declarations) 
-	private List<String> importedPackages = new ArrayList<String>();
+	private List<FMType> importedPackages = new ArrayList<FMType>();
 	
 	//methods
 	private List<FMMethod> FMMethods = new ArrayList<FMMethod>();
@@ -24,7 +23,7 @@ public class FMClass extends FMType {
 	
 	
 	public FMClass(String name, String classPackage, String visibility) {
-		super(name, classPackage);		
+		super(name, classPackage, false);
 		this.visibility = visibility;
 	}	
 	
@@ -56,15 +55,15 @@ public class FMClass extends FMType {
 		return FMProperties.size();
 	}
 	
-	public List<String> getImportedPackages(){
+	public List<FMType> getImportedPackages(){
 		return importedPackages;
 	}
 
-	public Iterator<String> getImportedIterator(){
+	public Iterator<FMType> getImportedIterator(){
 		return importedPackages.iterator();
 	}
 	
-	public void addImportedPackage(String importedPackage){
+	public void addImportedPackage(FMType importedPackage){
 		importedPackages.add(importedPackage);		
 	}
 	
